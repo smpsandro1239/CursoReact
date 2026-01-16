@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply antialiased text-gray-900;
+}
+
+.prose {
+  font-size: 1.125rem;
+}
