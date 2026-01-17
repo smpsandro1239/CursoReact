@@ -3,36 +3,74 @@ export const lessons = [
     id: 1,
     category: "Fundamentos",
     difficulty: "Iniciante",
-    readingTime: "5 min",
-    title: "Aula 1: O Início da Jornada React",
-    description: "Configurando o ambiente e criando seu primeiro componente.",
-    proTip: "Use sempre o Node.js em versão LTS para garantir estabilidade no seu ambiente de desenvolvimento.",
-    content: `Bem-vindo ao curso Premium de React! Nesta primeira aula, vamos entender por que o React é a escolha número 1 de grandes empresas como Netflix, Airbnb e Facebook.
+    readingTime: "60 min",
+    title: "Aula 1: Introdução ao JavaScript Moderno",
+    description: "Compreender o papel do JavaScript e dar os primeiros passos na consola.",
+    proTip: "Os erros são os teus melhores professores. Se aparecer vermelho na consola, lê com atenção! A curiosidade e a tentativa-erro são as chaves para aprender programação.",
+    content: `### O que vais aprender nesta aula:
+- Compreender a diferença entre HTML, CSS e JavaScript
+- Reconhecer o papel do JavaScript na web moderna
+- Abrir e utilizar a consola do navegador como ferramenta de desenvolvimento
+- Executar os teus primeiros comandos JavaScript
+- Experimentar interação básica com o utilizador
 
-O React não é apenas uma biblioteca; é uma forma de pensar em interfaces como uma composição de peças pequenas e independentes chamadas **Componentes**.
+---
 
-### O que vamos fazer hoje:
-1. Configurar o Node.js e o NPM.
-2. Criar um projeto usando Vite (muito mais rápido que o Create React App).
-3. Entender a estrutura de pastas.
+### 🧠 Teoria: A Analogia da Casa Inteligente
 
-### Exemplo de código:
-\`\`\`jsx
-function Welcome() {
-  return <h1>Olá, React! 🚀</h1>;
-}
+Para entender o JavaScript, vamos usar uma analogia clara:
+- **HTML** é a estrutura da casa — paredes, portas, janelas (o conteúdo estático).
+- **CSS** é a decoração — cores, móveis, iluminação (o aspeto visual).
+- **JavaScript** é a eletricidade, canalização e automação — faz as luzes acenderem, as portas abrirem sozinhas e a água correr (interatividade).
+
+**Por que isto importa?** Sem JavaScript, os websites seriam apenas folhetos estáticos. Com ele, criamos aplicações rápidas e interativas como o Gmail, Netflix ou Spotify.
+
+> 💡 **Sabias que?** O JavaScript foi criado em apenas 10 dias em 1995. Hoje é a linguagem mais usada no mundo e a base obrigatória para aprender React.
+
+---
+
+### 💻 Prática: A Consola do Navegador
+
+Abre as Ferramentas de Desenvolvedor no teu navegador (<kbd>F12</kbd> ou <kbd>Ctrl+Shift+J</kbd>) e vai ao separador **Console**. É aqui que a magia acontece!
+
+**1. O teu primeiro comando**
+\`\`\`javascript
+console.log("Olá, mundo!");
 \`\`\`
 
-Prepare-se para dominar o mercado de desenvolvimento web!`,
-    practice: "Instale o Node.js em sua máquina e execute o comando 'npm create vite@latest' no terminal para criar seu primeiro projeto.",
+**2. Variáveis e Interação**
+\`\`\`javascript
+let nome = "Sandro";
+console.log("Bem-vindo ao curso de React, " + nome + "! 🚀");
+alert("Bem-vindo à tua jornada!");
+\`\`\`
+
+**3. Interação Real**
+\`\`\`javascript
+let resposta = prompt("Pronto para aprender JavaScript moderno?");
+console.log("Resposta do aluno:", resposta);
+\`\`\`
+
+---
+
+### 🚀 Reforço de Confiança
+- Todos os grandes developers começaram com o primeiro \`console.log()\`.
+- Erro = Aprendizagem. Cada mensagem vermelha na consola é um passo para a mestria.
+- Persistência e prática diária valem mais do que "ser um génio".`,
+    practice: "Cria um programa na consola que apresente uma mini-apresentação pessoal interativa. Usa pelo menos 3 comandos console.log(), variáveis para o teu nome, idade e objetivo, e inclui um prompt() e um alert().",
     resources: [
-      { name: "Documentação Oficial - Instalação", url: "https://react.dev/learn/installation" },
-      { name: "Vite Guide", url: "https://vitejs.dev/guide/" }
+      { name: "MDN - JavaScript First Steps", url: "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps" },
+      { name: "W3Schools - JS Introduction", url: "https://www.w3schools.com/js/js_intro.asp" }
     ],
     quiz: {
-      question: "Qual ferramenta é recomendada atualmente para criar novos projetos React devido à sua velocidade?",
-      options: ["Create React App", "Vite", "Angular CLI", "jQuery"],
-      correctAnswer: 1
+      question: "Porque é importante aprender JavaScript antes de React?",
+      options: [
+        "React é escrito em JavaScript e usa os seus conceitos fundamentais",
+        "React substitui completamente o JavaScript",
+        "Não é necessário, pode-se aprender React diretamente",
+        "JavaScript é apenas para sites antigos"
+      ],
+      correctAnswer: 0
     }
   },
   {
