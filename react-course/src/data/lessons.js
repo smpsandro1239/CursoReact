@@ -104,35 +104,83 @@ O JSX torna o código mais legível e fácil de manter.`,
       correctAnswer: 1
     }
   },
-  {
+    {
     id: 3,
     category: "Fundamentos",
     difficulty: "Iniciante",
-    readingTime: "6 min",
-    title: "Aula 3: Props - Componentes Dinâmicos",
-    description: "Passando dados de um componente para outro.",
-    proTip: "Tente desestruturar suas props logo na assinatura da função para um código mais limpo: function MyComp({ title }) { ... }",
-    content: `Imagine os componentes como funções JavaScript. As **Props** são os argumentos dessas funções.
+    readingTime: "60 min",
+    title: "Aula 3: Controle de Fluxo – Condicionais e Loops",
+    description: "Utilizar estruturas condicionais e loops para tomar decisões e repetir tarefas.",
+    proTip: "Evite o 'aninhamento excessivo' (muitos if dentro de if) usando return cedo ou guard clauses. Código limpo é código legível!",
+    content: `### O que vais aprender nesta aula:
+- Utilizar estruturas condicionais (\`if/else\`, \`switch\`) para tomar decisões
+- Implementar loops (\`for\`, \`while\`, \`for...of\`) para repetir tarefas
+- Compreender a diferença entre \`==\` e \`===\` em condições
+- Usar operadores lógicos (\`&&\`, \`||\`, \`!\`) para combinar condições
+- Aplicar boas práticas para evitar "callback hell" e código aninhado excessivo
+- Resolver problemas do mundo real com lógica de programação
 
-Elas permitem que o mesmo componente exiba informações diferentes.
+---
 
-\`\`\`jsx
-function Avatar(props) {
-  return <img src={props.url} alt={props.nome} />;
+### 🧠 Teoria: A Analogia do Semáforo Inteligente
+
+O controle de fluxo é como o sistema nervoso de uma aplicação. Permite que ela "pense" e tome decisões:
+- **Condicionais (\`if/else\`)** são como semáforos: se o sinal está verde → avança; se está vermelho → para.
+- **Loops (\`for\`)** são como rotinas diárias: repete a mesma sequência (acordar, tomar banho, café) todos os dias até sexta-feira.
+
+**Porquê isto importa?** Em React, usas constantemente condicionais para mostrar/esconder componentes e loops para renderizar listas de dados. É impossível construir aplicações reais sem dominar estes conceitos.
+
+> 💡 **Sabias que?** O operador ternário (\`condition ? trueValue : falseValue\`) é a forma concisa de escrever um \`if/else\` simples. É muito usado em React para renderização condicional!
+
+---
+
+### 💻 Prática: Experimentando na Consola
+
+Abre a consola do navegador (<kbd>F12</kbd>) e experimenta os seguintes exemplos:
+
+**1. Condicionais básicas**
+\`\`\`javascript
+const idade = 17;
+if (idade >= 18) {
+  console.log("Pode votar!");
+} else {
+  console.log("Ainda não pode votar.");
 }
-
-// Uso:
-<Avatar url="foto.jpg" nome="João" />
 \`\`\`
 
-Lembre-se: Props são **somente leitura** (read-only).`,
-    practice: "Crie um componente 'Card' que recebe as props 'titulo' e 'preco' e os exiba na tela.",
+**2. Operador ternário (Conciso)**
+\`\`\`javascript
+const mensagem = idade >= 18 ? "Maior de idade" : "Menor de idade";
+console.log(mensagem);
+\`\`\`
+
+**3. Loop for...of (Moderno)**
+\`\`\`javascript
+const linguagens = ["JavaScript", "React", "Node.js"];
+for (const lang of linguagens) {
+  console.log(\`Estou a aprender ${lang}!\`);
+}
+\`\`\`
+
+---
+
+### 🚀 Reforço de Confiança
+- Loops infinitos acontecem a todos! Até aos seniors. Pressiona Ctrl+C e analisa onde esqueceste o incremento.
+- Cada condição bem escrita é um passo para aplicações mais robustas e menos propensas a bugs.
+- Estás a desenvolver o "cérebro" das tuas aplicações. Cada \`if\` e \`for\` é um neurónio novo!`,
+    practice: "Cria um programa que verifica a força de uma password. Usa loops para analisar cada caractere e condicionais para classificar como Fraca, Média ou Forte.",
     resources: [
-      { name: "Passing Props to a Component", url: "https://react.dev/learn/passing-props-to-a-component" }
+      { name: "MDN - Control flow and error handling", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling" },
+      { name: "W3Schools - JS Conditions", url: "https://www.w3schools.com/js/js_if_else.asp" }
     ],
     quiz: {
-      question: "O que acontece se você tentar modificar uma 'prop' dentro do componente que a recebeu?",
-      options: ["O componente atualiza", "O React ignora o erro", "Props são somente leitura e não devem ser modificadas", "O valor muda apenas para o pai"],
+      question: "Qual loop é mais adequado para iterar sobre um array de forma legível no JS moderno?",
+      options: [
+        "for tradicional",
+        "while",
+        "for...of",
+        "loop infinito"
+      ],
       correctAnswer: 2
     }
   },
