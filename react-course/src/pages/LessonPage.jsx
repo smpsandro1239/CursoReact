@@ -23,7 +23,10 @@ import {
   AlertCircle,
   RotateCcw,
   Share2,
-  Zap
+  Zap,
+  StickyNote,
+  Save,
+  Trophy
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -44,11 +47,22 @@ const LessonPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [quizAnswer, setQuizAnswer] = useState(null);
   const [showQuizResult, setShowQuizResult] = useState(false);
+  const [note, setNote] = useState('');
+  const [isNoteSaved, setIsNoteSaved] = useState(false);
+  const [practiceDone, setPracticeDone] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setQuizAnswer(null);
     setShowQuizResult(false);
+
+    // Load note for this lesson
+    const savedNotes = JSON.parse(localStorage.getItem('lessonNotes') || '{}');
+    setNote(savedNotes[lessonId] || '');
+    setIsNoteSaved(false);
+
+    const savedPractice = JSON.parse(localStorage.getItem('practiceDone') || '[]');
+    setPracticeDone(savedPractice.includes(lessonId));
   }, [lessonId]);
 
   useEffect(() => {
@@ -77,6 +91,32 @@ const LessonPage = () => {
     } else {
       setCompletedLessons([...completedLessons, id]);
     }
+  };
+
+  const saveNote = () => {
+    const savedNotes = JSON.parse(localStorage.getItem('lessonNotes') || '{}');
+    savedNotes[lessonId] = note;
+    localStorage.setItem('lessonNotes', JSON.stringify(savedNotes));
+    setIsNoteSaved(true);
+    setTimeout(() => setIsNoteSaved(false), 2000);
+  };
+
+  const togglePractice = () => {
+    const savedPractice = JSON.parse(localStorage.getItem('practiceDone') || '[]');
+    let newPractice;
+    if (practiceDone) {
+      newPractice = savedPractice.filter(id => id !== lessonId);
+    } else {
+      newPractice = [...savedPractice, lessonId];
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.8 },
+        colors: ['#3b82f6', '#8b5cf6', '#ec4899']
+      });
+    }
+    localStorage.setItem('practiceDone', JSON.stringify(newPractice));
+    setPracticeDone(!practiceDone);
   };
 
   const resetProgress = () => {
@@ -271,7 +311,8 @@ const LessonPage = () => {
               </div>
             </div>
 
-            {/* Content Card */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+              <div className="lg:col-span-2">
             <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden mb-10 transition-colors">
               <div className="p-8 md:p-12">
                 <div className="prose prose-slate dark:prose-invert prose-lg max-w-none
@@ -298,7 +339,7 @@ const LessonPage = () => {
                 {lesson.resources && (
                   <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
                     <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-4">Recursos Adicionais</h3>
-                    <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-3 lg:hidden">
                       {lesson.resources.map((res, i) => (
                         <a
                           key={i}
@@ -339,9 +380,22 @@ const LessonPage = () => {
                   <p className="leading-relaxed whitespace-pre-wrap">
                     {lesson.practice}
                   </p>
-                  <div className="mt-8 flex items-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                    Esperando sua implementação...
+                  <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+                      <span className={`w-2 h-2 rounded-full ${practiceDone ? 'bg-emerald-500' : 'bg-blue-500 animate-pulse'}`}></span>
+                      {practiceDone ? 'Desafio Concluído!' : 'Esperando sua implementação...'}
+                    </div>
+                    <button
+                      onClick={togglePractice}
+                      className={`
+                        flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all
+                        ${practiceDone
+                          ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                          : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-900/40'}
+                      `}
+                    >
+                      {practiceDone ? <><Check size={14} /> Refazer</> : <><Trophy size={14} /> Marcar como Feito</>}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -428,6 +482,58 @@ const LessonPage = () => {
                 </div>
               )}
             </div>
+            </div>
+
+            {/* Sidebar Notes (Only visible on large screens) */}
+            <div className="space-y-6">
+              <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none sticky top-24">
+                <div className="flex items-center gap-2 mb-4 text-blue-600">
+                  <StickyNote size={20} />
+                  <h3 className="font-black uppercase tracking-widest text-xs">Minhas Anotações</h3>
+                </div>
+                <textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  placeholder="Escreva algo importante sobre esta aula..."
+                  className="w-full h-48 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl text-sm border-none focus:ring-2 focus:ring-blue-500/20 resize-none dark:text-white"
+                />
+                <button
+                  onClick={saveNote}
+                  className={`
+                    w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all
+                    ${isNoteSaved
+                      ? 'bg-emerald-500 text-white'
+                      : 'bg-slate-900 dark:bg-blue-600 text-white hover:bg-black dark:hover:bg-blue-700'}
+                  `}
+                >
+                  {isNoteSaved ? <><Check size={18} /> Salvo!</> : <><Save size={18} /> Salvar Nota</>}
+                </button>
+              </div>
+
+              {lesson.resources && (
+                <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden">
+                  <div className="absolute top-0 right-0 p-4 opacity-10">
+                    <ExternalLink size={60} />
+                  </div>
+                  <h3 className="font-black uppercase tracking-widest text-xs mb-6 text-slate-400">Links Úteis</h3>
+                  <div className="space-y-3">
+                    {lesson.resources.map((res, i) => (
+                      <a
+                        key={i}
+                        href={res.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all group"
+                      >
+                        <span className="text-sm font-bold truncate pr-2">{res.name}</span>
+                        <ExternalLink size={14} className="text-slate-500 group-hover:text-white shrink-0" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
 
             {/* Bottom Navigation */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-10 border-t border-slate-200 dark:border-slate-800">

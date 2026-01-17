@@ -19,7 +19,9 @@ import {
   Layers,
   ShieldCheck,
   Clock,
-  BarChart3
+  BarChart3,
+  ExternalLink,
+  Library
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -33,6 +35,25 @@ const LandingPage = () => {
   const categories = ['Todas', ...new Set(lessons.map(l => l.category))];
   const totalMinutes = lessons.reduce((acc, l) => acc + parseInt(l.readingTime), 0);
   const totalHours = (totalMinutes / 60).toFixed(1);
+
+  const completedLessonsIds = JSON.parse(localStorage.getItem('completedLessons') || '[]');
+  const remainingMinutes = lessons.reduce((acc, l) => {
+    if (!completedLessonsIds.includes(l.id)) {
+      return acc + parseInt(l.readingTime);
+    }
+    return acc;
+  }, 0);
+
+  const allResources = lessons.reduce((acc, l) => {
+    if (l.resources) {
+      l.resources.forEach(r => {
+        if (!acc.find(item => item.url === r.url)) {
+          acc.push({ ...r, lessonTitle: l.title });
+        }
+      });
+    }
+    return acc;
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem('completedLessons');
@@ -135,7 +156,14 @@ const LandingPage = () => {
             <div className="flex-grow w-full">
               <div className="flex justify-between items-end mb-3">
                 <span className="text-xs font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">Seu Progresso Atual</span>
-                <span className="text-2xl font-black text-slate-900 dark:text-white">{Math.round((completedCount / lessons.length) * 100)}%</span>
+                <div className="flex flex-col items-end">
+                  <span className="text-2xl font-black text-slate-900 dark:text-white">{Math.round((completedCount / lessons.length) * 100)}%</span>
+                  {remainingMinutes > 0 && (
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">
+                      Restam aprox. {remainingMinutes} min
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="w-full h-4 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
@@ -309,6 +337,39 @@ const LandingPage = () => {
           ))}
         </div>
       </main>
+
+      {/* Resources Hub */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-12">
+            <div className="p-3 bg-blue-600 rounded-2xl text-white">
+              <Library size={32} />
+            </div>
+            <div>
+              <h2 className="text-4xl font-black tracking-tight dark:text-white">Hub de Recursos</h2>
+              <p className="text-slate-500 dark:text-slate-400 font-medium">Todas as referências e documentações do curso em um só lugar.</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {allResources.map((res, i) => (
+              <a
+                key={i}
+                href={res.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 hover:border-blue-500 transition-all group"
+              >
+                <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-3 truncate">{res.lessonTitle}</div>
+                <div className="font-bold mb-4 dark:text-white group-hover:text-blue-600 transition-colors">{res.name}</div>
+                <div className="flex items-center gap-2 text-xs text-slate-400 font-bold group-hover:text-slate-600 transition-colors">
+                  Acessar Documentação <ExternalLink size={12} />
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* FAQ Section */}
       <section className="py-32 bg-slate-50 dark:bg-slate-900/50 px-6">
