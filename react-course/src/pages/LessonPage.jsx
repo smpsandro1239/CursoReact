@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import confetti from 'canvas-confetti';
 import {
   ChevronLeft,
   ChevronRight,
@@ -101,7 +102,15 @@ const LessonPage = () => {
   const isAllComplete = completedLessons.length === lessons.length;
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-950 flex flex-col md:flex-row font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-950 flex flex-col md:flex-row font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
+      {/* Sticky Top Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-slate-100 dark:bg-slate-800">
+        <div
+          className="h-full bg-blue-600 transition-all duration-300"
+          style={{ width: `${(completedLessons.length / lessons.length) * 100}%` }}
+        ></div>
+      </div>
+
       {/* Mobile Header */}
       <div className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 flex justify-between items-center sticky top-0 z-20">
         <Link to="/" className="font-black text-blue-600 text-xl tracking-tighter">PREMIUM REACT</Link>
@@ -357,7 +366,17 @@ const LessonPage = () => {
                     {!showQuizResult ? (
                       <button
                         disabled={quizAnswer === null}
-                        onClick={() => setShowQuizResult(true)}
+                        onClick={() => {
+                          setShowQuizResult(true);
+                          if (quizAnswer === lesson.quiz.correctAnswer) {
+                            confetti({
+                              particleCount: 100,
+                              spread: 70,
+                              origin: { y: 0.6 },
+                              colors: ['#2563eb', '#10b981', '#f59e0b']
+                            });
+                          }
+                        }}
                         className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-all"
                       >
                         Verificar Resposta

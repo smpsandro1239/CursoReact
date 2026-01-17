@@ -17,7 +17,9 @@ import {
   Globe,
   Layout,
   Layers,
-  ShieldCheck
+  ShieldCheck,
+  Clock,
+  BarChart3
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -226,17 +228,30 @@ const LandingPage = () => {
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50/50 dark:bg-blue-900/10 rounded-bl-full -z-10 group-hover:bg-blue-600/5 transition-colors"></div>
               <div className="flex items-center justify-between mb-6">
-                <div className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
-                  Aula {lesson.id}
+                <div className="flex items-center gap-2">
+                  <div className="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                    Aula {lesson.id}
+                  </div>
+                  <div className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                    {lesson.category}
+                  </div>
                 </div>
                 <PlayCircle className="text-slate-300 dark:text-slate-700 group-hover:text-blue-500 transition-all" size={28} />
               </div>
               <h3 className="text-xl font-black mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight dark:text-white">
                 {lesson.title}
               </h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">
+              <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed mb-6">
                 {lesson.description}
               </p>
+              <div className="flex items-center gap-4 mt-auto pt-4 border-t border-slate-50 dark:border-slate-800/50">
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+                  <Clock size={12} /> {lesson.readingTime}
+                </div>
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+                  <BarChart3 size={12} /> {lesson.difficulty}
+                </div>
+              </div>
             </Link>
           ))}
         </div>
