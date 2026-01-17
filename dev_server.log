@@ -1,0 +1,94 @@
+
+> react-course@0.0.0 dev
+> vite
+
+
+  VITE v7.3.1  ready in 663 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+12:14:54 AM [vite] (client) Pre-transform error: /app/react-course/src/pages/LessonPage.jsx: Expecting Unicode escape sequence \uXXXX. (138:31)
+
+  136 |             <div
+  137 |               className="h-full bg-emerald-500 transition-all duration-500"
+> 138 |               style={{ width: \`\${(completedLessons.length / lessons.length) * 100}%\` }}
+      |                                ^
+  139 |             ></div>
+  140 |           </div>
+  141 |           <div className="text-[10px] text-slate-500 mt-2 text-center font-medium">
+  Plugin: vite:react-babel
+  File: /app/react-course/src/pages/LessonPage.jsx:138:31
+  136 |              <div
+  137 |                className="h-full bg-emerald-500 transition-all duration-500"
+  138 |                style={{ width: \`\${(completedLessons.length / lessons.length) * 100}%\` }}
+      |                                 ^
+  139 |              ></div>
+  140 |            </div>
+12:15:07 AM [vite] Internal server error: /app/react-course/src/pages/LessonPage.jsx: Expecting Unicode escape sequence \uXXXX. (138:31)
+
+  136 |             <div
+  137 |               className="h-full bg-emerald-500 transition-all duration-500"
+> 138 |               style={{ width: \`\${(completedLessons.length / lessons.length) * 100}%\` }}
+      |                                ^
+  139 |             ></div>
+  140 |           </div>
+  141 |           <div className="text-[10px] text-slate-500 mt-2 text-center font-medium">
+  Plugin: vite:react-babel
+  File: /app/react-course/src/pages/LessonPage.jsx:138:31
+  136 |              <div
+  137 |                className="h-full bg-emerald-500 transition-all duration-500"
+  138 |                style={{ width: \`\${(completedLessons.length / lessons.length) * 100}%\` }}
+      |                                 ^
+  139 |              ></div>
+  140 |            </div>
+      at constructor (/app/react-course/node_modules/@babel/parser/lib/index.js:365:19)
+      at JSXParserMixin.raise (/app/react-course/node_modules/@babel/parser/lib/index.js:6599:19)
+      at JSXParserMixin.readWord1 (/app/react-course/node_modules/@babel/parser/lib/index.js:6559:16)
+      at JSXParserMixin.readWord (/app/react-course/node_modules/@babel/parser/lib/index.js:6579:23)
+      at JSXParserMixin.getTokenFromCode (/app/react-course/node_modules/@babel/parser/lib/index.js:6298:14)
+      at JSXParserMixin.getTokenFromCode (/app/react-course/node_modules/@babel/parser/lib/index.js:4797:11)
+      at JSXParserMixin.nextToken (/app/react-course/node_modules/@babel/parser/lib/index.js:5782:10)
+      at JSXParserMixin.next (/app/react-course/node_modules/@babel/parser/lib/index.js:5692:10)
+      at JSXParserMixin.eat (/app/react-course/node_modules/@babel/parser/lib/index.js:5696:12)
+      at JSXParserMixin.parseObjectProperty (/app/react-course/node_modules/@babel/parser/lib/index.js:11939:14)
+      at JSXParserMixin.parseObjPropValue (/app/react-course/node_modules/@babel/parser/lib/index.js:11968:100)
+      at JSXParserMixin.parsePropertyDefinition (/app/react-course/node_modules/@babel/parser/lib/index.js:11905:17)
+      at JSXParserMixin.parseObjectLike (/app/react-course/node_modules/@babel/parser/lib/index.js:11822:21)
+      at JSXParserMixin.parseExprAtom (/app/react-course/node_modules/@babel/parser/lib/index.js:11329:23)
+      at JSXParserMixin.parseExprAtom (/app/react-course/node_modules/@babel/parser/lib/index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (/app/react-course/node_modules/@babel/parser/lib/index.js:11071:23)
+      at JSXParserMixin.parseUpdate (/app/react-course/node_modules/@babel/parser/lib/index.js:11056:21)
+      at JSXParserMixin.parseMaybeUnary (/app/react-course/node_modules/@babel/parser/lib/index.js:11036:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/app/react-course/node_modules/@babel/parser/lib/index.js:10889:61)
+      at JSXParserMixin.parseExprOps (/app/react-course/node_modules/@babel/parser/lib/index.js:10894:23)
+      at JSXParserMixin.parseMaybeConditional (/app/react-course/node_modules/@babel/parser/lib/index.js:10871:23)
+      at JSXParserMixin.parseMaybeAssign (/app/react-course/node_modules/@babel/parser/lib/index.js:10821:21)
+      at JSXParserMixin.parseExpressionBase (/app/react-course/node_modules/@babel/parser/lib/index.js:10774:23)
+      at /app/react-course/node_modules/@babel/parser/lib/index.js:10770:39
+      at JSXParserMixin.allowInAnd (/app/react-course/node_modules/@babel/parser/lib/index.js:12416:12)
+      at JSXParserMixin.parseExpression (/app/react-course/node_modules/@babel/parser/lib/index.js:10770:17)
+      at JSXParserMixin.jsxParseExpressionContainer (/app/react-course/node_modules/@babel/parser/lib/index.js:4632:31)
+      at JSXParserMixin.jsxParseAttributeValue (/app/react-course/node_modules/@babel/parser/lib/index.js:4604:21)
+      at JSXParserMixin.jsxParseAttribute (/app/react-course/node_modules/@babel/parser/lib/index.js:4653:38)
+      at JSXParserMixin.jsxParseOpeningElementAfterName (/app/react-course/node_modules/@babel/parser/lib/index.js:4667:28)
+      at JSXParserMixin.jsxParseOpeningElementAt (/app/react-course/node_modules/@babel/parser/lib/index.js:4662:17)
+      at JSXParserMixin.jsxParseElementAt (/app/react-course/node_modules/@babel/parser/lib/index.js:4686:33)
+      at JSXParserMixin.jsxParseElementAt (/app/react-course/node_modules/@babel/parser/lib/index.js:4698:32)
+      at JSXParserMixin.jsxParseElementAt (/app/react-course/node_modules/@babel/parser/lib/index.js:4698:32)
+      at JSXParserMixin.jsxParseElementAt (/app/react-course/node_modules/@babel/parser/lib/index.js:4698:32)
+      at JSXParserMixin.jsxParseElementAt (/app/react-course/node_modules/@babel/parser/lib/index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (/app/react-course/node_modules/@babel/parser/lib/index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (/app/react-course/node_modules/@babel/parser/lib/index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (/app/react-course/node_modules/@babel/parser/lib/index.js:11071:23)
+      at JSXParserMixin.parseUpdate (/app/react-course/node_modules/@babel/parser/lib/index.js:11056:21)
+      at JSXParserMixin.parseMaybeUnary (/app/react-course/node_modules/@babel/parser/lib/index.js:11036:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (/app/react-course/node_modules/@babel/parser/lib/index.js:10889:61)
+      at JSXParserMixin.parseExprOps (/app/react-course/node_modules/@babel/parser/lib/index.js:10894:23)
+      at JSXParserMixin.parseMaybeConditional (/app/react-course/node_modules/@babel/parser/lib/index.js:10871:23)
+      at JSXParserMixin.parseMaybeAssign (/app/react-course/node_modules/@babel/parser/lib/index.js:10821:21)
+      at /app/react-course/node_modules/@babel/parser/lib/index.js:10790:39
+      at JSXParserMixin.allowInAnd (/app/react-course/node_modules/@babel/parser/lib/index.js:12416:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (/app/react-course/node_modules/@babel/parser/lib/index.js:10790:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/app/react-course/node_modules/@babel/parser/lib/index.js:12483:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (/app/react-course/node_modules/@babel/parser/lib/index.js:11665:28)
+12:16:31 AM [vite] (client) hmr update /src/index.css
