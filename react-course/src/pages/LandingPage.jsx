@@ -28,6 +28,11 @@ const LandingPage = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [completedCount, setCompletedCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState('Todas');
+
+  const categories = ['Todas', ...new Set(lessons.map(l => l.category))];
+  const totalMinutes = lessons.reduce((acc, l) => acc + parseInt(l.readingTime), 0);
+  const totalHours = (totalMinutes / 60).toFixed(1);
 
   useEffect(() => {
     const saved = localStorage.getItem('completedLessons');
@@ -72,6 +77,36 @@ const LandingPage = () => {
           <p className="text-xl md:text-2xl mb-12 text-slate-500 dark:text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed">
             Aprenda a construir interfaces modernas, rápidas e escaláveis com o framework mais desejado do mercado. 30 aulas práticas focadas em resultados.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-8 mb-12">
+            <div className="flex items-center gap-2">
+              <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-600">
+                <Clock size={24} />
+              </div>
+              <div className="text-left">
+                <div className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none mb-1">Duração Total</div>
+                <div className="text-xl font-black dark:text-white leading-none">~{totalHours} Horas</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl flex items-center justify-center text-emerald-600">
+                <BookOpen size={24} />
+              </div>
+              <div className="text-left">
+                <div className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none mb-1">Conteúdo</div>
+                <div className="text-xl font-black dark:text-white leading-none">30 Módulos</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/20 rounded-2xl flex items-center justify-center text-amber-600">
+                <BarChart3 size={24} />
+              </div>
+              <div className="text-left">
+                <div className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none mb-1">Nível</div>
+                <div className="text-xl font-black dark:text-white leading-none">Zero ao Pro</div>
+              </div>
+            </div>
+          </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/lesson/1"
@@ -204,7 +239,7 @@ const LandingPage = () => {
           <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight dark:text-white">Grade Curricular</h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 font-medium mb-8">O caminho passo a passo para sua liberdade profissional.</p>
 
-          <div className="max-w-xl mx-auto relative">
+          <div className="max-w-xl mx-auto relative mb-10">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
             <input
               type="text"
@@ -214,13 +249,31 @@ const LandingPage = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all border ${
+                  activeCategory === cat
+                    ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-200 dark:shadow-none'
+                    : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-blue-200 dark:hover:border-blue-800'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {lessons.filter(l =>
-            l.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            l.description.toLowerCase().includes(searchTerm.toLowerCase())
-          ).map((lesson) => (
+          {lessons.filter(l => {
+            const matchesSearch = l.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                 l.description.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesCategory = activeCategory === 'Todas' || l.category === activeCategory;
+            return matchesSearch && matchesCategory;
+          }).map((lesson) => (
             <Link
               key={lesson.id}
               to={`/lesson/${lesson.id}`}

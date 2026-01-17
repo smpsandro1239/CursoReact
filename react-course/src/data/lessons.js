@@ -6,6 +6,7 @@ export const lessons = [
     readingTime: "5 min",
     title: "Aula 1: O Início da Jornada React",
     description: "Configurando o ambiente e criando seu primeiro componente.",
+    proTip: "Use sempre o Node.js em versão LTS para garantir estabilidade no seu ambiente de desenvolvimento.",
     content: `Bem-vindo ao curso Premium de React! Nesta primeira aula, vamos entender por que o React é a escolha número 1 de grandes empresas como Netflix, Airbnb e Facebook.
 
 O React não é apenas uma biblioteca; é uma forma de pensar em interfaces como uma composição de peças pequenas e independentes chamadas **Componentes**.
@@ -41,6 +42,7 @@ Prepare-se para dominar o mercado de desenvolvimento web!`,
     readingTime: "7 min",
     title: "Aula 2: JSX - O Super Poder do JavaScript",
     description: "Como misturar HTML e JS de forma elegante.",
+    proTip: "Pense no JSX como um template literal do JavaScript, mas muito mais poderoso e seguro contra ataques XSS.",
     content: `JSX parece HTML, mas tem todo o poder do JavaScript por trás. Ele permite que você escreva a estrutura da sua UI de forma declarativa.
 
 ### Pontos Importantes:
@@ -71,6 +73,7 @@ O JSX torna o código mais legível e fácil de manter.`,
     readingTime: "6 min",
     title: "Aula 3: Props - Componentes Dinâmicos",
     description: "Passando dados de um componente para outro.",
+    proTip: "Tente desestruturar suas props logo na assinatura da função para um código mais limpo: function MyComp({ title }) { ... }",
     content: `Imagine os componentes como funções JavaScript. As **Props** são os argumentos dessas funções.
 
 Elas permitem que o mesmo componente exiba informações diferentes.
@@ -102,6 +105,7 @@ Lembre-se: Props são **somente leitura** (read-only).`,
     readingTime: "8 min",
     title: "Aula 4: State - A Memória do Componente",
     description: "Gerenciando mudanças e interatividade.",
+    proTip: "Nunca modifique o estado diretamente. Use sempre a função de atualização (setState) para garantir que o React perceba a mudança.",
     content: `O Estado (State) é o que torna uma aplicação React viva. Quando o estado muda, o React atualiza a tela automaticamente.
 
 Usamos o hook \`useState\` para isso.
@@ -136,6 +140,7 @@ function Contador() {
     readingTime: "5 min",
     title: "Aula 5: Manipulação de Eventos",
     description: "Capturando cliques, digitação e muito mais.",
+    proTip: "Lembre-se de passar a referência da função no evento: onClick={handleClick} e não onClick={handleClick()}.",
     content: `No React, lidamos com eventos de forma muito similar ao DOM, mas com sintaxe camelCase.
 
 ### Eventos comuns:
@@ -169,6 +174,7 @@ function Alerta() {
     readingTime: "6 min",
     title: "Aula 6: Renderização Condicional",
     description: "Mostrando elementos apenas quando necessário.",
+    proTip: "Se você tem muitas condições, considere extrair a lógica para uma função ou componente separado para manter o JSX limpo.",
     content: `Às vezes, queremos mostrar algo apenas se uma condição for verdadeira (como um botão de login/logout).
 
 ### Técnicas:
@@ -195,6 +201,7 @@ function Alerta() {
     readingTime: "7 min",
     title: "Aula 7: Listas e Chaves (Keys)",
     description: "Trabalhando com múltiplos itens.",
+    proTip: "Evite usar o index como key se a lista puder ser reordenada ou filtrada. Use IDs únicos sempre que possível.",
     content: `Para renderizar múltiplos itens, usamos o método \`.map()\` do JavaScript.
 
 **Importante:** Cada item da lista deve ter uma prop \`key\` única para que o React possa otimizar as atualizações.
@@ -225,6 +232,7 @@ const frutas = ['Maçã', 'Banana', 'Laranja'];
     readingTime: "10 min",
     title: "Aula 8: Estilização com Tailwind CSS",
     description: "Design moderno e ultra rápido.",
+    proTip: "Use a extensão 'Tailwind CSS IntelliSense' no VS Code para ter autocompletar e sugestões de cores em tempo real.",
     content: `Neste curso, usamos o Tailwind CSS. Ele permite estilizar componentes usando apenas classes utilitárias diretamente no JSX.
 
 \`\`\`jsx
@@ -251,6 +259,7 @@ Isso elimina a necessidade de escrever arquivos CSS separados para cada componen
     readingTime: "12 min",
     title: "Aula 9: O Hook useEffect",
     description: "Lidando com efeitos colaterais.",
+    proTip: "Sempre retorne uma função de limpeza (cleanup) se você estiver usando assinaturas (subscriptions) ou timers.",
     content: `O \`useEffect\` é usado para ações que acontecem fora do fluxo normal do React, como buscar dados de uma API ou configurar um timer.
 
 \`\`\`jsx
@@ -277,6 +286,7 @@ useEffect(() => {
     readingTime: "8 min",
     title: "Aula 10: Formulários Controlados",
     description: "Sincronizando inputs com o estado.",
+    proTip: "Para formulários gigantes, componentes controlados podem causar lentidão. Nesses casos, bibliotecas como React Hook Form são a salvação.",
     content: `Em um formulário controlado, o React é quem manda no valor do input.
 
 \`\`\`jsx
@@ -306,6 +316,7 @@ Isso facilita a validação e o envio dos dados.`,
     readingTime: "7 min",
     title: "Aula 11: useRef - Acesso Direto ao DOM",
     description: "Quando você precisa 'tocar' nos elementos.",
+    proTip: "useRef também é ótimo para armazenar qualquer valor mutável que você não queira que dispare uma nova renderização ao mudar.",
     content: `O \`useRef\` cria uma referência persistente. É muito usado para focar um input automaticamente ou integrar bibliotecas externas que manipulam o DOM.
 
 \`\`\`jsx
@@ -332,6 +343,7 @@ const focar = () => inputRef.current.focus();
     readingTime: "15 min",
     title: "Aula 12: Context API - Estado Global",
     description: "Evitando o 'Prop Drilling'.",
+    proTip: "Não coloque tudo no Contexto. Use-o apenas para dados que realmente precisam ser globais, como tema ou autenticação.",
     content: `Quando precisamos passar dados para componentes muito distantes na árvore, usamos o Contexto.
 
 Ideal para temas (claro/escuro), informações de usuário logado e preferências de idioma.`,
@@ -352,6 +364,7 @@ Ideal para temas (claro/escuro), informações de usuário logado e preferência
     readingTime: "10 min",
     title: "Aula 13: Composição de Componentes",
     description: "Padrões avançados de arquitetura.",
+    proTip: "A prop 'children' é sua melhor amiga para criar layouts flexíveis e componentes altamente reutilizáveis.",
     content: `Em vez de criar componentes gigantes, aprendemos a compor a UI usando a prop \`children\`.
 
 \`\`\`jsx
@@ -381,6 +394,7 @@ function Layout({ children }) {
     readingTime: "12 min",
     title: "Aula 14: React Router - Rotas e Navegação",
     description: "Criando uma aplicação de várias páginas (SPA).",
+    proTip: "Use o componente <NavLink> em vez de <Link> para estilizar automaticamente o link da página que está ativa no momento.",
     content: `Aprendemos a usar o \`react-router-dom\` para navegar entre diferentes telas sem recarregar a página.
 
 Usamos os componentes \`<BrowserRouter>\`, \`<Routes>\` e \`<Route>\`.`,
@@ -401,6 +415,7 @@ Usamos os componentes \`<BrowserRouter>\`, \`<Routes>\` e \`<Route>\`.`,
     readingTime: "15 min",
     title: "Aula 15: Consumindo APIs com Fetch",
     description: "Buscando dados do mundo real.",
+    proTip: "Sempre verifique se a resposta é 'ok' antes de tentar converter para JSON: if (!res.ok) throw new Error().",
     content: `Aprendemos a usar o comando \`fetch\` dentro de um \`useEffect\` para carregar dados de uma API externa (como a JSONPlaceholder).
 
 Lidamos com estados de \`loading\`, \`error\` e \`data\`.`,
@@ -421,6 +436,7 @@ Lidamos com estados de \`loading\`, \`error\` e \`data\`.`,
     readingTime: "12 min",
     title: "Aula 16: Custom Hooks - Reutilização Máxima",
     description: "Extraindo sua própria lógica.",
+    proTip: "Custom Hooks são ótimos para testar lógica de negócio de forma isolada dos seus componentes visuais.",
     content: `Se você usa a mesma lógica em vários lugares, crie seu próprio Hook!
 
 Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
@@ -441,6 +457,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "10 min",
     title: "Aula 17: Performance com useMemo",
     description: "Evitando cálculos desnecessários.",
+    proTip: "Só use useMemo se o cálculo for realmente custoso. Otimização prematura pode tornar seu código mais complexo sem ganho real.",
     content: `O \`useMemo\` guarda o resultado de um cálculo pesado para que ele não seja refeito em toda renderização, a menos que suas dependências mudem.`,
     practice: "Crie uma função que simula um cálculo demorado e use o useMemo para otimizá-la.",
     resources: [
@@ -459,6 +476,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "10 min",
     title: "Aula 18: Otimização com useCallback",
     description: "Memorizando funções.",
+    proTip: "useCallback é essencial quando você passa funções para componentes filhos que usam React.memo para evitar renderizações extras.",
     content: `Similar ao useMemo, mas para funções. Evita que funções sejam recriadas desnecessariamente, o que é útil ao passar funções para componentes filhos otimizados com \`React.memo\`.`,
     practice: "Explique com suas palavras a diferença entre useMemo e useCallback.",
     resources: [
@@ -477,6 +495,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "8 min",
     title: "Aula 19: React.memo",
     description: "Impedindo renderizações inúteis.",
+    proTip: "O React.memo faz uma comparação rasa (shallow) das props. Cuidado ao passar objetos ou arrays criados dentro do componente pai.",
     content: `O \`React.memo\` é um Higher Order Component que impede que um componente seja renderizado novamente se suas props não mudarem.`,
     practice: "Aplique o React.memo em um componente simples de exibição de texto.",
     resources: [
@@ -495,6 +514,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "6 min",
     title: "Aula 20: Trabalhando com Imagens e Ativos",
     description: "Melhores práticas para arquivos estáticos.",
+    proTip: "Use formatos modernos como WebP e tamanhos responsivos para garantir que seu app carregue instantaneamente mesmo em conexões lentas.",
     content: `Como importar imagens, usar a pasta \`public\` e otimizar assets para que sua aplicação carregue rápido.`,
     practice: "Adicione uma imagem de sua preferência ao projeto e exiba-a usando um componente React.",
     resources: [
@@ -513,6 +533,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "8 min",
     title: "Aula 21: Portals - Renderizando fora do Root",
     description: "O segredo dos modais e tooltips.",
+    proTip: "Portals mantêm o contexto do React, o que significa que eventos disparados dentro do portal ainda borbulham para os pais no React.",
     content: `Portals permitem que você renderize um componente em qualquer lugar do DOM, mantendo-o logicamente dentro da sua árvore de componentes React.`,
     practice: "Crie um Modal simples que apareça centralizado na tela usando ReactDOM.createPortal.",
     resources: [
@@ -531,6 +552,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "10 min",
     title: "Aula 22: Error Boundaries - Tratando Falhas",
     description: "Não deixe seu app quebrar por inteiro.",
+    proTip: "Use Error Boundaries em pontos estratégicos (como um widget de terceiros) para que uma falha isolada não derrube sua página inteira.",
     content: `Error Boundaries capturam erros em qualquer lugar na árvore de componentes abaixo deles e exibem uma interface de fallback amigável.`,
     practice: "Crie um componente que 'quebra' de propósito e envolva-o em um Error Boundary.",
     resources: [
@@ -549,6 +571,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "15 min",
     title: "Aula 23: Bibliotecas de UI (Shadcn/UI)",
     description: "Componentes prontos e bonitos.",
+    proTip: "O shadcn/ui não é uma biblioteca de componentes tradicional, mas sim uma coleção de componentes que você copia e cola para ter controle total.",
     content: `Introdução ao Shadcn/UI, uma das coleções de componentes mais populares atualmente, baseada em Tailwind e Radix UI.`,
     practice: "Visite o site do shadcn/ui e veja como ele funciona.",
     resources: [
@@ -567,6 +590,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "12 min",
     title: "Aula 24: Testes Unitários com Vitest",
     description: "Garantindo que seu código funciona.",
+    proTip: "Comece testando funções utilitárias puras. Elas são mais fáceis de testar e garantem que a lógica base do seu app está sólida.",
     content: `Introdução aos testes no ambiente Vite usando o Vitest. Aprendemos a testar lógica pura de JavaScript antes de testar componentes.`,
     practice: "Escreva um teste simples para uma função que soma dois números.",
     resources: [
@@ -585,6 +609,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "15 min",
     title: "Aula 25: React Testing Library",
     description: "Testando a interação do usuário.",
+    proTip: "Sempre use 'findBy' quando estiver esperando por algo que aparece de forma assíncrona (como após um fetch).",
     content: `Aprendemos a testar se um botão realmente dispara um evento ou se um texto está visível na tela, focando na experiência do usuário.`,
     practice: "Escreva um teste que verifica se um botão com o texto 'Enviar' existe no seu componente.",
     resources: [
@@ -603,6 +628,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "15 min",
     title: "Aula 26: TypeScript Essentials para React",
     description: "Segurança e produtividade.",
+    proTip: "Aprenda a usar 'Utility Types' do TypeScript como Partial, Omit e Pick para manipular suas interfaces de props com facilidade.",
     content: `Tipando props, estados e eventos. O TypeScript ajuda a evitar erros comuns de 'undefined' e torna o desenvolvimento muito mais profissional.`,
     practice: "Converta um componente funcional simples para TypeScript, definindo uma interface para suas Props.",
     resources: [
@@ -621,6 +647,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "12 min",
     title: "Aula 27: Gerenciamento de Formulários com React Hook Form",
     description: "Formulários complexos sem dor de cabeça.",
+    proTip: "Combine o React Hook Form com o Zod para ter uma validação de esquema poderosa e totalmente tipada com TypeScript.",
     content: `A biblioteca definitiva para lidar com validações, erros e submissões de formulários de forma performática.`,
     practice: "Tente criar um formulário de cadastro com validação de 'campo obrigatório' usando React Hook Form.",
     resources: [
@@ -639,6 +666,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "10 min",
     title: "Aula 28: Deploy para Produção",
     description: "Seu site online para todo o mundo.",
+    proTip: "Configure o deploy automático (CI/CD) via GitHub para que cada 'push' na branch main atualize seu site instantaneamente.",
     content: `Aprendemos a gerar o build de produção e hospedar gratuitamente na Vercel ou Netlify com integração contínua (GitHub).`,
     practice: "Crie uma conta na Vercel e conecte um repositório seu para fazer o deploy.",
     resources: [
@@ -657,6 +685,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "10 min",
     title: "Aula 29: Próximos Passos (Next.js e Carreira)",
     description: "O que estudar depois do React?",
+    proTip: "O ecossistema React muda rápido. Focar em fundamentos de Web (HTML, CSS, JS) tornará você um profissional muito mais resiliente.",
     content: `Uma visão geral do ecossistema: Next.js para SSR, Remix, React Native e como se preparar para entrevistas técnicas.`,
     practice: "Pesquise qual a principal diferença entre o React puro e o Next.js.",
     resources: [
@@ -675,6 +704,7 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     readingTime: "20 min",
     title: "Aula 30: Conclusão e Projeto Final",
     description: "Você agora é um Desenvolvedor React!",
+    proTip: "O aprendizado nunca para. Participe de comunidades, faça networking e ajude outros desenvolvedores para acelerar sua carreira!",
     content: `Parabéns por completar as 30 aulas! Agora é hora de construir seu projeto de portfólio consolidando tudo o que aprendeu.
 
 O céu é o limite para o que você pode criar agora. Continue praticando e construindo!`,

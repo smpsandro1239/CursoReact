@@ -5,6 +5,7 @@ import confetti from 'canvas-confetti';
 import {
   ChevronLeft,
   ChevronRight,
+  ChevronRight as ChevronSmall,
   Home,
   List,
   CheckCircle,
@@ -21,7 +22,8 @@ import {
   Check,
   AlertCircle,
   RotateCcw,
-  Share2
+  Share2,
+  Zap
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -219,6 +221,17 @@ const LessonPage = () => {
       <div className="flex-grow flex flex-col min-w-0 h-screen overflow-y-auto bg-white dark:bg-slate-950 md:bg-[#f8fafc] dark:md:bg-slate-950">
         <main className="flex-grow p-4 md:p-12 lg:p-16">
           <div className="max-w-4xl mx-auto">
+            {/* Breadcrumbs */}
+            <nav className="flex items-center gap-2 mb-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-600 overflow-x-auto whitespace-nowrap scrollbar-hide">
+              <Link to="/" className="hover:text-blue-600 transition-colors flex items-center gap-1">
+                <Home size={12} /> Início
+              </Link>
+              <ChevronSmall size={12} />
+              <span className="bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded text-slate-500 dark:text-slate-400">{lesson.category}</span>
+              <ChevronSmall size={12} />
+              <span className="text-blue-600 dark:text-blue-400 truncate">{lesson.title}</span>
+            </nav>
+
             {/* Lesson Header */}
             <div className="mb-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
               <div className="space-y-2">
@@ -271,6 +284,16 @@ const LessonPage = () => {
                   text-slate-700 dark:text-slate-300 leading-relaxed">
                   <ReactMarkdown>{lesson.content}</ReactMarkdown>
                 </div>
+
+                {lesson.proTip && (
+                  <div className="mt-12 p-6 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-600 rounded-r-2xl flex gap-4">
+                    <Zap className="text-blue-600 shrink-0" size={24} />
+                    <div>
+                      <h4 className="text-blue-600 font-black text-sm uppercase tracking-widest mb-1">Dica Pro</h4>
+                      <p className="text-slate-600 dark:text-slate-300 text-sm font-medium italic">"{lesson.proTip}"</p>
+                    </div>
+                  </div>
+                )}
 
                 {lesson.resources && (
                   <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
