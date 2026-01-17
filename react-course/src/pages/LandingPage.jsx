@@ -36,6 +36,15 @@ const LandingPage = () => {
   const totalMinutes = lessons.reduce((acc, l) => acc + parseInt(l.readingTime), 0);
   const totalHours = (totalMinutes / 60).toFixed(1);
 
+  const [practiceCount, setPracticeCount] = useState(0);
+
+  useEffect(() => {
+    const savedPractice = localStorage.getItem('practiceDone');
+    if (savedPractice) {
+      setPracticeCount(JSON.parse(savedPractice).length);
+    }
+  }, []);
+
   const completedLessonsIds = JSON.parse(localStorage.getItem('completedLessons') || '[]');
   const remainingMinutes = lessons.reduce((acc, l) => {
     if (!completedLessonsIds.includes(l.id)) {
@@ -54,6 +63,25 @@ const LandingPage = () => {
     }
     return acc;
   }, []);
+
+  const exportAllNotes = () => {
+    const savedNotes = JSON.parse(localStorage.getItem('lessonNotes') || '{}');
+    let content = "# Minhas Notas do Curso Premium React\n\n";
+
+    lessons.forEach(l => {
+      if (savedNotes[l.id]) {
+        content += `## ${l.title}\n${savedNotes[l.id]}\n\n---\n\n`;
+      }
+    });
+
+    const blob = new Blob([content], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'notas-react-premium.md';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem('completedLessons');
@@ -127,6 +155,17 @@ const LandingPage = () => {
                 <div className="text-xl font-black dark:text-white leading-none">Zero ao Pro</div>
               </div>
             </div>
+            {practiceCount > 0 && (
+              <div className="flex items-center gap-2">
+                <div className="w-12 h-12 bg-pink-50 dark:bg-pink-900/20 rounded-2xl flex items-center justify-center text-pink-600">
+                  <Trophy size={24} />
+                </div>
+                <div className="text-left">
+                  <div className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none mb-1">Desafios</div>
+                  <div className="text-xl font-black dark:text-white leading-none">{practiceCount}/30</div>
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -179,14 +218,22 @@ const LandingPage = () => {
               >
                 Continuar Estudando <PlayCircle size={20} />
               </Link>
-              {completedCount === lessons.length && (
-                <Link
-                  to="/certificate"
-                  className="shrink-0 bg-emerald-600 text-white px-8 py-4 rounded-2xl font-black hover:scale-105 transition-transform flex items-center gap-2 justify-center"
+              <div className="flex flex-wrap gap-3">
+                {completedCount === lessons.length && (
+                  <Link
+                    to="/certificate"
+                    className="shrink-0 bg-emerald-600 text-white px-8 py-4 rounded-2xl font-black hover:scale-105 transition-transform flex items-center gap-2 justify-center"
+                  >
+                    Ver Certificado <Award size={20} />
+                  </Link>
+                )}
+                <button
+                  onClick={exportAllNotes}
+                  className="shrink-0 bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-300 px-6 py-4 rounded-2xl font-black hover:bg-slate-50 transition-colors flex items-center gap-2 justify-center"
                 >
-                  Ver Certificado <Award size={20} />
-                </Link>
-              )}
+                  Exportar Notas <Download size={20} />
+                </button>
+              </div>
             </div>
           </div>
         </section>

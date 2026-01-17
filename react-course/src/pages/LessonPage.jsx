@@ -26,7 +26,8 @@ import {
   Zap,
   StickyNote,
   Save,
-  Trophy
+  Trophy,
+  Download
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -89,7 +90,29 @@ const LessonPage = () => {
     if (completedLessons.includes(id)) {
       setCompletedLessons(completedLessons.filter(lId => lId !== id));
     } else {
-      setCompletedLessons([...completedLessons, id]);
+      const newCompleted = [...completedLessons, id];
+      setCompletedLessons(newCompleted);
+
+      // Massive celebration on 100% completion
+      if (newCompleted.length === lessons.length) {
+        const duration = 5 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+        const interval = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          const particleCount = 50 * (timeLeft / duration);
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+          confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+        }, 250);
+      }
     }
   };
 
@@ -99,6 +122,25 @@ const LessonPage = () => {
     localStorage.setItem('lessonNotes', JSON.stringify(savedNotes));
     setIsNoteSaved(true);
     setTimeout(() => setIsNoteSaved(false), 2000);
+  };
+
+  const exportAllNotes = () => {
+    const savedNotes = JSON.parse(localStorage.getItem('lessonNotes') || '{}');
+    let content = "# Minhas Notas do Curso Premium React\n\n";
+
+    lessons.forEach(l => {
+      if (savedNotes[l.id]) {
+        content += `## ${l.title}\n${savedNotes[l.id]}\n\n---\n\n`;
+      }
+    });
+
+    const blob = new Blob([content], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'notas-react-premium.md';
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const togglePractice = () => {
@@ -487,9 +529,18 @@ const LessonPage = () => {
             {/* Sidebar Notes (Only visible on large screens) */}
             <div className="space-y-6">
               <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none sticky top-24">
-                <div className="flex items-center gap-2 mb-4 text-blue-600">
-                  <StickyNote size={20} />
-                  <h3 className="font-black uppercase tracking-widest text-xs">Minhas Anotações</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2 text-blue-600">
+                    <StickyNote size={20} />
+                    <h3 className="font-black uppercase tracking-widest text-xs">Minhas Anotações</h3>
+                  </div>
+                  <button
+                    onClick={exportAllNotes}
+                    className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors"
+                    title="Exportar todas as notas"
+                  >
+                    <Download size={16} />
+                  </button>
                 </div>
                 <textarea
                   value={note}
@@ -536,7 +587,7 @@ const LessonPage = () => {
           </div>
 
             {/* Bottom Navigation */}
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-10 border-t border-slate-200 dark:border-slate-800">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-10 border-t border-slate-200 dark:border-slate-800 pb-24 md:pb-10">
               {prevLesson ? (
                 <Link
                   to={`/lesson/${prevLesson}`}
@@ -575,6 +626,25 @@ const LessonPage = () => {
             </div>
           </div>
         </main>
+      </div>
+
+      {/* Mobile Sticky Nav */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-6 py-4 z-[50] flex items-center justify-between">
+        {prevLesson ? (
+          <Link to={`/lesson/${prevLesson}`} className="p-3 text-slate-600 dark:text-slate-400">
+            <ChevronLeft size={24} />
+          </Link>
+        ) : <div className="w-12"></div>}
+
+        <Link to="/" className="p-3 text-blue-600">
+          <Home size={24} />
+        </Link>
+
+        {nextLesson ? (
+          <Link to={`/lesson/${nextLesson}`} className="p-3 text-slate-600 dark:text-slate-400">
+            <ChevronRight size={24} />
+          </Link>
+        ) : <div className="w-12"></div>}
       </div>
 
       {/* Overlay for mobile sidebar */}
