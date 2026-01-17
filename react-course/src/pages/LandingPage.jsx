@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, PlayCircle, ArrowRight, Zap, Target, Award, Star, Sun, Moon } from 'lucide-react';
+import {
+  BookOpen,
+  PlayCircle,
+  ArrowRight,
+  Zap,
+  Target,
+  Award,
+  Star,
+  Sun,
+  Moon,
+  ChevronDown,
+  CheckCircle2,
+  Code2,
+  Cpu,
+  Globe,
+  Layout,
+  Layers,
+  ShieldCheck
+} from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
 
 const LandingPage = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
+  const [completedCount, setCompletedCount] = useState(0);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('completedLessons');
+    if (saved) {
+      setCompletedCount(JSON.parse(saved).length);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
@@ -64,6 +90,32 @@ const LandingPage = () => {
         </div>
       </header>
 
+      {/* Progress Summary (Conditional) */}
+      {completedCount > 0 && (
+        <section className="max-w-7xl mx-auto px-6 -mt-10 mb-10 relative z-20">
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl shadow-blue-200/20 dark:shadow-none border border-blue-100 dark:border-blue-900/30 flex flex-col md:flex-row items-center gap-8">
+            <div className="flex-grow w-full">
+              <div className="flex justify-between items-end mb-3">
+                <span className="text-xs font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">Seu Progresso Atual</span>
+                <span className="text-2xl font-black text-slate-900 dark:text-white">{Math.round((completedCount / lessons.length) * 100)}%</span>
+              </div>
+              <div className="w-full h-4 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-blue-600 transition-all duration-1000 ease-out"
+                  style={{ width: `${(completedCount / lessons.length) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+            <Link
+              to={`/lesson/${completedCount + 1 > 30 ? 30 : completedCount + 1}`}
+              className="shrink-0 bg-slate-900 dark:bg-blue-600 text-white px-8 py-4 rounded-2xl font-black hover:scale-105 transition-transform flex items-center gap-2"
+            >
+              Continuar Estudando <PlayCircle size={20} />
+            </Link>
+          </div>
+        </section>
+      )}
+
       {/* Stats */}
       <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
         <div className="max-w-7xl mx-auto px-6">
@@ -79,6 +131,56 @@ const LandingPage = () => {
                 <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{item.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
+            <div className="lg:w-1/2 space-y-8">
+              <h2 className="text-5xl font-black tracking-tight leading-tight dark:text-white">
+                O que você vai <span className="text-blue-600">dominar</span> neste curso?
+              </h2>
+              <p className="text-lg text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                Nossa grade foi desenhada para levar você do absoluto zero até a criação de aplicações profissionais prontas para o mundo real.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {[
+                  { icon: <Layout className="text-blue-500" />, text: "JSX e Componentização" },
+                  { icon: <Cpu className="text-emerald-500" />, text: "Hooks de Estado e Efeito" },
+                  { icon: <Layers className="text-amber-500" />, text: "Context API e Redux" },
+                  { icon: <Globe className="text-indigo-500" />, text: "Consumo de APIs Reais" },
+                  { icon: <ShieldCheck className="text-rose-500" />, text: "Segurança e Performance" },
+                  { icon: <Code2 className="text-cyan-500" />, text: "TypeScript no React" },
+                ].map((f, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="p-2 bg-slate-50 dark:bg-slate-900 rounded-lg">{f.icon}</div>
+                    <span className="font-bold dark:text-slate-300">{f.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="lg:w-1/2 bg-blue-600 rounded-[3rem] p-12 text-white relative overflow-hidden shadow-2xl shadow-blue-500/20">
+              <div className="absolute top-0 right-0 p-8 opacity-20">
+                <Cpu size={120} />
+              </div>
+              <h3 className="text-3xl font-black mb-6">Metodologia 100% Prática</h3>
+              <ul className="space-y-4">
+                {[
+                  "Mais de 20 mini-projetos ao longo das aulas",
+                  "Desafios de código em todos os módulos",
+                  "Projeto final de nível profissional",
+                  "Acesso a recursos e links exclusivos"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 size={24} className="text-emerald-400 shrink-0" />
+                    <span className="font-bold text-lg">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -114,6 +216,29 @@ const LandingPage = () => {
           ))}
         </div>
       </main>
+
+      {/* FAQ Section */}
+      <section className="py-32 bg-slate-50 dark:bg-slate-900/50 px-6">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl font-black text-center mb-16 dark:text-white">Perguntas Frequentes</h2>
+          <div className="space-y-6">
+            {[
+              { q: "Preciso saber JavaScript antes?", a: "Sim, recomendamos ter uma base sólida em JavaScript moderno (ES6+), pois o React é construído sobre ele." },
+              { q: "O curso oferece certificado?", a: "Com certeza! Após completar as 30 aulas e passar nos mini-quizzes, você poderá baixar seu certificado VIP." },
+              { q: "Quanto tempo dura o curso?", a: "O curso é self-paced. Se você fizer uma aula por dia, em um mês estará dominando o React!" },
+              { q: "As aulas são atualizadas?", a: "Sim, o conteúdo utiliza as versões mais recentes do React (hooks) e ferramentas modernas como Vite e Tailwind." }
+            ].map((faq, i) => (
+              <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800">
+                <h4 className="text-lg font-black mb-3 dark:text-white flex items-center justify-between">
+                  {faq.q}
+                  <ChevronDown size={18} className="text-slate-400" />
+                </h4>
+                <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <footer className="bg-slate-900 dark:bg-black py-20 text-center text-slate-400">
         <div className="max-w-7xl mx-auto px-6">

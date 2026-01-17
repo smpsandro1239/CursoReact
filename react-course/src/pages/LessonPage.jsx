@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import {
   ChevronLeft,
   ChevronRight,
@@ -14,7 +15,10 @@ import {
   Sun,
   Moon,
   ExternalLink,
-  Award
+  Award,
+  HelpCircle,
+  Check,
+  AlertCircle
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -33,9 +37,13 @@ const LessonPage = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [quizAnswer, setQuizAnswer] = useState(null);
+  const [showQuizResult, setShowQuizResult] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setQuizAnswer(null);
+    setShowQuizResult(false);
   }, [lessonId]);
 
   useEffect(() => {
@@ -207,9 +215,13 @@ const LessonPage = () => {
               <div className="p-8 md:p-12">
                 <div className="prose prose-slate dark:prose-invert prose-lg max-w-none
                   prose-headings:font-black prose-headings:tracking-tight
-                  prose-a:text-blue-600 prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-code:bg-pink-50 dark:prose-code:bg-pink-900/20 prose-code:px-1 prose-code:rounded
+                  prose-a:text-blue-600
+                  prose-code:text-pink-600 dark:prose-code:text-pink-400
+                  prose-code:bg-pink-50 dark:prose-code:bg-pink-900/20
+                  prose-code:px-1 prose-code:rounded
+                  prose-pre:bg-slate-900 dark:prose-pre:bg-black
                   text-slate-700 dark:text-slate-300 leading-relaxed">
-                  <p className="whitespace-pre-wrap">{lesson.content}</p>
+                  <ReactMarkdown>{lesson.content}</ReactMarkdown>
                 </div>
 
                 {lesson.resources && (
@@ -245,6 +257,78 @@ const LessonPage = () => {
                   {lesson.practice}
                 </div>
               </div>
+
+              {/* Quiz Section */}
+              {lesson.quiz && (
+                <div className="p-8 md:p-12 border-t border-slate-100 dark:border-slate-800 bg-blue-50/30 dark:bg-blue-900/10">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg">
+                      <HelpCircle size={24} />
+                    </div>
+                    <h2 className="text-xl font-black tracking-tight dark:text-white text-slate-900">Quiz Rápido</h2>
+                  </div>
+
+                  <div className="space-y-6">
+                    <p className="text-lg font-bold text-slate-800 dark:text-slate-200">{lesson.quiz.question}</p>
+
+                    <div className="grid gap-3">
+                      {lesson.quiz.options.map((option, index) => (
+                        <button
+                          key={index}
+                          onClick={() => !showQuizResult && setQuizAnswer(index)}
+                          className={`
+                            w-full p-4 rounded-xl border-2 text-left transition-all font-medium
+                            ${showQuizResult
+                              ? index === lesson.quiz.correctAnswer
+                                ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-700 dark:text-emerald-400'
+                                : index === quizAnswer
+                                  ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-400'
+                                  : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 opacity-50'
+                              : quizAnswer === index
+                                ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-400'
+                                : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800 text-slate-600 dark:text-slate-400'
+                            }
+                          `}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>{option}</span>
+                            {showQuizResult && index === lesson.quiz.correctAnswer && <Check size={18} />}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+
+                    {!showQuizResult ? (
+                      <button
+                        disabled={quizAnswer === null}
+                        onClick={() => setShowQuizResult(true)}
+                        className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-all"
+                      >
+                        Verificar Resposta
+                      </button>
+                    ) : (
+                      <div className={`
+                        p-4 rounded-xl flex items-start gap-3
+                        ${quizAnswer === lesson.quiz.correctAnswer
+                          ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+                          : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'}
+                      `}>
+                        {quizAnswer === lesson.quiz.correctAnswer ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
+                        <div>
+                          <p className="font-bold">
+                            {quizAnswer === lesson.quiz.correctAnswer ? 'Excelente! Você acertou.' : 'Não foi dessa vez.'}
+                          </p>
+                          <p className="text-sm opacity-90">
+                            {quizAnswer === lesson.quiz.correctAnswer
+                              ? 'Continue assim e domine o React!'
+                              : `A resposta correta é: ${lesson.quiz.options[lesson.quiz.correctAnswer]}`}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Bottom Navigation */}
