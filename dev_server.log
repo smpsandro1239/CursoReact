@@ -92,3 +92,9 @@
       at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (/app/react-course/node_modules/@babel/parser/lib/index.js:12483:17)
       at JSXParserMixin.parseParenAndDistinguishExpression (/app/react-course/node_modules/@babel/parser/lib/index.js:11665:28)
 12:16:31 AM [vite] (client) hmr update /src/index.css
+12:22:53 AM [vite] (client) hmr update /src/index.css, /src/pages/LandingPage.jsx, /src/pages/LessonPage.jsx
+12:23:08 AM [vite] (client) hmr update /src/App.jsx, /src/index.css
+12:23:31 AM [vite] (client) hmr update /src/pages/LessonPage.jsx, /src/index.css
+12:23:45 AM [vite] (client) hmr update /src/pages/LandingPage.jsx, /src/index.css
+12:24:13 AM [vite] (client) hmr update /src/index.css
+12:26:46 AM [vite] (client) hmr update /src/index.css

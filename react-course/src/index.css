@@ -2,10 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply antialiased text-gray-900;
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 antialiased transition-colors duration-300;
+  }
 }
 
 .prose {
-  font-size: 1.125rem;
+  @apply max-w-none;
+}
+
+.prose pre {
+  @apply bg-slate-900 !important;
+}
+
+.prose code {
+  @apply text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-1 py-0.5 rounded font-medium;
+}
+
+.prose a {
+  @apply text-blue-600 hover:text-blue-700 font-semibold;
 }

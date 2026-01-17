@@ -20,7 +20,11 @@ function Welcome() {
 \`\`\`
 
 Prepare-se para dominar o mercado de desenvolvimento web!`,
-    practice: "Instale o Node.js em sua máquina e execute o comando 'npm create vite@latest' no terminal para criar seu primeiro projeto."
+    practice: "Instale o Node.js em sua máquina e execute o comando 'npm create vite@latest' no terminal para criar seu primeiro projeto.",
+    resources: [
+      { name: "Documentação Oficial - Instalação", url: "https://react.dev/learn/installation" },
+      { name: "Vite Guide", url: "https://vitejs.dev/guide/" }
+    ]
   },
   {
     id: 2,
@@ -39,7 +43,10 @@ const elemento = <div className="greeting">Olá, {nome}!</div>;
 \`\`\`
 
 O JSX torna o código mais legível e fácil de manter.`,
-    practice: "Crie uma constante com seu nome e exiba-a dentro de um parágrafo usando JSX."
+    practice: "Crie uma constante com seu nome e exiba-a dentro de um parágrafo usando JSX.",
+    resources: [
+      { name: "Writing Markup with JSX", url: "https://react.dev/learn/writing-markup-with-jsx" }
+    ]
   },
   {
     id: 3,
@@ -59,7 +66,10 @@ function Avatar(props) {
 \`\`\`
 
 Lembre-se: Props são **somente leitura** (read-only).`,
-    practice: "Crie um componente 'Card' que recebe as props 'titulo' e 'preco' e os exiba na tela."
+    practice: "Crie um componente 'Card' que recebe as props 'titulo' e 'preco' e os exiba na tela.",
+    resources: [
+      { name: "Passing Props to a Component", url: "https://react.dev/learn/passing-props-to-a-component" }
+    ]
   },
   {
     id: 4,
@@ -82,7 +92,10 @@ function Contador() {
   );
 }
 \`\`\``,
-    practice: "Crie um contador que tenha dois botões: um para incrementar e outro para decrementar o valor."
+    practice: "Crie um contador que tenha dois botões: um para incrementar e outro para decrementar o valor.",
+    resources: [
+      { name: "State: A Component's Memory", url: "https://react.dev/learn/state-a-components-memory" }
+    ]
   },
   {
     id: 5,
@@ -104,7 +117,10 @@ function Alerta() {
   return <button onClick={handleClick}>Clique aqui</button>;
 }
 \`\`\``,
-    practice: "Crie um input que exiba um alerta com o texto digitado quando o usuário pressionar um botão."
+    practice: "Crie um input que exiba um alerta com o texto digitado quando o usuário pressionar um botão.",
+    resources: [
+      { name: "Responding to Events", url: "https://react.dev/learn/responding-to-events" }
+    ]
   },
   {
     id: 6,
@@ -119,7 +135,10 @@ function Alerta() {
 \`\`\`jsx
 {isLoggedIn ? <LogoutButton /> : <LoginButton />}
 \`\`\``,
-    practice: "Crie um componente que exibe a mensagem 'Acesso Permitido' se uma variável booleana for verdadeira, e 'Acesso Negado' caso contrário."
+    practice: "Crie um componente que exibe a mensagem 'Acesso Permitido' se uma variável booleana for verdadeira, e 'Acesso Negado' caso contrário.",
+    resources: [
+      { name: "Conditional Rendering", url: "https://react.dev/learn/conditional-rendering" }
+    ]
   },
   {
     id: 7,
@@ -138,7 +157,10 @@ const frutas = ['Maçã', 'Banana', 'Laranja'];
   ))}
 </ul>
 \`\`\``,
-    practice: "Crie uma lista de tarefas (strings) e renderize-as em uma lista não ordenada (ul)."
+    practice: "Crie uma lista de tarefas (strings) e renderize-as em uma lista não ordenada (ul).",
+    resources: [
+      { name: "Rendering Lists", url: "https://react.dev/learn/rendering-lists" }
+    ]
   },
   {
     id: 8,
@@ -153,7 +175,10 @@ const frutas = ['Maçã', 'Banana', 'Laranja'];
 \`\`\`
 
 Isso elimina a necessidade de escrever arquivos CSS separados para cada componente.`,
-    practice: "Estilize um botão usando as classes do Tailwind para que ele fique verde, com bordas arredondadas e mude de cor ao passar o mouse (hover)."
+    practice: "Estilize um botão usando as classes do Tailwind para que ele fique verde, com bordas arredondadas e mude de cor ao passar o mouse (hover).",
+    resources: [
+      { name: "Tailwind CSS Documentation", url: "https://tailwindcss.com/docs" }
+    ]
   },
   {
     id: 9,
@@ -168,7 +193,10 @@ useEffect(() => {
   return () => console.log("Limpando efeito...");
 }, []); // Array vazio significa: executa apenas uma vez.
 \`\`\``,
-    practice: "Use o useEffect para exibir um 'console.log' toda vez que o estado de um contador for alterado."
+    practice: "Use o useEffect para exibir um 'console.log' toda vez que o estado de um contador for alterado.",
+    resources: [
+      { name: "Synchronizing with Effects", url: "https://react.dev/learn/synchronizing-with-effects" }
+    ]
   },
   {
     id: 10,
@@ -186,7 +214,10 @@ const [nome, setNome] = useState('');
 \`\`\`
 
 Isso facilita a validação e o envio dos dados.`,
-    practice: "Crie um pequeno formulário com campos de 'Email' e 'Senha' e exiba os valores digitados abaixo do formulário em tempo real."
+    practice: "Crie um pequeno formulário with campos de 'Email' e 'Senha' e exiba os valores digitados abaixo do formulário em tempo real.",
+    resources: [
+      { name: "Sharing State Between Components", url: "https://react.dev/learn/sharing-state-between-components" }
+    ]
   },
   {
     id: 11,
@@ -201,7 +232,10 @@ const focar = () => inputRef.current.focus();
 <input ref={inputRef} />
 <button onClick={focar}>Dar Foco</button>
 \`\`\``,
-    practice: "Crie um botão que, ao ser clicado, mude a cor de fundo de um elemento <div> usando useRef."
+    practice: "Crie um botão que, ao ser clicado, mude a cor de fundo de um elemento <div> usando useRef.",
+    resources: [
+      { name: "Referencing Values with Refs", url: "https://react.dev/learn/referencing-values-with-refs" }
+    ]
   },
   {
     id: 12,
@@ -210,7 +244,10 @@ const focar = () => inputRef.current.focus();
     content: `Quando precisamos passar dados para componentes muito distantes na árvore, usamos o Contexto.
 
 Ideal para temas (claro/escuro), informações de usuário logado e preferências de idioma.`,
-    practice: "Pesquise como criar um 'ThemeContext' básico para alternar entre as cores preto e branco em sua aplicação."
+    practice: "Pesquise como criar um 'ThemeContext' básico para alternar entre as cores preto e branco em sua aplicação.",
+    resources: [
+      { name: "Passing Data Deeply with Context", url: "https://react.dev/learn/passing-data-deeply-with-context" }
+    ]
   },
   {
     id: 13,
@@ -228,7 +265,10 @@ function Layout({ children }) {
   );
 }
 \`\`\``,
-    practice: "Crie um componente 'Container' que centraliza qualquer conteúdo que for passado dentro dele."
+    practice: "Crie um componente 'Container' que centraliza qualquer conteúdo que for passado dentro dele.",
+    resources: [
+      { name: "Passing Content to a Component", url: "https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children" }
+    ]
   },
   {
     id: 14,
@@ -237,7 +277,10 @@ function Layout({ children }) {
     content: `Aprendemos a usar o \`react-router-dom\` para navegar entre diferentes telas sem recarregar a página.
 
 Usamos os componentes \`<BrowserRouter>\`, \`<Routes>\` e \`<Route>\`.`,
-    practice: "Adicione uma nova rota '/sobre' em seu projeto que exiba uma descrição sobre você."
+    practice: "Adicione uma nova rota '/sobre' em seu projeto que exiba uma descrição sobre você.",
+    resources: [
+      { name: "React Router Docs", url: "https://reactrouter.com/en/main" }
+    ]
   },
   {
     id: 15,
@@ -246,7 +289,10 @@ Usamos os componentes \`<BrowserRouter>\`, \`<Routes>\` e \`<Route>\`.`,
     content: `Aprendemos a usar o comando \`fetch\` dentro de um \`useEffect\` para carregar dados de uma API externa (como a JSONPlaceholder).
 
 Lidamos com estados de \`loading\`, \`error\` e \`data\`.`,
-    practice: "Tente buscar a lista de usuários da URL 'https://jsonplaceholder.typicode.com/users' e exiba os nomes em uma lista."
+    practice: "Tente buscar a lista de usuários da URL 'https://jsonplaceholder.typicode.com/users' e exiba os nomes em uma lista.",
+    resources: [
+      { name: "MDN - Fetch API", url: "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" }
+    ]
   },
   {
     id: 16,
@@ -255,98 +301,140 @@ Lidamos com estados de \`loading\`, \`error\` e \`data\`.`,
     content: `Se você usa a mesma lógica em vários lugares, crie seu próprio Hook!
 
 Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
-    practice: "Tente criar um hook chamado 'useToggle' que alterna um valor entre true e false."
+    practice: "Tente criar um hook chamado 'useToggle' que alterna um valor entre true e false.",
+    resources: [
+      { name: "Reusing Logic with Custom Hooks", url: "https://react.dev/learn/reusing-logic-with-custom-hooks" }
+    ]
   },
   {
     id: 17,
     title: "Aula 17: Performance com useMemo",
     description: "Evitando cálculos desnecessários.",
     content: `O \`useMemo\` guarda o resultado de um cálculo pesado para que ele não seja refeito em toda renderização, a menos que suas dependências mudem.`,
-    practice: "Crie uma função que simula um cálculo demorado e use o useMemo para otimizá-la."
+    practice: "Crie uma função que simula um cálculo demorado e use o useMemo para otimizá-la.",
+    resources: [
+      { name: "React API - useMemo", url: "https://react.dev/reference/react/useMemo" }
+    ]
   },
   {
     id: 18,
     title: "Aula 18: Otimização com useCallback",
     description: "Memorizando funções.",
     content: `Similar ao useMemo, mas para funções. Evita que funções sejam recriadas desnecessariamente, o que é útil ao passar funções para componentes filhos otimizados com \`React.memo\`.`,
-    practice: "Explique com suas palavras a diferença entre useMemo e useCallback."
+    practice: "Explique com suas palavras a diferença entre useMemo e useCallback.",
+    resources: [
+      { name: "React API - useCallback", url: "https://react.dev/reference/react/useCallback" }
+    ]
   },
   {
     id: 19,
     title: "Aula 19: React.memo",
     description: "Impedindo renderizações inúteis.",
     content: `O \`React.memo\` é um Higher Order Component que impede que um componente seja renderizado novamente se suas props não mudarem.`,
-    practice: "Aplique o React.memo em um componente simples de exibição de texto."
+    practice: "Aplique o React.memo em um componente simples de exibição de texto.",
+    resources: [
+      { name: "React API - memo", url: "https://react.dev/reference/react/memo" }
+    ]
   },
   {
     id: 20,
     title: "Aula 20: Trabalhando com Imagens e Ativos",
     description: "Melhores práticas para arquivos estáticos.",
     content: `Como importar imagens, usar a pasta \`public\` e otimizar assets para que sua aplicação carregue rápido.`,
-    practice: "Adicione uma imagem de sua preferência ao projeto e exiba-a usando um componente React."
+    practice: "Adicione uma imagem de sua preferência ao projeto e exiba-a usando um componente React.",
+    resources: [
+      { name: "Vite - Static Asset Handling", url: "https://vitejs.dev/guide/assets.html" }
+    ]
   },
   {
     id: 21,
     title: "Aula 21: Portals - Renderizando fora do Root",
     description: "O segredo dos modais e tooltips.",
     content: `Portals permitem que você renderize um componente em qualquer lugar do DOM, mantendo-o logicamente dentro da sua árvore de componentes React.`,
-    practice: "Crie um Modal simples que apareça centralizado na tela usando ReactDOM.createPortal."
+    practice: "Crie um Modal simples que apareça centralizado na tela usando ReactDOM.createPortal.",
+    resources: [
+      { name: "React API - createPortal", url: "https://react.dev/reference/react-dom/createPortal" }
+    ]
   },
   {
     id: 22,
     title: "Aula 22: Error Boundaries - Tratando Falhas",
     description: "Não deixe seu app quebrar por inteiro.",
     content: `Error Boundaries capturam erros em qualquer lugar na árvore de componentes abaixo deles e exibem uma interface de fallback amigável.`,
-    practice: "Crie um componente que 'quebra' de propósito e envolva-o em um Error Boundary."
+    practice: "Crie um componente que 'quebra' de propósito e envolva-o em um Error Boundary.",
+    resources: [
+      { name: "React Docs - Catching Rendering Errors", url: "https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary" }
+    ]
   },
   {
     id: 23,
     title: "Aula 23: Bibliotecas de UI (Shadcn/UI)",
     description: "Componentes prontos e bonitos.",
     content: `Introdução ao Shadcn/UI, uma das coleções de componentes mais populares atualmente, baseada em Tailwind e Radix UI.`,
-    practice: "Visite o site do shadcn/ui e veja como ele funciona."
+    practice: "Visite o site do shadcn/ui e veja como ele funciona.",
+    resources: [
+      { name: "Shadcn/UI", url: "https://ui.shadcn.com/" }
+    ]
   },
   {
     id: 24,
     title: "Aula 24: Testes Unitários com Vitest",
     description: "Garantindo que seu código funciona.",
     content: `Introdução aos testes no ambiente Vite usando o Vitest. Aprendemos a testar lógica pura de JavaScript antes de testar componentes.`,
-    practice: "Escreva um teste simples para uma função que soma dois números."
+    practice: "Escreva um teste simples para uma função que soma dois números.",
+    resources: [
+      { name: "Vitest Guide", url: "https://vitest.dev/guide/" }
+    ]
   },
   {
     id: 25,
     title: "Aula 25: React Testing Library",
     description: "Testando a interação do usuário.",
     content: `Aprendemos a testar se um botão realmente dispara um evento ou se um texto está visível na tela, focando na experiência do usuário.`,
-    practice: "Escreva um teste que verifica se um botão com o texto 'Enviar' existe no seu componente."
+    practice: "Escreva um teste que verifica se um botão com o texto 'Enviar' existe no seu componente.",
+    resources: [
+      { name: "Testing Library Docs", url: "https://testing-library.com/docs/react-testing-library/intro/" }
+    ]
   },
   {
     id: 26,
     title: "Aula 26: TypeScript Essentials para React",
     description: "Segurança e produtividade.",
     content: `Tipando props, estados e eventos. O TypeScript ajuda a evitar erros comuns de 'undefined' e torna o desenvolvimento muito mais profissional.`,
-    practice: "Converta um componente funcional simples para TypeScript, definindo uma interface para suas Props."
+    practice: "Converta um componente funcional simples para TypeScript, definindo uma interface para suas Props.",
+    resources: [
+      { name: "React TypeScript Cheatsheet", url: "https://react-typescript-cheatsheet.netlify.app/" }
+    ]
   },
   {
     id: 27,
     title: "Aula 27: Gerenciamento de Formulários com React Hook Form",
     description: "Formulários complexos sem dor de cabeça.",
     content: `A biblioteca definitiva para lidar com validações, erros e submissões de formulários de forma performática.`,
-    practice: "Tente criar um formulário de cadastro com validação de 'campo obrigatório' usando React Hook Form."
+    practice: "Tente criar um formulário de cadastro com validação de 'campo obrigatório' usando React Hook Form.",
+    resources: [
+      { name: "React Hook Form", url: "https://react-hook-form.com/" }
+    ]
   },
   {
     id: 28,
     title: "Aula 28: Deploy para Produção",
     description: "Seu site online para todo o mundo.",
     content: `Aprendemos a gerar o build de produção e hospedar gratuitamente na Vercel ou Netlify com integração contínua (GitHub).`,
-    practice: "Crie uma conta na Vercel e conecte um repositório seu para fazer o deploy."
+    practice: "Crie uma conta na Vercel e conecte um repositório seu para fazer o deploy.",
+    resources: [
+      { name: "Vercel Deployment Guide", url: "https://vercel.com/docs/deployments/overview" }
+    ]
   },
   {
     id: 29,
     title: "Aula 29: Próximos Passos (Next.js e Carreira)",
     description: "O que estudar depois do React?",
     content: `Uma visão geral do ecossistema: Next.js para SSR, Remix, React Native e como se preparar para entrevistas técnicas.`,
-    practice: "Pesquise qual a principal diferença entre o React puro e o Next.js."
+    practice: "Pesquise qual a principal diferença entre o React puro e o Next.js.",
+    resources: [
+      { name: "Next.js Documentation", url: "https://nextjs.org/docs" }
+    ]
   },
   {
     id: 30,
@@ -355,6 +443,9 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     content: `Parabéns por completar as 30 aulas! Agora é hora de construir seu projeto de portfólio consolidando tudo o que aprendeu.
 
 O céu é o limite para o que você pode criar agora. Continue praticando e construindo!`,
-    practice: "Crie um projeto autoral (ex: Clone do Linktree, App de Clima ou Dashboard) e compartilhe com a comunidade!"
+    practice: "Crie um projeto autoral (ex: Clone do Linktree, App de Clima ou Dashboard) e compartilhe com a comunidade!",
+    resources: [
+      { name: "React Roadmap", url: "https://roadmap.sh/react" }
+    ]
   }
 ];
