@@ -21,7 +21,10 @@ import {
   Clock,
   BarChart3,
   ExternalLink,
-  Library
+  Library,
+  StickyNote,
+  MessageSquare, Download,
+  Search as SearchIcon
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -31,6 +34,7 @@ const LandingPage = () => {
   const [completedCount, setCompletedCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('Todas');
+  const [notesSearch, setNotesSearch] = useState('');
 
   const categories = ['Todas', ...new Set(lessons.map(l => l.category))];
   const totalMinutes = lessons.reduce((acc, l) => acc + parseInt(l.readingTime), 0);
@@ -52,6 +56,18 @@ const LandingPage = () => {
     }
     return acc;
   }, 0);
+
+  const savedNotes = JSON.parse(localStorage.getItem('lessonNotes') || '{}');
+  const hasNotes = Object.keys(savedNotes).length > 0;
+
+  const filteredNotes = Object.entries(savedNotes)
+    .filter(([id, text]) => text.toLowerCase().includes(notesSearch.toLowerCase()))
+    .map(([id, text]) => ({
+      id: parseInt(id),
+      text,
+      lesson: lessons.find(l => l.id === parseInt(id))
+    }))
+    .filter(item => item.lesson);
 
   const allResources = lessons.reduce((acc, l) => {
     if (l.resources) {
@@ -234,6 +250,60 @@ const LandingPage = () => {
                   Exportar Notas <Download size={20} />
                 </button>
               </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Notes Dashboard */}
+      {hasNotes && (
+        <section className="py-24 bg-white dark:bg-slate-950 border-y border-slate-50 dark:border-slate-900">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div className="flex items-center gap-4">
+                <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-3xl text-amber-600">
+                  <StickyNote size={32} />
+                </div>
+                <div>
+                  <h2 className="text-4xl font-black tracking-tight dark:text-white leading-tight">Seus Insights</h2>
+                  <p className="text-slate-500 dark:text-slate-400 font-medium">Busque em todas as anotações que você fez durante o curso.</p>
+                </div>
+              </div>
+              <div className="relative w-full md:w-80">
+                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <input
+                  type="text"
+                  placeholder="Buscar em suas notas..."
+                  value={notesSearch}
+                  onChange={(e) => setNotesSearch(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl text-sm focus:outline-none focus:border-blue-500 transition-all dark:text-white"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredNotes.length > 0 ? (
+                filteredNotes.map(item => (
+                  <Link
+                    key={item.id}
+                    to={`/lesson/${item.id}`}
+                    className="group bg-slate-50 dark:bg-slate-900/50 p-8 rounded-[2.5rem] border border-transparent hover:border-amber-200 dark:hover:border-amber-900 transition-all relative overflow-hidden"
+                  >
+                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                      <MessageSquare size={80} />
+                    </div>
+                    <div className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-2">Aula {item.id}</div>
+                    <h3 className="font-bold text-lg mb-4 dark:text-white line-clamp-1">{item.lesson.title}</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm italic line-clamp-3 leading-relaxed">
+                      "{item.text}"
+                    </p>
+                  </Link>
+                ))
+              ) : (
+                <div className="col-span-full text-center py-12 bg-slate-50 dark:bg-slate-900/50 rounded-[2.5rem] text-slate-400 font-medium border-2 border-dashed border-slate-100 dark:border-slate-800">
+                  Nenhum insight encontrado para "{notesSearch}"
+                </div>
+              )}
             </div>
           </div>
         </section>

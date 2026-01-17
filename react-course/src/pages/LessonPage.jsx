@@ -27,7 +27,8 @@ import {
   StickyNote,
   Save,
   Trophy,
-  Download
+  Download,
+  Link as LinkIcon
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -51,6 +52,7 @@ const LessonPage = () => {
   const [note, setNote] = useState('');
   const [isNoteSaved, setIsNoteSaved] = useState(false);
   const [practiceDone, setPracticeDone] = useState(false);
+  const [solutionUrl, setSolutionUrl] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -64,6 +66,9 @@ const LessonPage = () => {
 
     const savedPractice = JSON.parse(localStorage.getItem('practiceDone') || '[]');
     setPracticeDone(savedPractice.includes(lessonId));
+
+    const savedSolutions = JSON.parse(localStorage.getItem('lessonSolutions') || '{}');
+    setSolutionUrl(savedSolutions[lessonId] || '');
   }, [lessonId]);
 
   useEffect(() => {
@@ -122,6 +127,13 @@ const LessonPage = () => {
     localStorage.setItem('lessonNotes', JSON.stringify(savedNotes));
     setIsNoteSaved(true);
     setTimeout(() => setIsNoteSaved(false), 2000);
+  };
+
+  const saveSolutionUrl = (url) => {
+    setSolutionUrl(url);
+    const savedSolutions = JSON.parse(localStorage.getItem('lessonSolutions') || '{}');
+    savedSolutions[lessonId] = url;
+    localStorage.setItem('lessonSolutions', JSON.stringify(savedSolutions));
   };
 
   const exportAllNotes = () => {
@@ -184,6 +196,12 @@ const LessonPage = () => {
   const prevLesson = lessonId > 1 ? lessonId - 1 : null;
   const nextLesson = lessonId < lessons.length ? lessonId + 1 : null;
   const isAllComplete = completedLessons.length === lessons.length;
+
+  const relatedLessons = useMemo(() => {
+    return lessons
+      .filter(l => l.category === lesson.category && l.id !== lessonId)
+      .slice(0, 3);
+  }, [lesson.category, lessonId]);
 
   return (
     <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-950 flex flex-col md:flex-row font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
@@ -328,263 +346,297 @@ const LessonPage = () => {
               </div>
 
               <div className="flex items-center gap-3">
-              <button
-                onClick={shareLesson}
-                className="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all shadow-sm bg-white dark:bg-slate-900"
-                title="Compartilhar Aula"
-              >
-                <Share2 size={20} />
-              </button>
-              <button
-                onClick={() => toggleComplete(lessonId)}
-                className={`
-                  flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border-2 transition-all font-bold text-sm shrink-0
-                  ${completedLessons.includes(lessonId)
-                    ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 shadow-sm'
-                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 hover:shadow-md'}
-                `}
-              >
-                {completedLessons.includes(lessonId) ? (
-                  <><CheckCircle size={20} /> Concluída</>
-                ) : (
-                  <><Circle size={20} /> Concluir Aula</>
-                )}
-              </button>
+                <button
+                  onClick={shareLesson}
+                  className="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all shadow-sm bg-white dark:bg-slate-900"
+                  title="Compartilhar Aula"
+                >
+                  <Share2 size={20} />
+                </button>
+                <button
+                  onClick={() => toggleComplete(lessonId)}
+                  className={`
+                    flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border-2 transition-all font-bold text-sm shrink-0
+                    ${completedLessons.includes(lessonId)
+                      ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 shadow-sm'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 hover:shadow-md'}
+                  `}
+                >
+                  {completedLessons.includes(lessonId) ? (
+                    <><CheckCircle size={20} /> Concluída</>
+                  ) : (
+                    <><Circle size={20} /> Concluir Aula</>
+                  )}
+                </button>
               </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
               <div className="lg:col-span-2">
-            <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden mb-10 transition-colors">
-              <div className="p-8 md:p-12">
-                <div className="prose prose-slate dark:prose-invert prose-lg max-w-none
-                  prose-headings:font-black prose-headings:tracking-tight
-                  prose-a:text-blue-600
-                  prose-code:text-pink-600 dark:prose-code:text-pink-400
-                  prose-code:bg-pink-50 dark:prose-code:bg-pink-900/20
-                  prose-code:px-1 prose-code:rounded
-                  prose-pre:bg-slate-900 dark:prose-pre:bg-black
-                  text-slate-700 dark:text-slate-300 leading-relaxed">
-                  <ReactMarkdown>{lesson.content}</ReactMarkdown>
+                <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden mb-10 transition-colors">
+                  <div className="p-8 md:p-12">
+                    <div className="prose prose-slate dark:prose-invert prose-lg max-w-none
+                      prose-headings:font-black prose-headings:tracking-tight
+                      prose-a:text-blue-600
+                      prose-code:text-pink-600 dark:prose-code:text-pink-400
+                      prose-code:bg-pink-50 dark:prose-code:bg-pink-900/20
+                      prose-code:px-1 prose-code:rounded
+                      prose-pre:bg-slate-900 dark:prose-pre:bg-black
+                      text-slate-700 dark:text-slate-300 leading-relaxed">
+                      <ReactMarkdown>{lesson.content}</ReactMarkdown>
+                    </div>
+
+                    {lesson.proTip && (
+                      <div className="mt-12 p-6 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-600 rounded-r-2xl flex gap-4">
+                        <Zap className="text-blue-600 shrink-0" size={24} />
+                        <div>
+                          <h4 className="text-blue-600 font-black text-sm uppercase tracking-widest mb-1">Dica Pro</h4>
+                          <p className="text-slate-600 dark:text-slate-300 text-sm font-medium italic">"{lesson.proTip}"</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {lesson.resources && (
+                      <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
+                        <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-4">Recursos Adicionais</h3>
+                        <div className="flex flex-wrap gap-3 lg:hidden">
+                          {lesson.resources.map((res, i) => (
+                            <a
+                              key={i}
+                              href={res.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all border border-slate-100 dark:border-slate-700"
+                            >
+                              {res.name}
+                              <ExternalLink size={14} />
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Practice Section */}
+                  <div className="bg-slate-950 p-8 md:p-12 text-white overflow-hidden relative">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-blue-600 rounded-lg">
+                          <Code size={24} />
+                        </div>
+                        <h2 className="text-xl font-black tracking-tight">Desafio Prático</h2>
+                      </div>
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                      </div>
+                    </div>
+                    <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 font-mono text-blue-300 relative group">
+                      <div className="absolute -top-3 left-6 bg-slate-800 px-3 py-1 rounded-md text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        instruções.md
+                      </div>
+                      <p className="leading-relaxed whitespace-pre-wrap">
+                        {lesson.practice}
+                      </p>
+                      <div className="mt-8 space-y-4">
+                        <div className="relative">
+                          <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
+                          <input
+                            type="url"
+                            value={solutionUrl}
+                            onChange={(e) => saveSolutionUrl(e.target.value)}
+                            placeholder="Link da sua solução (GitHub, CodeSandbox...)"
+                            className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                          />
+                        </div>
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                          <div className="flex items-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+                            <span className={`w-2 h-2 rounded-full ${practiceDone ? 'bg-emerald-500' : 'bg-blue-500 animate-pulse'}`}></span>
+                            {practiceDone ? 'Desafio Concluído!' : 'Esperando sua implementação...'}
+                          </div>
+                          <button
+                            onClick={togglePractice}
+                            className={`
+                              flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all
+                              ${practiceDone
+                                ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                                : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-900/40'}
+                            `}
+                          >
+                            {practiceDone ? <><Check size={14} /> Refazer</> : <><Trophy size={14} /> Marcar como Feito</>}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Quiz Section */}
+                  {lesson.quiz && (
+                    <div className="p-8 md:p-12 border-t border-slate-100 dark:border-slate-800 bg-blue-50/30 dark:bg-blue-900/10">
+                      <div className="flex items-center gap-3 mb-8">
+                        <div className="p-2 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg">
+                          <HelpCircle size={24} />
+                        </div>
+                        <h2 className="text-xl font-black tracking-tight dark:text-white text-slate-900">Quiz Rápido</h2>
+                      </div>
+
+                      <div className="space-y-6">
+                        <p className="text-lg font-bold text-slate-800 dark:text-slate-200">{lesson.quiz.question}</p>
+
+                        <div className="grid gap-3">
+                          {lesson.quiz.options.map((option, index) => (
+                            <button
+                              key={index}
+                              onClick={() => !showQuizResult && setQuizAnswer(index)}
+                              className={`
+                                w-full p-4 rounded-xl border-2 text-left transition-all font-medium
+                                ${showQuizResult
+                                  ? index === lesson.quiz.correctAnswer
+                                    ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-700 dark:text-emerald-400'
+                                    : index === quizAnswer
+                                      ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-400'
+                                      : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 opacity-50'
+                                  : quizAnswer === index
+                                    ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-400'
+                                    : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800 text-slate-600 dark:text-slate-400'
+                                }
+                              `}
+                            >
+                              <div className="flex items-center justify-between">
+                                <span>{option}</span>
+                                {showQuizResult && index === lesson.quiz.correctAnswer && <Check size={18} />}
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+
+                        {!showQuizResult ? (
+                          <button
+                            disabled={quizAnswer === null}
+                            onClick={() => {
+                              setShowQuizResult(true);
+                              if (quizAnswer === lesson.quiz.correctAnswer) {
+                                confetti({
+                                  particleCount: 100,
+                                  spread: 70,
+                                  origin: { y: 0.6 },
+                                  colors: ['#2563eb', '#10b981', '#f59e0b']
+                                });
+                              }
+                            }}
+                            className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-all"
+                          >
+                            Verificar Resposta
+                          </button>
+                        ) : (
+                          <div className={`
+                            p-4 rounded-xl flex items-start gap-3
+                            ${quizAnswer === lesson.quiz.correctAnswer
+                              ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+                              : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'}
+                          `}>
+                            {quizAnswer === lesson.quiz.correctAnswer ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
+                            <div>
+                              <p className="font-bold">
+                                {quizAnswer === lesson.quiz.correctAnswer ? 'Excelente! Você acertou.' : 'Não foi dessa vez.'}
+                              </p>
+                              <p className="text-sm opacity-90">
+                                {quizAnswer === lesson.quiz.correctAnswer
+                                  ? 'Continue assim e domine o React!'
+                                  : `A resposta correta é: ${lesson.quiz.options[lesson.quiz.correctAnswer]}`}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {lesson.proTip && (
-                  <div className="mt-12 p-6 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-600 rounded-r-2xl flex gap-4">
-                    <Zap className="text-blue-600 shrink-0" size={24} />
-                    <div>
-                      <h4 className="text-blue-600 font-black text-sm uppercase tracking-widest mb-1">Dica Pro</h4>
-                      <p className="text-slate-600 dark:text-slate-300 text-sm font-medium italic">"{lesson.proTip}"</p>
+                {/* Related Lessons */}
+                {relatedLessons.length > 0 && (
+                  <div className="mt-12 mb-16">
+                    <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-6">Aulas Relacionadas</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {relatedLessons.map(rl => (
+                        <Link
+                          key={rl.id}
+                          to={`/lesson/${rl.id}`}
+                          className="group bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 hover:border-blue-500 transition-all flex items-center justify-between"
+                        >
+                          <div>
+                            <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">{rl.category}</div>
+                            <div className="font-bold text-slate-800 dark:text-white group-hover:text-blue-600 transition-colors">{rl.title}</div>
+                          </div>
+                          <ChevronRight size={20} className="text-slate-300 group-hover:text-blue-600 transition-all" />
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Sidebar Notes */}
+              <div className="space-y-6">
+                <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none sticky top-24">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2 text-blue-600">
+                      <StickyNote size={20} />
+                      <h3 className="font-black uppercase tracking-widest text-xs">Minhas Anotações</h3>
+                    </div>
+                    <button
+                      onClick={exportAllNotes}
+                      className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors"
+                      title="Exportar todas as notas"
+                    >
+                      <Download size={16} />
+                    </button>
+                  </div>
+                  <textarea
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    placeholder="Escreva algo importante sobre esta aula..."
+                    className="w-full h-48 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl text-sm border-none focus:ring-2 focus:ring-blue-500/20 resize-none dark:text-white"
+                  />
+                  <button
+                    onClick={saveNote}
+                    className={`
+                      w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all
+                      ${isNoteSaved
+                        ? 'bg-emerald-500 text-white'
+                        : 'bg-slate-900 dark:bg-blue-600 text-white hover:bg-black dark:hover:bg-blue-700'}
+                    `}
+                  >
+                    {isNoteSaved ? <><Check size={18} /> Salvo!</> : <><Save size={18} /> Salvar Nota</>}
+                  </button>
+                </div>
 
                 {lesson.resources && (
-                  <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
-                    <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-4">Recursos Adicionais</h3>
-                  <div className="flex flex-wrap gap-3 lg:hidden">
+                  <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-4 opacity-10">
+                      <ExternalLink size={60} />
+                    </div>
+                    <h3 className="font-black uppercase tracking-widest text-xs mb-6 text-slate-400">Links Úteis</h3>
+                    <div className="space-y-3">
                       {lesson.resources.map((res, i) => (
                         <a
                           key={i}
                           href={res.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all border border-slate-100 dark:border-slate-700"
+                          className="flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all group"
                         >
-                          {res.name}
-                          <ExternalLink size={14} />
+                          <span className="text-sm font-bold truncate pr-2">{res.name}</span>
+                          <ExternalLink size={14} className="text-slate-500 group-hover:text-white shrink-0" />
                         </a>
                       ))}
                     </div>
                   </div>
                 )}
               </div>
-
-              {/* Practice Section */}
-              <div className="bg-slate-950 p-8 md:p-12 text-white overflow-hidden relative">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-600 rounded-lg">
-                      <Code size={24} />
-                    </div>
-                    <h2 className="text-xl font-black tracking-tight">Desafio Prático</h2>
-                  </div>
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-amber-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
-                  </div>
-                </div>
-                <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 font-mono text-blue-300 relative group">
-                  <div className="absolute -top-3 left-6 bg-slate-800 px-3 py-1 rounded-md text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                    instruções.md
-                  </div>
-                  <p className="leading-relaxed whitespace-pre-wrap">
-                    {lesson.practice}
-                  </p>
-                  <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                      <span className={`w-2 h-2 rounded-full ${practiceDone ? 'bg-emerald-500' : 'bg-blue-500 animate-pulse'}`}></span>
-                      {practiceDone ? 'Desafio Concluído!' : 'Esperando sua implementação...'}
-                    </div>
-                    <button
-                      onClick={togglePractice}
-                      className={`
-                        flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all
-                        ${practiceDone
-                          ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
-                          : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-900/40'}
-                      `}
-                    >
-                      {practiceDone ? <><Check size={14} /> Refazer</> : <><Trophy size={14} /> Marcar como Feito</>}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quiz Section */}
-              {lesson.quiz && (
-                <div className="p-8 md:p-12 border-t border-slate-100 dark:border-slate-800 bg-blue-50/30 dark:bg-blue-900/10">
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg">
-                      <HelpCircle size={24} />
-                    </div>
-                    <h2 className="text-xl font-black tracking-tight dark:text-white text-slate-900">Quiz Rápido</h2>
-                  </div>
-
-                  <div className="space-y-6">
-                    <p className="text-lg font-bold text-slate-800 dark:text-slate-200">{lesson.quiz.question}</p>
-
-                    <div className="grid gap-3">
-                      {lesson.quiz.options.map((option, index) => (
-                        <button
-                          key={index}
-                          onClick={() => !showQuizResult && setQuizAnswer(index)}
-                          className={`
-                            w-full p-4 rounded-xl border-2 text-left transition-all font-medium
-                            ${showQuizResult
-                              ? index === lesson.quiz.correctAnswer
-                                ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-700 dark:text-emerald-400'
-                                : index === quizAnswer
-                                  ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-400'
-                                  : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 opacity-50'
-                              : quizAnswer === index
-                                ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-400'
-                                : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800 text-slate-600 dark:text-slate-400'
-                            }
-                          `}
-                        >
-                          <div className="flex items-center justify-between">
-                            <span>{option}</span>
-                            {showQuizResult && index === lesson.quiz.correctAnswer && <Check size={18} />}
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-
-                    {!showQuizResult ? (
-                      <button
-                        disabled={quizAnswer === null}
-                        onClick={() => {
-                          setShowQuizResult(true);
-                          if (quizAnswer === lesson.quiz.correctAnswer) {
-                            confetti({
-                              particleCount: 100,
-                              spread: 70,
-                              origin: { y: 0.6 },
-                              colors: ['#2563eb', '#10b981', '#f59e0b']
-                            });
-                          }
-                        }}
-                        className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-all"
-                      >
-                        Verificar Resposta
-                      </button>
-                    ) : (
-                      <div className={`
-                        p-4 rounded-xl flex items-start gap-3
-                        ${quizAnswer === lesson.quiz.correctAnswer
-                          ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
-                          : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'}
-                      `}>
-                        {quizAnswer === lesson.quiz.correctAnswer ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                        <div>
-                          <p className="font-bold">
-                            {quizAnswer === lesson.quiz.correctAnswer ? 'Excelente! Você acertou.' : 'Não foi dessa vez.'}
-                          </p>
-                          <p className="text-sm opacity-90">
-                            {quizAnswer === lesson.quiz.correctAnswer
-                              ? 'Continue assim e domine o React!'
-                              : `A resposta correta é: ${lesson.quiz.options[lesson.quiz.correctAnswer]}`}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
             </div>
-            </div>
-
-            {/* Sidebar Notes (Only visible on large screens) */}
-            <div className="space-y-6">
-              <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none sticky top-24">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2 text-blue-600">
-                    <StickyNote size={20} />
-                    <h3 className="font-black uppercase tracking-widest text-xs">Minhas Anotações</h3>
-                  </div>
-                  <button
-                    onClick={exportAllNotes}
-                    className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors"
-                    title="Exportar todas as notas"
-                  >
-                    <Download size={16} />
-                  </button>
-                </div>
-                <textarea
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  placeholder="Escreva algo importante sobre esta aula..."
-                  className="w-full h-48 p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl text-sm border-none focus:ring-2 focus:ring-blue-500/20 resize-none dark:text-white"
-                />
-                <button
-                  onClick={saveNote}
-                  className={`
-                    w-full mt-4 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all
-                    ${isNoteSaved
-                      ? 'bg-emerald-500 text-white'
-                      : 'bg-slate-900 dark:bg-blue-600 text-white hover:bg-black dark:hover:bg-blue-700'}
-                  `}
-                >
-                  {isNoteSaved ? <><Check size={18} /> Salvo!</> : <><Save size={18} /> Salvar Nota</>}
-                </button>
-              </div>
-
-              {lesson.resources && (
-                <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <ExternalLink size={60} />
-                  </div>
-                  <h3 className="font-black uppercase tracking-widest text-xs mb-6 text-slate-400">Links Úteis</h3>
-                  <div className="space-y-3">
-                    {lesson.resources.map((res, i) => (
-                      <a
-                        key={i}
-                        href={res.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all group"
-                      >
-                        <span className="text-sm font-bold truncate pr-2">{res.name}</span>
-                        <ExternalLink size={14} className="text-slate-500 group-hover:text-white shrink-0" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
 
             {/* Bottom Navigation */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-10 border-t border-slate-200 dark:border-slate-800 pb-24 md:pb-10">
