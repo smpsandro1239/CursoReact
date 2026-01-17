@@ -18,7 +18,9 @@ import {
   Award,
   HelpCircle,
   Check,
-  AlertCircle
+  AlertCircle,
+  RotateCcw,
+  Share2
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
@@ -71,6 +73,26 @@ const LessonPage = () => {
       setCompletedLessons(completedLessons.filter(lId => lId !== id));
     } else {
       setCompletedLessons([...completedLessons, id]);
+    }
+  };
+
+  const resetProgress = () => {
+    if (window.confirm("Tem certeza que deseja resetar todo o seu progresso?")) {
+      setCompletedLessons([]);
+      localStorage.removeItem('completedLessons');
+    }
+  };
+
+  const shareLesson = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: `Estou aprendendo React: ${lesson.title}`,
+        text: `Confira esta aula sobre ${lesson.title} no curso Premium React!`,
+        url: window.location.href,
+      });
+    } else {
+      alert("Link copiado para a área de transferência!");
+      navigator.clipboard.writeText(window.location.href);
     }
   };
 
@@ -161,7 +183,15 @@ const LessonPage = () => {
             </Link>
           ) : null}
           <div className="flex justify-between items-end mb-2">
-            <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase font-black tracking-widest">Progresso do Aluno</span>
+            <div className="flex flex-col">
+              <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase font-black tracking-widest">Progresso do Aluno</span>
+              <button
+                onClick={resetProgress}
+                className="text-[9px] text-red-500 hover:text-red-600 font-bold uppercase tracking-tighter flex items-center gap-1 mt-1 transition-colors"
+              >
+                <RotateCcw size={10} /> Resetar Progresso
+              </button>
+            </div>
             <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{Math.round((completedLessons.length / lessons.length) * 100)}%</span>
           </div>
           <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
@@ -193,6 +223,14 @@ const LessonPage = () => {
                 <p className="text-lg text-slate-500 dark:text-slate-400 font-medium">{lesson.description}</p>
               </div>
 
+              <div className="flex items-center gap-3">
+              <button
+                onClick={shareLesson}
+                className="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all shadow-sm bg-white dark:bg-slate-900"
+                title="Compartilhar Aula"
+              >
+                <Share2 size={20} />
+              </button>
               <button
                 onClick={() => toggleComplete(lessonId)}
                 className={`
@@ -208,6 +246,7 @@ const LessonPage = () => {
                   <><Circle size={20} /> Concluir Aula</>
                 )}
               </button>
+              </div>
             </div>
 
             {/* Content Card */}
@@ -246,15 +285,32 @@ const LessonPage = () => {
               </div>
 
               {/* Practice Section */}
-              <div className="bg-slate-900 dark:bg-black p-8 md:p-12 text-white">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-blue-500 rounded-lg">
-                    <Code size={24} />
+              <div className="bg-slate-950 p-8 md:p-12 text-white overflow-hidden relative">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-600 rounded-lg">
+                      <Code size={24} />
+                    </div>
+                    <h2 className="text-xl font-black tracking-tight">Desafio Prático</h2>
                   </div>
-                  <h2 className="text-xl font-black tracking-tight">Desafio Prático</h2>
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                  </div>
                 </div>
-                <div className="bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700 dark:border-slate-800 p-6 rounded-2xl text-slate-300 font-medium leading-relaxed">
-                  {lesson.practice}
+                <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 font-mono text-blue-300 relative group">
+                  <div className="absolute -top-3 left-6 bg-slate-800 px-3 py-1 rounded-md text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    instruções.md
+                  </div>
+                  <p className="leading-relaxed whitespace-pre-wrap">
+                    {lesson.practice}
+                  </p>
+                  <div className="mt-8 flex items-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    Esperando sua implementação...
+                  </div>
                 </div>
               </div>
 

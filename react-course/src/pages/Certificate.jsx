@@ -1,12 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { Award, Download, Home, Share2 } from 'lucide-react';
+import { Award, Download, Home, Share2, User } from 'lucide-react';
 import { lessons } from '../data/lessons';
 
 const Certificate = () => {
   const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '[]');
   const isComplete = completedLessons.length === lessons.length;
   const certificateRef = useRef();
+  const [userName, setUserName] = useState(() => localStorage.getItem('studentName') || 'Seu Nome Aqui');
+
+  useEffect(() => {
+    localStorage.setItem('studentName', userName);
+  }, [userName]);
 
   if (!isComplete) {
     return <Navigate to="/" />;
@@ -20,11 +25,23 @@ const Certificate = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-12 px-4 flex flex-col items-center">
-      <div className="max-w-4xl w-full flex justify-between items-center mb-8">
+      <div className="max-w-4xl w-full flex flex-col md:flex-row justify-between items-center gap-6 mb-8 print:hidden">
         <Link to="/" className="flex items-center gap-2 text-slate-600 dark:text-slate-400 font-bold hover:text-blue-600 transition-colors">
           <Home size={20} />
           Voltar ao Início
         </Link>
+
+        <div className="flex-grow max-w-sm relative">
+          <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl font-bold text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            placeholder="Seu nome completo"
+          />
+        </div>
+
         <button
           onClick={() => window.print()}
           className="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold flex items-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 dark:shadow-none"
@@ -58,7 +75,7 @@ const Certificate = () => {
           <div className="py-12 space-y-4">
             <p className="text-slate-500 dark:text-slate-400 font-medium italic text-lg">Certificamos que</p>
             <h2 className="text-4xl font-black text-slate-800 dark:text-slate-100 border-b-2 border-slate-100 dark:border-slate-800 inline-block px-12 py-2">
-              Desenvolvedor Premium
+              {userName}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed pt-4">
               concluiu com êxito o treinamento intensivo de **React.js**, totalizando 30 aulas práticas, abrangendo desde fundamentos básicos até padrões avançados de arquitetura, performance e deploy.

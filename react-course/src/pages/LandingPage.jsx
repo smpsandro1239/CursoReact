@@ -25,6 +25,7 @@ import { useTheme } from '../context/ThemeContext';
 const LandingPage = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [completedCount, setCompletedCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const saved = localStorage.getItem('completedLessons');
@@ -106,12 +107,22 @@ const LandingPage = () => {
                 ></div>
               </div>
             </div>
-            <Link
-              to={`/lesson/${completedCount + 1 > 30 ? 30 : completedCount + 1}`}
-              className="shrink-0 bg-slate-900 dark:bg-blue-600 text-white px-8 py-4 rounded-2xl font-black hover:scale-105 transition-transform flex items-center gap-2"
-            >
-              Continuar Estudando <PlayCircle size={20} />
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                to={`/lesson/${completedCount + 1 > 30 ? 30 : completedCount + 1}`}
+                className="shrink-0 bg-slate-900 dark:bg-blue-600 text-white px-8 py-4 rounded-2xl font-black hover:scale-105 transition-transform flex items-center gap-2 justify-center"
+              >
+                Continuar Estudando <PlayCircle size={20} />
+              </Link>
+              {completedCount === lessons.length && (
+                <Link
+                  to="/certificate"
+                  className="shrink-0 bg-emerald-600 text-white px-8 py-4 rounded-2xl font-black hover:scale-105 transition-transform flex items-center gap-2 justify-center"
+                >
+                  Ver Certificado <Award size={20} />
+                </Link>
+              )}
+            </div>
           </div>
         </section>
       )}
@@ -189,11 +200,25 @@ const LandingPage = () => {
       <main className="max-w-7xl mx-auto py-24 px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight dark:text-white">Grade Curricular</h2>
-          <p className="text-lg text-slate-500 dark:text-slate-400 font-medium">O caminho passo a passo para sua liberdade profissional.</p>
+          <p className="text-lg text-slate-500 dark:text-slate-400 font-medium mb-8">O caminho passo a passo para sua liberdade profissional.</p>
+
+          <div className="max-w-xl mx-auto relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+            <input
+              type="text"
+              placeholder="O que você quer aprender hoje? (ex: Hooks, Props, Deploy...)"
+              className="w-full pl-12 pr-4 py-4 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-2xl text-lg focus:outline-none focus:border-blue-500 transition-all shadow-sm dark:text-white"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {lessons.map((lesson) => (
+          {lessons.filter(l =>
+            l.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            l.description.toLowerCase().includes(searchTerm.toLowerCase())
+          ).map((lesson) => (
             <Link
               key={lesson.id}
               to={`/lesson/${lesson.id}`}
