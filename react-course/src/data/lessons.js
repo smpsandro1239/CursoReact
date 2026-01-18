@@ -107,7 +107,7 @@ idade = 31; // Válido
 **2. Template Literals (Moderno)**
 \`\`\`javascript
 const linguagem = "JavaScript";
-console.log(\`Estou a aprender ${linguagem}!\`);
+console.log(\`Estou a aprender \${linguagem}!\`);
 \`\`\``,
     practice: "Cria um programa que calcule o IMC (Peso / Altura²). Usa const para nome e altura, let para peso. Exibe o resultado usando template literals.",
     resources: [
@@ -166,7 +166,7 @@ if (idade >= 18) {
 \`\`\`javascript
 const linguagens = ["JavaScript", "React", "Node.js"];
 for (const lang of linguagens) {
-  console.log(\`Estou a aprender ${lang}!\`);
+  console.log(\`Estou a aprender \${lang}!\`);
 }
 \`\`\``,
     practice: "Cria um programa que verifica a força de uma password. Usa loops para analisar cada caractere e condicionais para classificar como Fraca, Média ou Forte.",
@@ -685,7 +685,7 @@ function App() {
       { name: "React Docs - Context", url: "https://react.dev/reference/react/useContext" }
     ],
     quiz: {
-      question: "Qual é a principal problema que a Context API resolve?",
+      question: "Qual é o principal problema que a Context API resolve?",
       options: ["Prop Drilling", "Lentidão do JS", "Falta de CSS", "Erros de sintaxe"],
       correctAnswer: 0
     }
@@ -739,290 +739,579 @@ const handleAdd = useCallback(() => { ... }, [dependencias]);
   },
   {
     id: 15,
-    category: "APIs",
-    difficulty: "Intermediário",
-    readingTime: "15 min",
-    title: "Aula 15: Consumindo APIs com Fetch",
-    description: "Buscando dados do mundo real.",
-    proTip: "Sempre verifique se a resposta é 'ok' antes de tentar converter para JSON: if (!res.ok) throw new Error().",
-    content: `Aprendemos a usar o comando \`fetch\` dentro de um \`useEffect\` para carregar dados de uma API externa (como a JSONPlaceholder).
+    category: "Testes",
+    difficulty: "Intermédio",
+    readingTime: "60 min",
+    title: "Aula 15: Testes em React – Jest e RTL",
+    description: "Garantir a qualidade do código com testes unitários e de interação.",
+    proTip: "Nunca testes a implementação interna. Testa o que o utilizador vê e faz. Isto torna os teus testes resilientes a refatorações.",
+    content: `### O que vais aprender nesta aula:
+- Configurar Jest e React Testing Library (RTL)
+- Escrever testes unitários para componentes
+- Testar interações do utilizador e eventos
+- Mockar APIs externas
 
-Lidamos com estados de \`loading\`, \`error\` e \`data\`.`,
-    practice: "Tente buscar a lista de usuários da URL 'https://jsonplaceholder.typicode.com/users' e exiba os nomes em uma lista.",
+---
+
+### 🧠 Teoria: Os Inspetores de Qualidade
+Testes automatizados são como inspetores numa fábrica:
+- **Unitários** = verificam se cada peça individual funciona.
+- **Integração** = verificam se as peças encaixam bem.
+- **Jest + RTL** = a equipa especializada para componentes React.
+
+**Porquê isto importa?** Dá-te confiança para mudar o código sem medo de quebrar o que já funciona. É essencial em ambientes profissionais.
+
+---
+
+### 💻 Prática: O teu primeiro teste
+\`\`\`jsx
+import { render, screen } from '@testing-library/react';
+import Button from './Button';
+
+test('renderiza o texto do botão', () => {
+  render(<Button>Clique aqui</Button>);
+  expect(screen.getByText(/clique aqui/i)).toBeInTheDocument();
+});
+\`\`\``,
+    practice: "Escreve testes para um componente de formulário de login, verificando se os campos de email e password existem e se o botão de login está ativo.",
     resources: [
-      { name: "MDN - Fetch API", url: "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" }
+      { name: "React Testing Library Docs", url: "https://testing-library.com/docs/react-testing-library/intro/" }
     ],
     quiz: {
-      question: "Qual o melhor lugar para fazer uma chamada de API (fetch) em um componente funcional?",
-      options: ["No corpo do componente (diretamente)", "Dentro de um useEffect", "Dentro de um arquivo CSS", "No index.html"],
+      question: "Qual é a abordagem recomendada pela React Testing Library?",
+      options: ["Testar a implementação interna", "Testar da perspetiva do utilizador", "Testar apenas o CSS", "Não testar nada"],
       correctAnswer: 1
     }
   },
   {
     id: 16,
-    category: "Hooks",
-    difficulty: "Avançado",
-    readingTime: "12 min",
-    title: "Aula 16: Custom Hooks - Reutilização Máxima",
-    description: "Extraindo sua própria lógica.",
-    proTip: "Custom Hooks são ótimos para testar lógica de negócio de forma isolada dos seus componentes visuais.",
-    content: `Se você usa a mesma lógica em vários lugares, crie seu próprio Hook!
+    category: "TypeScript",
+    difficulty: "Intermédio",
+    readingTime: "60 min",
+    title: "Aula 16: TypeScript com React – Tipagem Estática",
+    description: "Adicionar segurança ao código React detetando erros antes de executar.",
+    proTip: "Não tentes tipar tudo de uma vez. Começa com as props dos novos componentes e vai avançando gradualmente.",
+    content: `### O que vais aprender nesta aula:
+- Configurar TS num projeto React
+- Definir tipos para Props e State
+- Utilizar Interfaces e Generics
+- Tipar hooks e eventos do DOM
 
-Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
-    practice: "Tente criar um hook chamado 'useToggle' que alterna um valor entre true e false.",
+---
+
+### 🧠 Teoria: O Co-Piloto Inteligente
+TypeScript é como ter um co-piloto que te avisa imediatamente se estás a voar na direção errada:
+- **JavaScript** = descobres o erro quando o avião cai (browser).
+- **TypeScript** = o erro aparece a vermelho enquanto escreves o código.
+
+---
+
+### 💻 Prática: Tipando Componentes
+\`\`\`tsx
+interface UserProps {
+  name: string;
+  age: number;
+}
+
+function UserProfile({ name, age }: UserProps) {
+  return <div>{name}, {age} anos</div>;
+}
+\`\`\``,
+    practice: "Converte um componente funcional de lista de tarefas para TypeScript, definindo uma interface para a 'Task'.",
     resources: [
-      { name: "Reusing Logic with Custom Hooks", url: "https://react.dev/learn/reusing-logic-with-custom-hooks" }
+      { name: "React TypeScript Cheatsheet", url: "https://react-typescript-cheatsheet.netlify.app/" }
     ],
     quiz: {
-      question: "Qual o prefixo obrigatório para o nome de um Custom Hook?",
-      options: ["get", "handle", "use", "react"],
-      correctAnswer: 2
-    }
-  },
-  {
-    id: 17,
-    category: "Performance",
-    difficulty: "Avançado",
-    readingTime: "10 min",
-    title: "Aula 17: Performance com useMemo",
-    description: "Evitando cálculos desnecessários.",
-    proTip: "Só use useMemo se o cálculo for realmente custoso. Otimização prematura pode tornar seu código mais complexo sem ganho real.",
-    content: `O \`useMemo\` guarda o resultado de um cálculo pesado para que ele não seja refeito em toda renderização, a menos que suas dependências mudem.`,
-    practice: "Crie uma função que simula um cálculo demorado e use o useMemo para otimizá-la.",
-    resources: [
-      { name: "React API - useMemo", url: "https://react.dev/reference/react/useMemo" }
-    ],
-    quiz: {
-      question: "Para que serve o useMemo?",
-      options: ["Para memorizar um valor calculado", "Para memorizar uma função", "Para criar um novo componente", "Para fazer chamadas de API"],
+      question: "Como se tipa o estado com useState em TS?",
+      options: ["useState<string>('')", "useState('') as string", "const string state = ''", "Nenhuma das anteriores"],
       correctAnswer: 0
     }
   },
   {
-    id: 18,
-    category: "Performance",
-    difficulty: "Avançado",
-    readingTime: "10 min",
-    title: "Aula 18: Otimização com useCallback",
-    description: "Memorizando funções.",
-    proTip: "useCallback é essencial quando você passa funções para componentes filhos que usam React.memo para evitar renderizações extras.",
-    content: `Similar ao useMemo, mas para funções. Evita que funções sejam recriadas desnecessariamente, o que é útil ao passar funções para componentes filhos otimizados com \`React.memo\`.`,
-    practice: "Explique com suas palavras a diferença entre useMemo e useCallback.",
+    id: 17,
+    category: "Design",
+    difficulty: "Intermédio",
+    readingTime: "60 min",
+    title: "Aula 17: Styled Components – CSS-in-JS",
+    description: "Estilizar componentes de forma modular e dinâmica usando JavaScript.",
+    proTip: "Pensa nos teus componentes como unidades completas: lógica + design no mesmo ficheiro.",
+    content: `### O que vais aprender nesta aula:
+- Criar componentes estilizados
+- Passar props para mudar o design dinamicamente
+- Criar Temas Globais (Dark/Light Mode)
+- Estilizar componentes de terceiros
+
+---
+
+### 🧠 Teoria: O Designer Integrado
+Styled Components é como ter um designer sentado ao teu lado, criando estilos específicos para cada peça, sem risco de conflitos de nomes (cascading).
+
+---
+
+### 💻 Prática: Estilos Dinâmicos
+\`\`\`jsx
+const Button = styled.button\`
+  background: \${props => props.primary ? 'blue' : 'gray'};
+  color: white;
+  border-radius: 8px;
+\`;
+\`\`\``,
+    practice: "Cria um sistema de cartões de produto usando Styled Components, onde produtos 'em destaque' têm uma borda dourada via props.",
     resources: [
-      { name: "React API - useCallback", url: "https://react.dev/reference/react/useCallback" }
+      { name: "Styled Components Docs", url: "https://styled-components.com/docs" }
     ],
     quiz: {
-      question: "O que o useCallback retorna?",
-      options: ["O resultado de uma função", "Uma versão memorizada da função em si", "Um booleano", "Um elemento JSX"],
+      question: "Qual a vantagem do Styled Components sobre o CSS tradicional?",
+      options: ["É mais rápido", "Evita conflitos de nomes e estilos órfãos", "Não precisa de JS", "É padrão do HTML"],
+      correctAnswer: 1
+    }
+  },
+  {
+    id: 18,
+    category: "Data",
+    difficulty: "Intermédio",
+    readingTime: "60 min",
+    title: "Aula 18: React Query – Gestão de Dados",
+    description: "Simplificar a busca, cache e sincronização de dados do servidor.",
+    proTip: "Nunca uses useEffect para buscar dados! O React Query foi feito exatamente para resolver isso de forma robusta.",
+    content: `### O que vais aprender nesta aula:
+- Buscar dados com useQuery
+- Atualizar dados com Mutations
+- Configurar Cache e Invalidação automática
+- Lidar com estados de Loading e Erro de forma profissional
+
+---
+
+### 🧠 Teoria: O Gestor de Cache
+React Query é o assistente que verifica se já tens o que precisas em casa (cache) antes de te mandar ir ao supermercado (servidor).
+
+---
+
+### 💻 Prática: Fetching Profissional
+\`\`\`jsx
+const { data, isLoading } = useQuery(['users'], fetchUsers);
+\`\`\``,
+    practice: "Cria uma lista de posts que usa React Query e implementa um botão de 'Atualizar' que invalida a cache para forçar um novo fetch.",
+    resources: [
+      { name: "TanStack Query Docs", url: "https://tanstack.com/query/latest" }
+    ],
+    quiz: {
+      question: "Para que serve o staleTime no React Query?",
+      options: ["Para apagar os dados", "Para definir quanto tempo os dados são considerados 'frescos'", "Para acelerar a internet", "Para mudar o tema"],
       correctAnswer: 1
     }
   },
   {
     id: 19,
-    category: "Performance",
-    difficulty: "Avançado",
-    readingTime: "8 min",
-    title: "Aula 19: React.memo",
-    description: "Impedindo renderizações inúteis.",
-    proTip: "O React.memo faz uma comparação rasa (shallow) das props. Cuidado ao passar objetos ou arrays criados dentro do componente pai.",
-    content: `O \`React.memo\` é um Higher Order Component que impede que um componente seja renderizado novamente se suas props não mudarem.`,
-    practice: "Aplique o React.memo em um componente simples de exibição de texto.",
+    category: "Formulários",
+    difficulty: "Intermédio",
+    readingTime: "60 min",
+    title: "Aula 19: React Hook Form – Validação",
+    description: "Criar formulários complexos com performance otimizada e validação robusta.",
+    proTip: "Usa a abordagem 'uncontrolled' do React Hook Form para evitar re-renderizações desnecessárias em formulários gigantes.",
+    content: `### O que vais aprender nesta aula:
+- Configurar o hook useForm
+- Validação nativa e com Yup/Zod
+- Tratar erros e submissões assíncronas
+- Criar inputs reutilizáveis com forwardRef
+
+---
+
+### 🧠 Teoria: O Assistente de Formulários
+Pensa no React Hook Form como um secretário que preenche a papelada por ti e só te interrompe se encontrares um erro óbvio.
+
+---
+
+### 💻 Prática: Formulário de Registo
+\`\`\`jsx
+const { register, handleSubmit } = useForm();
+<input {...register('email', { required: true })} />
+\`\`\``,
+    practice: "Cria um formulário de contacto com validação avançada (email válido, mensagem mínima de 10 caracteres) usando Yup.",
     resources: [
-      { name: "React API - memo", url: "https://react.dev/reference/react/memo" }
+      { name: "React Hook Form Docs", url: "https://react-hook-form.com/" }
     ],
     quiz: {
-      question: "Quando o React.memo decide NÃO renderizar novamente um componente?",
-      options: ["Sempre", "Nunca", "Quando as novas props são iguais às anteriores", "Quando o estado interno muda"],
-      correctAnswer: 2
+      question: "Porquê usar React Hook Form em vez de gerir tudo com useState?",
+      options: ["É mais colorido", "Melhor performance e menos código boilerplate", "Não precisa de HTML", "É obrigatório"],
+      correctAnswer: 1
     }
   },
   {
     id: 20,
-    category: "Ativos",
-    difficulty: "Iniciante",
-    readingTime: "6 min",
-    title: "Aula 20: Trabalhando com Imagens e Ativos",
-    description: "Melhores práticas para arquivos estáticos.",
-    proTip: "Use formatos modernos como WebP e tamanhos responsivos para garantir que seu app carregue instantaneamente mesmo em conexões lentas.",
-    content: `Como importar imagens, usar a pasta \`public\` e otimizar assets para que sua aplicação carregue rápido.`,
-    practice: "Adicione uma imagem de sua preferência ao projeto e exiba-a usando um componente React.",
+    category: "Segurança",
+    difficulty: "Avançado",
+    readingTime: "60 min",
+    title: "Aula 20: Autenticação e Proteção de Rotas",
+    description: "Implementar sistemas de Login, tokens JWT e áreas privadas seguras.",
+    proTip: "Nunca confies apenas no frontend. A segurança real é feita no servidor; o frontend apenas esconde o que o utilizador não deve ver.",
+    content: `### O que vais aprender nesta aula:
+- Criar o AuthContext global
+- Persistir sessões com Tokens (JWT)
+- Criar componentes de Rota Protegida
+- Implementar Logout e limpeza de estado
+
+---
+
+### 🧠 Teoria: O Sistema de Segurança
+- **Login** = Apresentar identificação na receção.
+- **Token** = Crachá temporário para circular no edifício.
+- **PrivateRoute** = Portas que só abrem com o crachá correto.
+
+---
+
+### 💻 Prática: Protegendo Rotas
+\`\`\`jsx
+function PrivateRoute({ children }) {
+  const { user } = useAuth();
+  return user ? children : <Navigate to="/login" />;
+}
+\`\`\``,
+    practice: "Implementa um sistema onde o Dashboard só é visível se existir um utilizador no AuthContext. Caso contrário, redireciona para Login.",
     resources: [
-      { name: "Vite - Static Asset Handling", url: "https://vitejs.dev/guide/assets.html" }
+      { name: "JWT.io", url: "https://jwt.io/" }
     ],
     quiz: {
-      question: "Onde devem ficar os arquivos que você quer que sejam acessíveis via URL direta (sem processamento)?",
-      options: ["src/assets", "src/components", "public/", "node_modules/"],
-      correctAnswer: 2
+      question: "Onde é mais seguro guardar tokens sensíveis no browser?",
+      options: ["LocalStorage", "Cookies HttpOnly", "Variáveis globais", "No URL"],
+      correctAnswer: 1
     }
   },
   {
     id: 21,
-    category: "Avançado",
+    category: "Testes",
     difficulty: "Avançado",
-    readingTime: "8 min",
-    title: "Aula 21: Portals - Renderizando fora do Root",
-    description: "O segredo dos modais e tooltips.",
-    proTip: "Portals mantêm o contexto do React, o que significa que eventos disparados dentro do portal ainda borbulham para os pais no React.",
-    content: `Portals permitem que você renderize um componente em qualquer lugar do DOM, mantendo-o logicamente dentro da sua árvore de componentes React.`,
-    practice: "Crie um Modal simples que apareça centralizado na tela usando ReactDOM.createPortal.",
+    readingTime: "60 min",
+    title: "Aula 21: Testes Avançados e Mocking",
+    description: "Simular cenários complexos, falhas de API e timers em testes de alta qualidade.",
+    proTip: "Escreve testes como se estivesses a documentar o comportamento da app. Um bom teste deve ser legível por humanos.",
+    content: `### O que vais aprender nesta aula:
+- Mockar APIs complexas com MSW ou Jest
+- Testar hooks personalizados com renderHook
+- Simular passagem de tempo (fake timers)
+- Testar fluxos de integração completos
+
+---
+
+### 🧠 Teoria: As Simulações de Voo
+Mocking é simular situações de emergência (falha de motor, mau tempo) num ambiente seguro, para garantir que o piloto (aplicação) sabe reagir.
+
+---
+
+### 💻 Prática: Mocking de API
+\`\`\`javascript
+global.fetch = jest.fn().mockResolvedValue({
+  json: () => Promise.resolve({ name: 'Sandro' })
+});
+\`\`\``,
+    practice: "Escreve um teste avançado para o hook 'useCounter' que criaste na aula 11, garantindo que ele não ultrapassa o valor máximo.",
     resources: [
-      { name: "React API - createPortal", url: "https://react.dev/reference/react-dom/createPortal" }
+      { name: "Mock Service Worker", url: "https://mswjs.io/" }
     ],
     quiz: {
-      question: "Qual o uso mais comum para React Portals?",
-      options: ["Listas infinitas", "Modais e Tooltips", "Animações complexas", "Roteamento"],
+      question: "Qual a principal vantagem de 'mockar' uma API nos testes?",
+      options: ["Tornar o teste mais lento", "Isolar o teste de falhas externas e torná-lo rápido", "Pagar menos pela API", "Não serve para nada"],
       correctAnswer: 1
     }
   },
   {
     id: 22,
-    category: "Avançado",
+    category: "Performance",
     difficulty: "Avançado",
-    readingTime: "10 min",
-    title: "Aula 22: Error Boundaries - Tratando Falhas",
-    description: "Não deixe seu app quebrar por inteiro.",
-    proTip: "Use Error Boundaries em pontos estratégicos (como um widget de terceiros) para que uma falha isolada não derrube sua página inteira.",
-    content: `Error Boundaries capturam erros em qualquer lugar na árvore de componentes abaixo deles e exibem uma interface de fallback amigável.`,
-    practice: "Crie um componente que 'quebra' de propósito e envolva-o em um Error Boundary.",
+    readingTime: "60 min",
+    title: "Aula 22: Performance Avançada e Lazy Loading",
+    description: "Otimizar o carregamento de apps gigantes dividindo o código em pedaços menores.",
+    proTip: "Usa o React DevTools Profiler para identificar exatamente qual o componente que está a travar a tua aplicação.",
+    content: `### O que vais aprender nesta aula:
+- Code Splitting com React.lazy e Suspense
+- Otimização de imagens e ativos
+- Virtualização de listas (renderizar só o que se vê)
+- Estratégias de Prefetching
+
+---
+
+### 🧠 Teoria: A Analogia das Malas
+Lazy Loading é como pedir as peças de um móvel conforme as vais montando, em vez de carregar o camião inteiro de uma só vez.
+
+---
+
+### 💻 Prática: Carregamento Preguiçoso
+\`\`\`jsx
+const Dashboard = lazy(() => import('./Dashboard'));
+// ...
+<Suspense fallback={<Spinner />}>
+  <Dashboard />
+</Suspense>
+\`\`\``,
+    practice: "Divide o teu projeto principal em rotas carregadas via 'lazy', medindo a redução do tamanho do ficheiro inicial.",
     resources: [
-      { name: "React Docs - Catching Rendering Errors", url: "https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary" }
+      { name: "React Docs - Code Splitting", url: "https://react.dev/learn/code-splitting" }
     ],
     quiz: {
-      question: "Atualmente, Error Boundaries podem ser escritos como componentes funcionais?",
-      options: ["Sim, usando o hook useError", "Não, eles ainda exigem componentes de classe", "Apenas em TypeScript", "Sim, usando useEffect"],
+      question: "O que faz a virtualização de listas?",
+      options: ["Apaga a lista", "Renderiza apenas os itens visíveis na janela", "Converte lista em vídeo", "Não existe"],
       correctAnswer: 1
     }
   },
   {
     id: 23,
-    category: "Design",
-    difficulty: "Intermediário",
-    readingTime: "15 min",
-    title: "Aula 23: Bibliotecas de UI (Shadcn/UI)",
-    description: "Componentes prontos e bonitos.",
-    proTip: "O shadcn/ui não é uma biblioteca de componentes tradicional, mas sim uma coleção de componentes que você copia e cola para ter controle total.",
-    content: `Introdução ao Shadcn/UI, uma das coleções de componentes mais populares atualmente, baseada em Tailwind e Radix UI.`,
-    practice: "Visite o site do shadcn/ui e veja como ele funciona.",
+    category: "Segurança",
+    difficulty: "Avançado",
+    readingTime: "60 min",
+    title: "Aula 23: Segurança em React – Boas Práticas",
+    description: "Proteção contra ataques XSS, CSRF e injeção de código malicioso.",
+    proTip: "Pensa como um atacante: 'Como é que eu poderia abusar deste formulário?'. Prevenção é o melhor remédio.",
+    content: `### O que vais aprender nesta aula:
+- Prevenir XSS (Sanitização)
+- Implementar Content Security Policy (CSP)
+- Gerir segredos e variáveis de ambiente
+- Boas práticas de validação no cliente e servidor
+
+---
+
+### 🧠 Teoria: O Sistema de Defesa
+Segurança é como um castelo: não basta ter uma porta forte (login); precisas de fossos, arqueiros e vigilância constante em cada janela.
+
+---
+
+### 💻 Prática: Sanitização
+\`\`\`jsx
+import DOMPurify from 'dompurify';
+const cleanHTML = DOMPurify.sanitize(dirtyHTML);
+\`\`\``,
+    practice: "Implementa uma política de segurança onde qualquer HTML inserido pelo utilizador é limpo antes de ser exibido.",
     resources: [
-      { name: "Shadcn/UI", url: "https://ui.shadcn.com/" }
+      { name: "OWASP Top 10", url: "https://owasp.org/www-project-top-ten/" }
     ],
     quiz: {
-      question: "Como o Shadcn/UI difere de bibliotecas como Material UI?",
-      options: ["É pago", "Você copia o código para seu projeto em vez de instalar um pacote npm gigante", "Não usa Tailwind", "Só funciona com Next.js"],
-      correctAnswer: 1
+      question: "Qual é a melhor forma de prevenir XSS em React?",
+      options: ["Evitar dangerouslySetInnerHTML", "Usar apenas divs", "Não usar JS", "Usar cores vivas"],
+      correctAnswer: 0
     }
   },
   {
     id: 24,
-    category: "Testes",
-    difficulty: "Intermediário",
-    readingTime: "12 min",
-    title: "Aula 24: Testes Unitários com Vitest",
-    description: "Garantindo que seu código funciona.",
-    proTip: "Comece testando funções utilitárias puras. Elas são mais fáceis de testar e garantem que a lógica base do seu app está sólida.",
-    content: `Introdução aos testes no ambiente Vite usando o Vitest. Aprendemos a testar lógica pura de JavaScript antes de testar componentes.`,
-    practice: "Escreva um teste simples para uma função que soma dois números.",
+    category: "I18n",
+    difficulty: "Intermédio",
+    readingTime: "60 min",
+    title: "Aula 24: Internacionalização (i18n)",
+    description: "Criar aplicações globais que suportam múltiplos idiomas e moedas.",
+    proTip: "Nunca concatenes strings traduzidas! Usa placeholders para manter a ordem correta das palavras em cada língua.",
+    content: `### O que vais aprender nesta aula:
+- Configurar react-i18next
+- Gerir ficheiros de tradução (JSON)
+- Mudar idiomas dinamicamente
+- Formatação de datas e números locais
+
+---
+
+### 🧠 Teoria: Os Intérpretes
+i18n é como ter intérpretes profissionais numa conferência: cada um ouve o mesmo conteúdo na sua língua, sem perder o significado original.
+
+---
+
+### 💻 Prática: Traduzindo
+\`\`\`jsx
+const { t } = useTranslation();
+<h1>{t('welcome_message')}</h1>
+\`\`\``,
+    practice: "Cria uma interface de e-commerce que suporte Português, Inglês e Espanhol, incluindo a mudança do símbolo da moeda.",
     resources: [
-      { name: "Vitest Guide", url: "https://vitest.dev/guide/" }
+      { name: "react-i18next Docs", url: "https://react.i18next.com/" }
     ],
     quiz: {
-      question: "O que é o Vitest?",
-      options: ["Um framework de CSS", "Um executor de testes rápido para Vite", "Um substituto para o React", "Um banco de dados"],
+      question: "Qual a vantagem de usar i18n em vez de vários sites diferentes?",
+      options: ["É mais caro", "Um único código mantém todos os idiomas sincronizados", "Não há vantagem", "O Google obriga"],
       correctAnswer: 1
     }
   },
   {
     id: 25,
-    category: "Testes",
-    difficulty: "Intermediário",
-    readingTime: "15 min",
-    title: "Aula 25: React Testing Library",
-    description: "Testando a interação do usuário.",
-    proTip: "Sempre use 'findBy' quando estiver esperando por algo que aparece de forma assíncrona (como após um fetch).",
-    content: `Aprendemos a testar se um botão realmente dispara um evento ou se um texto está visível na tela, focando na experiência do usuário.`,
-    practice: "Escreva um teste que verifica se um botão com o texto 'Enviar' existe no seu componente.",
+    category: "Acessibilidade",
+    difficulty: "Intermédio",
+    readingTime: "60 min",
+    title: "Aula 25: Acessibilidade (a11y) Profissional",
+    description: "Garantir que a tua aplicação é utilizável por todos, incluindo pessoas com deficiências.",
+    proTip: "Se o teu site não funciona só com o teclado, ele não é acessível. Testa sempre sem usar o rato!",
+    content: `### O que vais aprender nesta aula:
+- Princípios WCAG (A, AA, AAA)
+- Uso correto de ARIA labels e Roles
+- Gestão de Foco e contraste de cores
+- Testar com Leitores de Ecrã
+
+---
+
+### 🧠 Teoria: A Cidade Inclusiva
+Acessibilidade é como construir uma cidade com rampas, semáforos sonoros e sinalização tátil: beneficia todos, não apenas quem tem necessidades específicas.
+
+---
+
+### 💻 Prática: Botões Acessíveis
+\`\`\`jsx
+<button aria-label="Fechar modal" onClick={close}>
+  <IconX />
+</button>
+\`\`\``,
+    practice: "Faz uma auditoria de acessibilidade no teu projeto usando a ferramenta 'Lighthouse' e corrige todos os erros encontrados.",
     resources: [
-      { name: "Testing Library Docs", url: "https://testing-library.com/docs/react-testing-library/intro/" }
+      { name: "A11y Project", url: "https://www.a11yproject.com/" }
     ],
     quiz: {
-      question: "Qual a filosofia da React Testing Library?",
-      options: ["Testar detalhes de implementação", "Testar como o usuário interage com o app", "Testar apenas o CSS", "Testar a velocidade do código"],
+      question: "O que significa WCAG?",
+      options: ["World Code Access Group", "Web Content Accessibility Guidelines", "Web Center for Accessible Graphics", "Nenhuma"],
       correctAnswer: 1
     }
   },
   {
     id: 26,
-    category: "TypeScript",
-    difficulty: "Avançado",
-    readingTime: "15 min",
-    title: "Aula 26: TypeScript Essentials para React",
-    description: "Segurança e produtividade.",
-    proTip: "Aprenda a usar 'Utility Types' do TypeScript como Partial, Omit e Pick para manipular suas interfaces de props com facilidade.",
-    content: `Tipando props, estados e eventos. O TypeScript ajuda a evitar erros comuns de 'undefined' e torna o desenvolvimento muito mais profissional.`,
-    practice: "Converta um componente funcional simples para TypeScript, definindo uma interface para suas Props.",
+    category: "Animações",
+    difficulty: "Intermédio",
+    readingTime: "60 min",
+    title: "Aula 26: Animações e Micro-interações",
+    description: "Criar experiências envolventes com Framer Motion e transições fluidas.",
+    proTip: "Menos é mais. Animações devem guiar o utilizador, não distraí-lo. Usa movimentos suaves e intencionais.",
+    content: `### O que vais aprender nesta aula:
+- Transições CSS vs Framer Motion
+- Animar entrada e saída de elementos
+- Micro-interações de feedback (cliques, sucesso)
+- Gestos (drag, hover avançado)
+
+---
+
+### 🧠 Teoria: A Coreografia Teatral
+Animações são como a coreografia: movimentos fluidos guiam a atenção do público e tornam a experiência mais natural e envolvente.
+
+---
+
+### 💻 Prática: Framer Motion
+\`\`\`jsx
+<motion.div animate={{ scale: 1.2 }} />
+\`\`\``,
+    practice: "Cria um botão que, ao ser clicado, exibe um ícone de 'Sucesso' com uma animação de pulsação e mude de cor suavemente.",
     resources: [
-      { name: "React TypeScript Cheatsheet", url: "https://react-typescript-cheatsheet.netlify.app/" }
+      { name: "Framer Motion Docs", url: "https://www.framer.com/motion/" }
     ],
     quiz: {
-      question: "Qual a principal vantagem de usar TypeScript com React?",
-      options: ["O código roda mais rápido no navegador", "Detecção de erros durante o desenvolvimento", "Ocupa menos espaço em disco", "Não precisa de Node.js"],
+      question: "Qual propriedade deve ser animada para melhor performance?",
+      options: ["width/height", "transform/opacity", "margin/padding", "color/border"],
       correctAnswer: 1
     }
   },
   {
     id: 27,
-    category: "Formulários",
-    difficulty: "Intermediário",
-    readingTime: "12 min",
-    title: "Aula 27: Gerenciamento de Formulários com React Hook Form",
-    description: "Formulários complexos sem dor de cabeça.",
-    proTip: "Combine o React Hook Form com o Zod para ter uma validação de esquema poderosa e totalmente tipada com TypeScript.",
-    content: `A biblioteca definitiva para lidar com validações, erros e submissões de formulários de forma performática.`,
-    practice: "Tente criar um formulário de cadastro com validação de 'campo obrigatório' usando React Hook Form.",
+    category: "Testes",
+    difficulty: "Avançado",
+    readingTime: "60 min",
+    title: "Aula 27: Testes End-to-End com Cypress",
+    description: "Simular fluxos reais do utilizador no navegador, do início ao fim.",
+    proTip: "Usa atributos 'data-cy' para os teus seletores. Classes CSS mudam para design e podem quebrar os teus testes desnecessariamente.",
+    content: `### O que vais aprender nesta aula:
+- Configurar Cypress ou Playwright
+- Escrever testes de Aceitação (User Journeys)
+- Interagir com elementos reais e navegação
+- Integrar E2E no pipeline de CI/CD
+
+---
+
+### 🧠 Teoria: Os Utilizadores Beta
+Testes E2E são utilizadores virtuais que testam o teu site 24/7, garantindo que o fluxo de compra ou registo nunca falha.
+
+---
+
+### 💻 Prática: O teu fluxo E2E
+\`\`\`javascript
+it('faz login com sucesso', () => {
+  cy.visit('/login');
+  cy.get('[data-cy=email]').type('user@test.com');
+  cy.get('[data-cy=btn]').click();
+  cy.url().should('include', '/dashboard');
+});
+\`\`\``,
+    practice: "Cria um teste E2E completo: Registo -> Login -> Adicionar ao Carrinho -> Checkout.",
     resources: [
-      { name: "React Hook Form", url: "https://react-hook-form.com/" }
+      { name: "Cypress Docs", url: "https://docs.cypress.io/" }
     ],
     quiz: {
-      question: "Por que usar React Hook Form em vez de gerenciar tudo com useState?",
-      options: ["Porque é mais colorido", "Para evitar renderizações excessivas em formulários grandes", "Porque não precisa de HTML", "Porque é o único jeito de fazer formulários"],
+      question: "O que testa um teste E2E?",
+      options: ["Uma função isolada", "O fluxo completo da app no browser", "Apenas a base de dados", "O código CSS"],
       correctAnswer: 1
     }
   },
   {
     id: 28,
     category: "Deploy",
-    difficulty: "Iniciante",
-    readingTime: "10 min",
-    title: "Aula 28: Deploy para Produção",
-    description: "Seu site online para todo o mundo.",
-    proTip: "Configure o deploy automático (CI/CD) via GitHub para que cada 'push' na branch main atualize seu site instantaneamente.",
-    content: `Aprendemos a gerar o build de produção e hospedar gratuitamente na Vercel ou Netlify com integração contínua (GitHub).`,
-    practice: "Crie uma conta na Vercel e conecte um repositório seu para fazer o deploy.",
+    difficulty: "Avançado",
+    readingTime: "60 min",
+    title: "Aula 28: Deployment e CI/CD Profissional",
+    description: "Automatizar a publicação da app com pipelines de integração contínua.",
+    proTip: "Configura um 'Health Check'. Se a app nova falhar no arranque, o pipeline deve fazer 'Rollback' automático para a versão anterior.",
+    content: `### O que vais aprender nesta aula:
+- Deploys automáticos (Vercel, Netlify)
+- GitHub Actions para CI/CD
+- Gestão de ambientes (Staging vs Produção)
+- Monitorização de erros em produção (Sentry)
+
+---
+
+### 🧠 Teoria: A Linha de Montagem
+CI/CD é como uma fábrica moderna: o código entra (Push), passa por inspeções automáticas (Testes) e sai embalado para o cliente (Deploy).
+
+---
+
+### 💻 Prática: GitHub Action
+\`\`\`yaml
+on: push
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm install && npm run build
+\`\`\``,
+    practice: "Configura um pipeline que corre os teus testes automaticamente em cada Pull Request e só permite o Merge se eles passarem.",
     resources: [
-      { name: "Vercel Deployment Guide", url: "https://vercel.com/docs/deployments/overview" }
+      { name: "GitHub Actions Guide", url: "https://github.com/features/actions" }
     ],
     quiz: {
-      question: "O que o comando 'npm run build' faz?",
-      options: ["Apaga o projeto", "Cria uma versão otimizada da aplicação para produção", "Inicia o servidor de desenvolvimento", "Instala novas bibliotecas"],
+      question: "Qual a vantagem do CI/CD?",
+      options: ["Mais bugs", "Publicações rápidas, frequentes e seguras", "Trabalhar menos", "Gastar mais dinheiro"],
       correctAnswer: 1
     }
   },
   {
     id: 29,
-    category: "Carreira",
-    difficulty: "Iniciante",
-    readingTime: "10 min",
-    title: "Aula 29: Próximos Passos (Next.js e Carreira)",
-    description: "O que estudar depois do React?",
-    proTip: "O ecossistema React muda rápido. Focar em fundamentos de Web (HTML, CSS, JS) tornará você um profissional muito mais resiliente.",
-    content: `Uma visão geral do ecossistema: Next.js para SSR, Remix, React Native e como se preparar para entrevistas técnicas.`,
-    practice: "Pesquise qual a principal diferença entre o React puro e o Next.js.",
+    category: "Arquitetura",
+    difficulty: "Avançado",
+    readingTime: "60 min",
+    title: "Aula 29: Arquitetura e Escalabilidade",
+    description: "Estruturar projetos gigantes que centenas de developers podem manter simultaneamente.",
+    proTip: "Pergunta-te: 'Se eu tiver que remover esta funcionalidade, quantos ficheiros tenho que tocar?'. Quanto menos, melhor a arquitetura.",
+    content: `### O que vais aprender nesta aula:
+- Feature-Sliced Design (FSD)
+- Princípios SOLID em React
+- Camadas de abstração (Entities, Features, App)
+- Preparar para Micro-frontends
+
+---
+
+### 🧠 Teoria: O Planeamento Urbano
+Arquitetura é como o planeamento de uma cidade: bairros organizados, infraestrutura invisível e regras de construção que evitam o caos à medida que cresce.
+
+---
+
+### 💻 Prática: Estrutura FSD
+\`\`\`text
+src/
+  features/   (Lógica de negócio)
+  entities/   (Dados de domínio)
+  shared/     (UI reutilizável)
+\`\`\``,
+    practice: "Reestrutura o teu projeto final seguindo os princípios de camadas de abstração, isolando a lógica de API da lógica de UI.",
     resources: [
-      { name: "Next.js Documentation", url: "https://nextjs.org/docs" }
+      { name: "Feature-Sliced Design", url: "https://feature-sliced.design/" }
     ],
     quiz: {
-      question: "O que significa SSR no contexto do Next.js?",
-      options: ["Super Speed React", "Server Side Rendering", "Simple State Routing", "Static Site React"],
+      question: "O que é o princípio da Responsabilidade Única?",
+      options: ["Todos fazem tudo", "Um componente deve fazer apenas uma coisa e bem", "Ninguém é responsável", "Fazer código rápido"],
       correctAnswer: 1
     }
   },
@@ -1030,20 +1319,36 @@ Exemplo: \`useFetch\`, \`useLocalStorage\`, \`useAuth\`.`,
     id: 30,
     category: "Conclusão",
     difficulty: "Avançado",
-    readingTime: "20 min",
-    title: "Aula 30: Conclusão e Projeto Final",
-    description: "Você agora é um Desenvolvedor React!",
-    proTip: "O aprendizado nunca para. Participe de comunidades, faça networking e ajude outros desenvolvedores para acelerar sua carreira!",
-    content: `Parabéns por completar as 30 aulas! Agora é hora de construir seu projeto de portfólio consolidando tudo o que aprendeu.
+    readingTime: "60 min",
+    title: "Aula 30: Projeto Final Profissional",
+    description: "Consolidar 30 aulas de conhecimento numa aplicação completa pronta para o mercado.",
+    proTip: "Qualidade sobre Quantidade. Um projeto final perfeito com testes e boa arquitetura vale mais do que 10 projetos incompletos no teu portfolio.",
+    content: `### O que vais fazer hoje:
+- Aplicar TODOS os conceitos aprendidos
+- Implementar uma app completa (ex: E-learning ou Dashboard)
+- Deploy com CI/CD e Documentação
+- Preparação para Portfolio
 
-O céu é o limite para o que você pode criar agora. Continue praticando e construindo!`,
-    practice: "Crie um projeto autoral (ex: Clone do Linktree, App de Clima ou Dashboard) e compartilhe com a comunidade!",
+---
+
+### 🎓 Teoria: A Tese de Mestrado
+Este projeto é a prova física da tua evolução. É o que vais mostrar nas entrevistas para provar que és um developer React de elite.
+
+---
+
+### 🚀 Prática Final: Check-list
+- [ ] Autenticação funcional
+- [ ] Gestão de estado global
+- [ ] Testes Unitários e E2E
+- [ ] Performance otimizada (Lazy loading)
+- [ ] Acessibilidade e I18n`,
+    practice: "Finaliza, documenta e publica a tua aplicação. Escreve um README.md profissional explicando as decisões técnicas que tomaste.",
     resources: [
-      { name: "React Roadmap", url: "https://roadmap.sh/react" }
+      { name: "React Roadmap 2026", url: "https://roadmap.sh/react" }
     ],
     quiz: {
-      question: "Qual o melhor jeito de consolidar o aprendizado agora?",
-      options: ["Assistir mais vídeos sem praticar", "Construir projetos reais e ler a documentação", "Desistir e mudar de área", "Esperar o React ser substituído"],
+      question: "Qual o próximo passo após terminar este curso?",
+      options: ["Parar de estudar", "Continuar a construir projetos reais e manter-se atualizado", "Mudar de área", "Esquecer tudo"],
       correctAnswer: 1
     }
   }

@@ -24,6 +24,7 @@ import {
   Library,
   StickyNote,
   MessageSquare, Download,
+  Trophy,
   Search as SearchIcon
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
@@ -385,7 +386,7 @@ const LandingPage = () => {
           <p className="text-lg text-slate-500 dark:text-slate-400 font-medium mb-8">O caminho passo a passo para sua liberdade profissional.</p>
 
           <div className="max-w-xl mx-auto relative mb-10">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
             <input
               type="text"
               placeholder="O que você quer aprender hoje? (ex: Hooks, Props, Deploy...)"
