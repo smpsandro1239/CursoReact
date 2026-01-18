@@ -18,24 +18,27 @@ O projeto principal está localizado na diretoria:
 
 ## 🛠️ Como Iniciar
 
-Para ver a aplicação a funcionar:
+Para ver a aplicação a funcionar localmente:
 
-1. Entre na pasta do projeto:
-   ```bash
-   cd react-course
-   ```
+1. Entre na pasta do projeto: `cd react-course`
+2. Instale as dependências: `npm install`
+3. Inicie: `npm run dev`
+4. Aceda em [http://localhost:5173](http://localhost:5173).
 
-2. Instale as dependências:
-   ```bash
-   npm install
-   ```
+## 🌍 Como Colocar Online (Grátis)
 
-3. Inicie o servidor de desenvolvimento:
-   ```bash
-   npm run dev
-   ```
+Esta aplicação está pronta para ser publicada gratuitamente no **Vercel** ou **Netlify**:
 
-4. Abra o seu navegador em [http://localhost:5173](http://localhost:5173).
+1. **Submeter para o GitHub:** Crie um repositório no seu GitHub e envie este código para lá.
+2. **Ligar à Vercel (Recomendado):**
+   - Aceda a [vercel.com](https://vercel.com) e faça login com o GitHub.
+   - Clique em "Add New" -> "Project".
+   - Importe o seu repositório.
+   - A Vercel detetará automaticamente que é um projeto **Vite**.
+   - Clique em **Deploy**.
+3. **Pronto!** O seu site terá um endereço público (ex: `meu-curso-react.vercel.app`).
+
+O ficheiro `vercel.json` já está incluído para garantir que a navegação entre as aulas funciona corretamente online.
 
 ## 📄 Documentação Detalhada
 
