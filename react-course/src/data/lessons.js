@@ -31,7 +31,7 @@ Para entender o JavaScript, vamos usar uma analogia clara:
 
 ### 💻 Prática: A Consola do Navegador
 
-Abre as Ferramentas de Desenvolvedor no teu navegador (<kbd>F12</kbd> ou <kbd>Ctrl+Shift+J</kbd>) e vai ao separador **Console**. É aqui que a magia acontece!
+Abre as Ferramentas de Desenvolvedor no teu navegador (<kbd>F12</kbd> ou <kbd>Ctrl+Shift+J</kbd>) e vai ao separador **consola**. É aqui que a magia acontece!
 
 **1. O teu primeiro comando**
 \`\`\`javascript
@@ -255,7 +255,7 @@ if (true) {
 - **Array** = uma caixa organizada por ordem (chave de fendas, martelo).
 - **Objeto** = organizada por categorias (elétrica: {voltagem: 220}, mecânica: {martelo: "500g"}).
 
-**Porquê isto importa?** Em React, os dados vêm frequentemente como arrays de objetos. O método \`map()\` transforma esses dados em elementos visuais na tela!
+**Porquê isto importa?** Em React, os dados vêm frequentemente como arrays de objetos. O método \`map()\` transforma esses dados em elementos visuais na ecrã!
 
 > 💡 **Sabias que?** O método \`map()\` é tão fundamental que é usado diariamente por todos os developers React para renderizar listas.
 
@@ -343,7 +343,7 @@ botao.addEventListener("click", () => {
     difficulty: "Iniciante",
     readingTime: "60 min",
     title: "Aula 7: Introdução ao React – O Primeiro Componente",
-    description: "Entrar no ecossistema React e criar o teu primeiro componente funcional.",
+    description: "entrar no ecossistema React e criar o teu primeiro componente funcional.",
     proTip: "Nunca esqueças de fechar tags em JSX! Mesmo tags como <img> devem ser escritas como <img />.",
     content: `### O que vais aprender nesta aula:
 - Compreender o que é o React e a sua popularidade
@@ -634,7 +634,7 @@ function useOnline() {
 \`\`\``,
     practice: "Cria um blog simples com uma página de lista de posts e uma página de detalhe que usa useParams() para identificar qual post exibir.",
     resources: [
-      { name: "React Router Tutorial", url: "https://reactrouter.com/en/main/start/tutorial" }
+      { name: "React Router guia", url: "https://reactrouter.com/en/main/start/guia" }
     ],
     quiz: {
       question: "Qual componente deves usar para navegar sem recarregar a página?",
@@ -663,7 +663,7 @@ function useOnline() {
 - **Prop Drilling** = passar um recado de pessoa em pessoa até chegar ao fim da fila.
 - **Context API** = usar um megafone para que todos oiçam a mensagem diretamente.
 
-**Por que isto importa?** Dados como 'Quem é o utilizador logado?' ou 'O tema é escuro ou claro?' são necessários em quase toda a app. O Contexto torna-os acessíveis em qualquer lado.
+**Por que isto importa?** Dados como 'Quem é o utilizador autenticado?' ou 'O tema é escuro ou claro?' são necessários em quase toda a app. O Contexto torna-os acessíveis em qualquer lado.
 
 ---
 
@@ -680,7 +680,7 @@ function App() {
   );
 }
 \`\`\``,
-    practice: "Cria um sistema de autenticação global (AuthContext) onde qualquer componente pode saber se o utilizador está logado e qual o seu nome.",
+    practice: "Cria um sistema de autenticação global (AuthContext) onde qualquer componente pode saber se o utilizador está autenticado e qual o seu nome.",
     resources: [
       { name: "React Docs - Context", url: "https://react.dev/reference/react/useContext" }
     ],

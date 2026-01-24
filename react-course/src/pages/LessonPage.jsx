@@ -609,7 +609,7 @@ const LessonPage = () => {
                         : 'bg-slate-900 dark:bg-blue-600 text-white hover:bg-black dark:hover:bg-blue-700'}
                     `}
                   >
-                    {isNoteSaved ? <><Check size={18} /> Salvo!</> : <><Save size={18} /> Salvar Nota</>}
+                    {isNoteSaved ? <><Check size={18} /> guardado!</> : <><Save size={18} /> guardar Nota</>}
                   </button>
                 </div>
 
