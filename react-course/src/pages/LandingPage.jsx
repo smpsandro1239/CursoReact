@@ -135,7 +135,7 @@ const LandingPage = () => {
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 text-sm font-black uppercase tracking-widest mb-8 border border-blue-100 dark:border-blue-900/30 shadow-sm">
             <Star size={16} fill="currentColor" />
-            Vagas Abertas - Turma 2024
+            Vagas Abertas - Turma {new Date().getFullYear()}
           </div>
           <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tight leading-[0.9] dark:text-white">
             Domine o <span className="text-blue-600">React</span> do Zero ao <span className="text-emerald-500">Premium</span>.
@@ -522,7 +522,7 @@ const LandingPage = () => {
             ))}
           </div>
           <div className="pt-8 border-t border-slate-800 dark:border-slate-900 text-xs text-slate-600 font-medium">
-            © 2024 PREMIUM REACT. Todos os direitos reservados.
+            © {new Date().getFullYear()} PREMIUM REACT - Sandro Pereira. Todos os direitos reservados.
           </div>
         </div>
       </footer>

@@ -72,4 +72,4 @@ Quer levar esta plataforma ainda mais longe? Aqui estão algumas ideias para fut
 
 ---
 
-Desenvolvido com foco na excelência educativa e experiência do utilizador. Bom estudo! 🎓
+Desenvolvido por Sandro Pereira com foco na excelência educativa e experiência do utilizador. Bom estudo! 🎓

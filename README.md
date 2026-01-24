@@ -1,4 +1,6 @@
-# 🎓 Plataforma de Curso React (30 Aulas)
+# 🚀 Premium React: O Curso Definitivo (30 Aulas) de Sandro Pereira
+
+[![Website](https://img.shields.io/badge/Aceder_ao_Curso-Online-blue?style=for-the-badge&logo=vercel)](https://curso-react-rvyq.vercel.app/)
 
 Este repositório contém uma aplicação completa de e-learning (LMS) focada no ensino de React, cobrindo desde os fundamentos básicos até arquiteturas profissionais avançadas.
 
@@ -49,4 +51,4 @@ O ficheiro `vercel.json` já está incluído para garantir que a navegação ent
 Para mais informações sobre as tecnologias utilizadas, estrutura de código e sugestões de melhoria, consulte o [README.md específico do projeto](./react-course/README.md).
 
 ---
-*Este projeto foi desenvolvido para proporcionar uma experiência de aprendizagem moderna e profissional.*
+*Este projeto foi desenvolvido por Sandro Pereira para proporcionar uma experiência de aprendizagem moderna e profissional.*

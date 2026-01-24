@@ -7,7 +7,7 @@ const Certificate = () => {
   const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '[]');
   const isComplete = completedLessons.length === lessons.length;
   const certificateRef = useRef();
-  const [userName, setUserName] = useState(() => localStorage.getItem('studentName') || 'Seu Nome Aqui');
+  const [userName, setUserName] = useState(() => localStorage.getItem('studentName') || 'Sandro Pereira');
 
   useEffect(() => {
     localStorage.setItem('studentName', userName);
@@ -17,7 +17,7 @@ const Certificate = () => {
     return <Navigate to="/" />;
   }
 
-  const today = new Date().toLocaleDateString('pt-BR', {
+  const today = new Date().toLocaleDateString('pt-PT', {
     day: '2-digit',
     month: 'long',
     year: 'numeric'
@@ -98,7 +98,7 @@ const Certificate = () => {
 
       <div className="mt-8 flex items-center gap-4 text-slate-400 dark:text-slate-600 text-sm font-medium">
         <Share2 size={16} />
-        <span>Compartilhe sua conquista nas redes sociais!</span>
+        <span>Partilhe sua conquista nas redes sociais!</span>
       </div>
     </div>
   );

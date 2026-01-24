@@ -40,7 +40,7 @@ console.log("Olá, mundo!");
 
 **2. Variáveis e Interação**
 \`\`\`javascript
-let nome = "Sandro";
+let nome = "Sandro Pereira";
 console.log("Bem-vindo ao curso de React, " + nome + "! 🚀");
 alert("Bem-vindo à tua jornada!");
 \`\`\`
@@ -99,7 +99,7 @@ console.log("Resposta do aluno:", resposta);
 
 **1. Declaração segura**
 \`\`\`javascript
-const nome = "Sandro";
+const nome = "Sandro Pereira";
 let idade = 30;
 idade = 31; // Válido
 \`\`\`
@@ -272,7 +272,7 @@ const pares = numeros.filter(n => n % 2 === 0); // [2, 4]
 
 **2. Spread Operator (Imutabilidade)**
 \`\`\`javascript
-const perfil = { nome: "Sandro", idade: 30 };
+const perfil = { nome: "Sandro Pereira", idade: 30 };
 const atualizado = { ...perfil, cidade: "Lisboa" };
 \`\`\``,
     practice: "Cria um array de objetos de tarefas (id, texto, concluida). Implementa funções para adicionar uma tarefa e marcar uma como concluída usando map e spread operator.",
@@ -431,7 +431,7 @@ function Saudacao({ nome }) {
 }
 
 // Pai
-<Saudacao nome="Sandro" />
+<Saudacao nome="Sandro Pereira" />
 \`\`\`
 
 **2. Prop Children**
@@ -1001,7 +1001,7 @@ Mocking é simular situações de emergência (falha de motor, mau tempo) num am
 ### 💻 Prática: Mocking de API
 \`\`\`javascript
 global.fetch = jest.fn().mockResolvedValue({
-  json: () => Promise.resolve({ name: 'Sandro' })
+  json: () => Promise.resolve({ name: 'Sandro Pereira' })
 });
 \`\`\``,
     practice: "Escreve um teste avançado para o hook 'useCounter' que criaste na aula 11, garantindo que ele não ultrapassa o valor máximo.",
