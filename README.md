@@ -27,16 +27,20 @@ Para ver a aplicação a funcionar localmente:
 
 ## 🌍 Como Colocar Online (Grátis)
 
-Esta aplicação está pronta para ser publicada gratuitamente no **Vercel** ou **Netlify**:
+Esta aplicação está preparada para ser publicada gratuitamente de duas formas:
 
-1. **Submeter para o GitHub:** Crie um repositório no seu GitHub e envie este código para lá.
-2. **Ligar à Vercel (Recomendado):**
-   - Aceda a [vercel.com](https://vercel.com) e faça login com o GitHub.
-   - Clique em "Add New" -> "Project".
-   - Importe o seu repositório.
-   - A Vercel detetará automaticamente que é um projeto **Vite**.
-   - Clique em **Deploy**.
-3. **Pronto!** O seu site terá um endereço público (ex: `meu-curso-react.vercel.app`).
+### Opção 1: GitHub Pages (Automático)
+Este repositório já inclui um **GitHub Action**. Assim que enviar o código para o seu repositório GitHub:
+1. Vá às **Settings** do seu repositório no GitHub.
+2. No menu lateral, clique em **Pages**.
+3. Em "Build and deployment" -> "Source", escolha **GitHub Actions**.
+4. O GitHub fará o build e o deploy automático sempre que fizer "push" de novo código.
+
+### Opção 2: Vercel (Recomendado pela simplicidade)
+1. Crie um repositório no seu GitHub e envie este código para lá.
+2. Aceda a [vercel.com](https://vercel.com) e importe o repositório.
+3. A Vercel detetará automaticamente as configurações de **Vite**.
+4. Clique em **Deploy**.
 
 O ficheiro `vercel.json` já está incluído para garantir que a navegação entre as aulas funciona corretamente online.
 
