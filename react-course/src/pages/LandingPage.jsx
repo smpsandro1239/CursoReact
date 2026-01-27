@@ -121,7 +121,7 @@ const LandingPage = () => {
               to="/lesson/1"
               className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors"
             >
-              Acessar Aulas
+              Aceder às Aulas
             </Link>
           </div>
         </div>
@@ -135,7 +135,7 @@ const LandingPage = () => {
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 text-sm font-black uppercase tracking-widest mb-8 border border-blue-100 dark:border-blue-900/30 shadow-sm">
             <Star size={16} fill="currentColor" />
-            Vagas Abertas - Turma {new Date().getFullYear()}
+            Inscrições Abertas - Turma {new Date().getFullYear()}
           </div>
           <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tight leading-[0.9] dark:text-white">
             Domine o <span className="text-blue-600">React</span> do Zero ao <span className="text-emerald-500">Premium</span>.
@@ -189,7 +189,7 @@ const LandingPage = () => {
               to="/lesson/1"
               className="w-full sm:w-auto bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-none transition-all flex items-center justify-center gap-3 group"
             >
-              Começar minha jornada <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+              Começar a minha jornada <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <div className="flex items-center gap-3 text-slate-400 dark:text-slate-600 font-bold">
               <div className="flex -space-x-3">
@@ -266,15 +266,15 @@ const LandingPage = () => {
                   <StickyNote size={32} />
                 </div>
                 <div>
-                  <h2 className="text-4xl font-black tracking-tight dark:text-white leading-tight">Seus Insights</h2>
-                  <p className="text-slate-500 dark:text-slate-400 font-medium">Busque em todas as anotações que você fez durante o curso.</p>
+                  <h2 className="text-4xl font-black tracking-tight dark:text-white leading-tight">Os Teus Insights</h2>
+                  <p className="text-slate-500 dark:text-slate-400 font-medium">Pesquisa em todas as notas que fizeste durante o curso.</p>
                 </div>
               </div>
               <div className="relative w-full md:w-80">
                 <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                 <input
                   type="text"
-                  placeholder="Buscar em suas notas..."
+                  placeholder="Pesquisar nas tuas notas..."
                   value={notesSearch}
                   onChange={(e) => setNotesSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl text-sm focus:outline-none focus:border-blue-500 transition-all dark:text-white"
@@ -481,7 +481,7 @@ const LandingPage = () => {
                 <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-3 truncate">{res.lessonTitle}</div>
                 <div className="font-bold mb-4 dark:text-white group-hover:text-blue-600 transition-colors">{res.name}</div>
                 <div className="flex items-center gap-2 text-xs text-slate-400 font-bold group-hover:text-slate-600 transition-colors">
-                  Acessar Documentação <ExternalLink size={12} />
+                  Aceder à Documentação <ExternalLink size={12} />
                 </div>
               </a>
             ))}

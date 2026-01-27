@@ -38,7 +38,7 @@ const Certificate = () => {
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl font-bold text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            placeholder="Seu nome completo"
+            placeholder="O teu nome completo"
           />
         </div>
 
@@ -78,7 +78,7 @@ const Certificate = () => {
               {userName}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed pt-4">
-              concluiu com êxito o treinamento intensivo de **React.js**, totalizando 30 aulas práticas, abrangendo desde fundamentos básicos até padrões avançados de arquitetura, performance e deploy.
+              concluiu com êxito a formação intensiva de **React.js**, totalizando 30 aulas práticas, abrangendo desde fundamentos básicos até padrões avançados de arquitetura, performance e deploy.
             </p>
           </div>
 

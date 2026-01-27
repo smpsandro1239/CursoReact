@@ -174,7 +174,7 @@ const LessonPage = () => {
   };
 
   const resetProgress = () => {
-    if (window.confirm("Tem certeza que deseja resetar todo o seu progresso?")) {
+    if (window.confirm("Tens a certeza que desejas repor todo o teu progresso?")) {
       setCompletedLessons([]);
       localStorage.removeItem('completedLessons');
     }
@@ -183,8 +183,8 @@ const LessonPage = () => {
   const shareLesson = () => {
     if (navigator.share) {
       navigator.share({
-        title: `Estou aprendendo React: ${lesson.title}`,
-        text: `Confira esta aula sobre ${lesson.title} no curso Premium React!`,
+        title: `Estou a aprender React: ${lesson.title}`,
+        text: `Vê esta aula sobre ${lesson.title} no curso Premium React!`,
         url: window.location.href,
       });
     } else {
@@ -300,7 +300,7 @@ const LessonPage = () => {
                 onClick={resetProgress}
                 className="text-[9px] text-red-500 hover:text-red-600 font-bold uppercase tracking-tighter flex items-center gap-1 mt-1 transition-colors"
               >
-                <RotateCcw size={10} /> Resetar Progresso
+                <RotateCcw size={10} /> Repor Progresso
               </button>
             </div>
             <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{Math.round((completedLessons.length / lessons.length) * 100)}%</span>
@@ -349,7 +349,7 @@ const LessonPage = () => {
                 <button
                   onClick={shareLesson}
                   className="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all shadow-sm bg-white dark:bg-slate-900"
-                  title="Compartilhar Aula"
+                  title="Partilhar Aula"
                 >
                   <Share2 size={20} />
                 </button>
@@ -584,7 +584,7 @@ const LessonPage = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2 text-blue-600">
                       <StickyNote size={20} />
-                      <h3 className="font-black uppercase tracking-widest text-xs">Minhas Anotações</h3>
+                      <h3 className="font-black uppercase tracking-widest text-xs">As Minhas Notas</h3>
                     </div>
                     <button
                       onClick={exportAllNotes}
