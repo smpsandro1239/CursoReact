@@ -28,6 +28,7 @@ import {
   Save,
   Trophy,
   Download,
+  Heart,
   Link as LinkIcon
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
@@ -53,6 +54,7 @@ const LessonPage = () => {
   const [isNoteSaved, setIsNoteSaved] = useState(false);
   const [practiceDone, setPracticeDone] = useState(false);
   const [solutionUrl, setSolutionUrl] = useState('');
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -69,6 +71,9 @@ const LessonPage = () => {
 
     const savedSolutions = JSON.parse(localStorage.getItem('lessonSolutions') || '{}');
     setSolutionUrl(savedSolutions[lessonId] || '');
+
+    const savedFavorites = JSON.parse(localStorage.getItem('favoriteLessons') || '[]');
+    setIsFavorite(savedFavorites.includes(lessonId));
   }, [lessonId]);
 
   useEffect(() => {
@@ -153,6 +158,18 @@ const LessonPage = () => {
     a.download = 'notas-react-premium.md';
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const toggleFavorite = () => {
+    const savedFavorites = JSON.parse(localStorage.getItem('favoriteLessons') || '[]');
+    let newFavorites;
+    if (isFavorite) {
+      newFavorites = savedFavorites.filter(id => id !== lessonId);
+    } else {
+      newFavorites = [...savedFavorites, lessonId];
+    }
+    localStorage.setItem('favoriteLessons', JSON.stringify(newFavorites));
+    setIsFavorite(!isFavorite);
   };
 
   const togglePractice = () => {
@@ -346,6 +363,18 @@ const LessonPage = () => {
               </div>
 
               <div className="flex items-center gap-3">
+                <button
+                  onClick={toggleFavorite}
+                  className={`
+                    p-3 rounded-2xl border-2 transition-all shadow-sm bg-white dark:bg-slate-900
+                    ${isFavorite
+                      ? 'border-pink-200 dark:border-pink-900 text-pink-500'
+                      : 'border-slate-200 dark:border-slate-800 text-slate-400 hover:text-pink-500 hover:border-pink-500'}
+                  `}
+                  title={isFavorite ? "Remover dos Favoritos" : "Adicionar aos Favoritos"}
+                >
+                  <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
+                </button>
                 <button
                   onClick={shareLesson}
                   className="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all shadow-sm bg-white dark:bg-slate-900"

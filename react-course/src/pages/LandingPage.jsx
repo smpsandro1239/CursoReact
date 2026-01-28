@@ -25,11 +25,18 @@ import {
   StickyNote,
   MessageSquare, Download,
   Trophy,
+  Heart,
+  Medal,
   Search as SearchIcon
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
 import Fuse from 'fuse.js';
+
+const fuse = new Fuse(lessons, {
+  keys: ['title', 'description', 'category', 'tags'],
+  threshold: 0.3,
+});
 
 const LandingPage = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -43,11 +50,14 @@ const LandingPage = () => {
   const totalHours = (totalMinutes / 60).toFixed(1);
 
   const [practiceCount, setPracticeCount] = useState(0);
+  const [favoriteLessons, setFavoriteLessons] = useState([]);
 
-  const fuse = new Fuse(lessons, {
-    keys: ['title', 'description', 'category', 'tags'],
-    threshold: 0.3,
-  });
+  const badges = [
+    { id: 'iniciado', name: 'Iniciado', min: 1, icon: <Zap size={20} />, color: 'bg-blue-500' },
+    { id: 'explorador', name: 'Explorador', min: 5, icon: <Target size={20} />, color: 'bg-indigo-500' },
+    { id: 'avancado', name: 'Avançado', min: 15, icon: <ShieldCheck size={20} />, color: 'bg-purple-500' },
+    { id: 'mestre', name: 'Mestre React', min: 30, icon: <Trophy size={20} />, color: 'bg-amber-500' }
+  ];
 
   const filteredLessons = useMemo(() => {
     let result = lessons;
@@ -122,6 +132,9 @@ const LandingPage = () => {
     if (saved) {
       setCompletedCount(JSON.parse(saved).length);
     }
+
+    const savedFavorites = JSON.parse(localStorage.getItem('favoriteLessons') || '[]');
+    setFavoriteLessons(lessons.filter(l => savedFavorites.includes(l.id)));
   }, []);
 
   return (
@@ -134,6 +147,12 @@ const LandingPage = () => {
             <button onClick={toggleDarkMode} className="p-2 text-slate-400 hover:text-blue-600 transition-colors">
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
+            <Link
+              to="/glossary"
+              className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors"
+            >
+              Glossário
+            </Link>
             <Link
               to="/lesson/1"
               className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors"
@@ -222,6 +241,34 @@ const LandingPage = () => {
         </div>
       </header>
 
+      {/* Badges Section */}
+      {completedCount > 0 && (
+        <section className="max-w-7xl mx-auto px-6 mb-12">
+          <div className="flex flex-wrap gap-4 items-center justify-center">
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-2">As Tuas Conquistas:</span>
+            {badges.map(badge => {
+              const isLocked = completedCount < badge.min;
+              return (
+                <div
+                  key={badge.id}
+                  className={`
+                    flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all
+                    ${isLocked
+                      ? 'bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 opacity-40 grayscale'
+                      : `${badge.color} border-transparent text-white shadow-lg shadow-blue-500/20`}
+                  `}
+                  title={isLocked ? `Conclui ${badge.min} aulas para desbloquear` : 'Conquista desbloqueada!'}
+                >
+                  {badge.icon}
+                  <span className="text-xs font-black uppercase tracking-wider">{badge.name}</span>
+                  {!isLocked && <Medal size={14} className="text-white/80" />}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       {/* Progress Summary (Conditional) */}
       {completedCount > 0 && (
         <section className="max-w-7xl mx-auto px-6 -mt-10 mb-10 relative z-20">
@@ -268,6 +315,47 @@ const LandingPage = () => {
                   Exportar Notas <Download size={20} />
                 </button>
               </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Favorite Lessons */}
+      {favoriteLessons.length > 0 && (
+        <section className="py-24 bg-white dark:bg-slate-950 border-t border-slate-50 dark:border-slate-900">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center gap-4 mb-12">
+              <div className="p-4 bg-pink-50 dark:bg-pink-900/20 rounded-3xl text-pink-500">
+                <Heart size={32} fill="currentColor" />
+              </div>
+              <div>
+                <h2 className="text-4xl font-black tracking-tight dark:text-white leading-tight">As Tuas Favoritas</h2>
+                <p className="text-slate-500 dark:text-slate-400 font-medium">As aulas que marcaste para rever mais tarde.</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {favoriteLessons.map((lesson) => (
+                <Link
+                  key={lesson.id}
+                  to={`/lesson/${lesson.id}`}
+                  className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 hover:border-pink-200 dark:hover:border-pink-900 hover:shadow-2xl dark:hover:shadow-none transition-all group relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-pink-50/50 dark:bg-pink-900/10 rounded-bl-full -z-10 group-hover:bg-pink-600/5 transition-colors"></div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="bg-pink-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                      Aula {lesson.id}
+                    </div>
+                    <Heart size={20} className="text-pink-500" fill="currentColor" />
+                  </div>
+                  <h3 className="text-xl font-black mb-3 group-hover:text-pink-600 transition-colors leading-tight dark:text-white">
+                    {lesson.title}
+                  </h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">
+                    {lesson.description}
+                  </p>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
