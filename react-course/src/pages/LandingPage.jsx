@@ -154,6 +154,12 @@ const LandingPage = () => {
               Glossário
             </Link>
             <Link
+              to="/analytics"
+              className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors"
+            >
+              Dashboard
+            </Link>
+            <Link
               to="/lesson/1"
               className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors"
             >

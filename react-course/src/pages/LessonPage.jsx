@@ -33,6 +33,8 @@ import {
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
+import CodePlayground from '../components/CodePlayground';
+import CommentsSection from '../components/CommentsSection';
 
 const LessonPage = () => {
   const { id } = useParams();
@@ -480,9 +482,21 @@ const LessonPage = () => {
                       <div className="absolute -top-3 left-6 bg-slate-800 px-3 py-1 rounded-md text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                         instruções.md
                       </div>
-                      <p className="leading-relaxed whitespace-pre-wrap">
+                      <p className="leading-relaxed whitespace-pre-wrap mb-8">
                         {lesson.practice}
                       </p>
+
+                      {lesson.playground && (
+                        <div className="mb-8">
+                          <CodePlayground
+                            initialHtml={lesson.playground.html}
+                            initialCss={lesson.playground.css}
+                            initialJs={lesson.playground.js}
+                            height="400px"
+                          />
+                        </div>
+                      )}
+
                       <div className="mt-8 space-y-4">
                         <div className="relative">
                           <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
@@ -612,6 +626,11 @@ const LessonPage = () => {
                       </div>
                     </div>
                   )}
+
+                  {/* Comments Section */}
+                  <div className="p-8 md:p-12 border-t border-slate-100 dark:border-slate-800">
+                    <CommentsSection lessonId={lessonId} />
+                  </div>
                 </div>
 
                 {/* Related Lessons */}

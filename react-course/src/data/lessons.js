@@ -80,6 +80,11 @@ Experimenta mudar os valores e ver o que acontece. A curiosidade e a tentativa-e
 - [ ] Executei comandos como \`console.log\`, \`alert\` e \`prompt\`.
 - [ ] Estou pronto para aprender sobre variáveis na próxima aula.`,
     practice: "Cria um programa na consola que apresente uma mini-apresentação pessoal interativa. Usa pelo menos 3 comandos console.log(), variáveis para o teu nome, idade e objetivo no curso, e inclui pelo menos um prompt() e um alert().",
+    playground: {
+      html: "<!-- Testa o teu código JavaScript aqui -->\n<h1 id='titulo'>Olá Mundo!</h1>\n<button id='btn'>Clica-me</button>",
+      css: "body { font-family: sans-serif; text-align: center; padding: 20px; }\nbutton { padding: 10px 20px; cursor: pointer; }",
+      js: "// Escreve aqui o teu código da Aula 1\nconst btn = document.getElementById('btn');\nbtn.onclick = () => {\n  const nome = prompt('Qual é o teu nome?');\n  alert('Bem-vindo ao curso, ' + nome + '!');\n  console.log('Utilizador saudado: ' + nome);\n};"
+    },
     resources: [
       { name: "MDN - JavaScript First Steps", url: "https://developer.mozilla.org/pt-PT/docs/Learn/JavaScript/First_steps" },
       { name: "W3Schools - JS Introduction", url: "https://www.w3schools.com/js/js_intro.asp" }
@@ -174,6 +179,11 @@ Em português europeu e boas práticas globais, usa nomes descritivos em \`camel
 - [ ] Uso \`===\` para comparações seguras.
 - [ ] Sei criar strings dinâmicas com template literals.`,
     practice: "Cria um programa que calcule o IMC (Índice de Massa Corporal). Usa const para nome e altura, let para peso (que pode mudar). Calcula IMC = peso / (altura * altura) e exibe o resultado usando template literals.",
+    playground: {
+      html: "<div id='app'></div>",
+      css: "#app { font-family: system-ui; padding: 2rem; border-radius: 1rem; background: #f0f9ff; }",
+      js: "const nome = 'Sandro';\nconst altura = 1.75;\nlet peso = 75;\n\nconst imc = peso / (altura * altura);\nconst msg = `Olá ${nome}, o teu IMC é ${imc.toFixed(2)}`;\n\ndocument.getElementById('app').textContent = msg;"
+    },
     resources: [
       { name: "MDN - Grammar and types", url: "https://developer.mozilla.org/pt-PT/docs/Web/JavaScript/Guide/Grammar_and_types" },
       { name: "JavaScript.info - Variables", url: "https://javascript.info/variables" }
