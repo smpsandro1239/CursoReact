@@ -28,10 +28,13 @@ import {
   Save,
   Trophy,
   Download,
+  Heart,
   Link as LinkIcon
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
+import CodePlayground from '../components/CodePlayground';
+import CommentsSection from '../components/CommentsSection';
 
 const LessonPage = () => {
   const { id } = useParams();
@@ -47,17 +50,18 @@ const LessonPage = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [quizAnswer, setQuizAnswer] = useState(null);
-  const [showQuizResult, setShowQuizResult] = useState(false);
+  const [quizAnswers, setQuizAnswers] = useState({});
+  const [showQuizResults, setShowQuizResults] = useState(false);
   const [note, setNote] = useState('');
   const [isNoteSaved, setIsNoteSaved] = useState(false);
   const [practiceDone, setPracticeDone] = useState(false);
   const [solutionUrl, setSolutionUrl] = useState('');
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setQuizAnswer(null);
-    setShowQuizResult(false);
+    setQuizAnswers({});
+    setShowQuizResults(false);
 
     // Load note for this lesson
     const savedNotes = JSON.parse(localStorage.getItem('lessonNotes') || '{}');
@@ -69,6 +73,9 @@ const LessonPage = () => {
 
     const savedSolutions = JSON.parse(localStorage.getItem('lessonSolutions') || '{}');
     setSolutionUrl(savedSolutions[lessonId] || '');
+
+    const savedFavorites = JSON.parse(localStorage.getItem('favoriteLessons') || '[]');
+    setIsFavorite(savedFavorites.includes(lessonId));
   }, [lessonId]);
 
   useEffect(() => {
@@ -155,6 +162,18 @@ const LessonPage = () => {
     URL.revokeObjectURL(url);
   };
 
+  const toggleFavorite = () => {
+    const savedFavorites = JSON.parse(localStorage.getItem('favoriteLessons') || '[]');
+    let newFavorites;
+    if (isFavorite) {
+      newFavorites = savedFavorites.filter(id => id !== lessonId);
+    } else {
+      newFavorites = [...savedFavorites, lessonId];
+    }
+    localStorage.setItem('favoriteLessons', JSON.stringify(newFavorites));
+    setIsFavorite(!isFavorite);
+  };
+
   const togglePractice = () => {
     const savedPractice = JSON.parse(localStorage.getItem('practiceDone') || '[]');
     let newPractice;
@@ -174,7 +193,7 @@ const LessonPage = () => {
   };
 
   const resetProgress = () => {
-    if (window.confirm("Tem certeza que deseja resetar todo o seu progresso?")) {
+    if (window.confirm("Tens a certeza que desejas repor todo o teu progresso?")) {
       setCompletedLessons([]);
       localStorage.removeItem('completedLessons');
     }
@@ -183,8 +202,8 @@ const LessonPage = () => {
   const shareLesson = () => {
     if (navigator.share) {
       navigator.share({
-        title: `Estou aprendendo React: ${lesson.title}`,
-        text: `Confira esta aula sobre ${lesson.title} no curso Premium React!`,
+        title: `Estou a aprender React: ${lesson.title}`,
+        text: `Vê esta aula sobre ${lesson.title} no curso Premium React!`,
         url: window.location.href,
       });
     } else {
@@ -300,7 +319,7 @@ const LessonPage = () => {
                 onClick={resetProgress}
                 className="text-[9px] text-red-500 hover:text-red-600 font-bold uppercase tracking-tighter flex items-center gap-1 mt-1 transition-colors"
               >
-                <RotateCcw size={10} /> Resetar Progresso
+                <RotateCcw size={10} /> Repor Progresso
               </button>
             </div>
             <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{Math.round((completedLessons.length / lessons.length) * 100)}%</span>
@@ -347,9 +366,21 @@ const LessonPage = () => {
 
               <div className="flex items-center gap-3">
                 <button
+                  onClick={toggleFavorite}
+                  className={`
+                    p-3 rounded-2xl border-2 transition-all shadow-sm bg-white dark:bg-slate-900
+                    ${isFavorite
+                      ? 'border-pink-200 dark:border-pink-900 text-pink-500'
+                      : 'border-slate-200 dark:border-slate-800 text-slate-400 hover:text-pink-500 hover:border-pink-500'}
+                  `}
+                  title={isFavorite ? "Remover dos Favoritos" : "Adicionar aos Favoritos"}
+                >
+                  <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
+                </button>
+                <button
                   onClick={shareLesson}
                   className="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all shadow-sm bg-white dark:bg-slate-900"
-                  title="Compartilhar Aula"
+                  title="Partilhar Aula"
                 >
                   <Share2 size={20} />
                 </button>
@@ -375,6 +406,20 @@ const LessonPage = () => {
               <div className="lg:col-span-2">
                 <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden mb-10 transition-colors">
                   <div className="p-8 md:p-12">
+                    {lesson.videoUrl && (
+                      <div className="mb-10 aspect-video rounded-3xl overflow-hidden border-4 border-slate-100 dark:border-slate-800 shadow-2xl">
+                        <iframe
+                          width="100%"
+                          height="100%"
+                          src={lesson.videoUrl}
+                          title="Vídeo da Aula"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        ></iframe>
+                      </div>
+                    )}
+
                     <div className="prose prose-slate dark:prose-invert prose-lg max-w-none
                       prose-headings:font-black prose-headings:tracking-tight
                       prose-a:text-blue-600
@@ -437,9 +482,21 @@ const LessonPage = () => {
                       <div className="absolute -top-3 left-6 bg-slate-800 px-3 py-1 rounded-md text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                         instruções.md
                       </div>
-                      <p className="leading-relaxed whitespace-pre-wrap">
+                      <p className="leading-relaxed whitespace-pre-wrap mb-8">
                         {lesson.practice}
                       </p>
+
+                      {lesson.playground && (
+                        <div className="mb-8">
+                          <CodePlayground
+                            initialHtml={lesson.playground.html}
+                            initialCss={lesson.playground.css}
+                            initialJs={lesson.playground.js}
+                            height="400px"
+                          />
+                        </div>
+                      )}
+
                       <div className="mt-8 space-y-4">
                         <div className="relative">
                           <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={14} />
@@ -473,53 +530,60 @@ const LessonPage = () => {
                   </div>
 
                   {/* Quiz Section */}
-                  {lesson.quiz && (
+                  {lesson.quizzes && lesson.quizzes.length > 0 && (
                     <div className="p-8 md:p-12 border-t border-slate-100 dark:border-slate-800 bg-blue-50/30 dark:bg-blue-900/10">
                       <div className="flex items-center gap-3 mb-8">
                         <div className="p-2 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg">
                           <HelpCircle size={24} />
                         </div>
-                        <h2 className="text-xl font-black tracking-tight dark:text-white text-slate-900">Quiz Rápido</h2>
+                        <h2 className="text-xl font-black tracking-tight dark:text-white text-slate-900">Verificação de Conhecimento</h2>
                       </div>
 
-                      <div className="space-y-6">
-                        <p className="text-lg font-bold text-slate-800 dark:text-slate-200">{lesson.quiz.question}</p>
+                      <div className="space-y-12">
+                        {lesson.quizzes.map((quiz, qIndex) => (
+                          <div key={qIndex} className="space-y-6">
+                            <p className="text-lg font-bold text-slate-800 dark:text-slate-200">
+                              {qIndex + 1}. {quiz.question}
+                            </p>
 
-                        <div className="grid gap-3">
-                          {lesson.quiz.options.map((option, index) => (
-                            <button
-                              key={index}
-                              onClick={() => !showQuizResult && setQuizAnswer(index)}
-                              className={`
-                                w-full p-4 rounded-xl border-2 text-left transition-all font-medium
-                                ${showQuizResult
-                                  ? index === lesson.quiz.correctAnswer
-                                    ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-700 dark:text-emerald-400'
-                                    : index === quizAnswer
-                                      ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-400'
-                                      : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 opacity-50'
-                                  : quizAnswer === index
-                                    ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-400'
-                                    : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800 text-slate-600 dark:text-slate-400'
-                                }
-                              `}
-                            >
-                              <div className="flex items-center justify-between">
-                                <span>{option}</span>
-                                {showQuizResult && index === lesson.quiz.correctAnswer && <Check size={18} />}
-                              </div>
-                            </button>
-                          ))}
-                        </div>
+                            <div className="grid gap-3">
+                              {quiz.options.map((option, index) => (
+                                <button
+                                  key={index}
+                                  onClick={() => !showQuizResults && setQuizAnswers(prev => ({ ...prev, [qIndex]: index }))}
+                                  className={`
+                                    w-full p-4 rounded-xl border-2 text-left transition-all font-medium
+                                    ${showQuizResults
+                                      ? index === quiz.correctAnswer
+                                        ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-700 dark:text-emerald-400'
+                                        : index === quizAnswers[qIndex]
+                                          ? 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-400'
+                                          : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 opacity-50'
+                                      : quizAnswers[qIndex] === index
+                                        ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-700 dark:text-blue-400'
+                                        : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800 text-slate-600 dark:text-slate-400'
+                                    }
+                                  `}
+                                >
+                                  <div className="flex items-center justify-between">
+                                    <span>{option}</span>
+                                    {showQuizResults && index === quiz.correctAnswer && <Check size={18} />}
+                                  </div>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
 
-                        {!showQuizResult ? (
+                        {!showQuizResults ? (
                           <button
-                            disabled={quizAnswer === null}
+                            disabled={Object.keys(quizAnswers).length < lesson.quizzes.length}
                             onClick={() => {
-                              setShowQuizResult(true);
-                              if (quizAnswer === lesson.quiz.correctAnswer) {
+                              setShowQuizResults(true);
+                              const correctCount = lesson.quizzes.filter((q, i) => quizAnswers[i] === q.correctAnswer).length;
+                              if (correctCount === lesson.quizzes.length) {
                                 confetti({
-                                  particleCount: 100,
+                                  particleCount: 150,
                                   spread: 70,
                                   origin: { y: 0.6 },
                                   colors: ['#2563eb', '#10b981', '#f59e0b']
@@ -528,31 +592,45 @@ const LessonPage = () => {
                             }}
                             className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-all"
                           >
-                            Verificar Resposta
+                            Verificar Todas as Respostas
                           </button>
                         ) : (
                           <div className={`
-                            p-4 rounded-xl flex items-start gap-3
-                            ${quizAnswer === lesson.quiz.correctAnswer
+                            p-6 rounded-2xl flex flex-col gap-4
+                            ${lesson.quizzes.every((q, i) => quizAnswers[i] === q.correctAnswer)
                               ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
-                              : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'}
+                              : 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'}
                           `}>
-                            {quizAnswer === lesson.quiz.correctAnswer ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                            <div>
-                              <p className="font-bold">
-                                {quizAnswer === lesson.quiz.correctAnswer ? 'Excelente! Você acertou.' : 'Não foi dessa vez.'}
-                              </p>
-                              <p className="text-sm opacity-90">
-                                {quizAnswer === lesson.quiz.correctAnswer
-                                  ? 'Continue assim e domine o React!'
-                                  : `A resposta correta é: ${lesson.quiz.options[lesson.quiz.correctAnswer]}`}
+                            <div className="flex items-center gap-3">
+                              {lesson.quizzes.every((q, i) => quizAnswers[i] === q.correctAnswer) ? <Trophy size={24} /> : <AlertCircle size={24} />}
+                              <p className="font-black text-xl">
+                                Resultado: {lesson.quizzes.filter((q, i) => quizAnswers[i] === q.correctAnswer).length} de {lesson.quizzes.length} corretas!
                               </p>
                             </div>
+                            <p className="font-medium opacity-90">
+                              {lesson.quizzes.every((q, i) => quizAnswers[i] === q.correctAnswer)
+                                ? 'Brilhante! Dominaste esta aula a 100%.'
+                                : 'Bom esforço! Revê as questões marcadas a vermelho para solidificar o conhecimento.'}
+                            </p>
+                            <button
+                              onClick={() => {
+                                setShowQuizResults(false);
+                                setQuizAnswers({});
+                              }}
+                              className="w-fit text-sm font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70"
+                            >
+                              <RotateCcw size={14} /> Tentar Novamente
+                            </button>
                           </div>
                         )}
                       </div>
                     </div>
                   )}
+
+                  {/* Comments Section */}
+                  <div className="p-8 md:p-12 border-t border-slate-100 dark:border-slate-800">
+                    <CommentsSection lessonId={lessonId} />
+                  </div>
                 </div>
 
                 {/* Related Lessons */}
@@ -584,7 +662,7 @@ const LessonPage = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2 text-blue-600">
                       <StickyNote size={20} />
-                      <h3 className="font-black uppercase tracking-widest text-xs">Minhas Anotações</h3>
+                      <h3 className="font-black uppercase tracking-widest text-xs">As Minhas Notas</h3>
                     </div>
                     <button
                       onClick={exportAllNotes}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BookOpen,
@@ -25,10 +25,18 @@ import {
   StickyNote,
   MessageSquare, Download,
   Trophy,
+  Heart,
+  Medal,
   Search as SearchIcon
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
+import Fuse from 'fuse.js';
+
+const fuse = new Fuse(lessons, {
+  keys: ['title', 'description', 'category', 'tags'],
+  threshold: 0.3,
+});
 
 const LandingPage = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -42,6 +50,25 @@ const LandingPage = () => {
   const totalHours = (totalMinutes / 60).toFixed(1);
 
   const [practiceCount, setPracticeCount] = useState(0);
+  const [favoriteLessons, setFavoriteLessons] = useState([]);
+
+  const badges = [
+    { id: 'iniciado', name: 'Iniciado', min: 1, icon: <Zap size={20} />, color: 'bg-blue-500' },
+    { id: 'explorador', name: 'Explorador', min: 5, icon: <Target size={20} />, color: 'bg-indigo-500' },
+    { id: 'avancado', name: 'Avançado', min: 15, icon: <ShieldCheck size={20} />, color: 'bg-purple-500' },
+    { id: 'mestre', name: 'Mestre React', min: 30, icon: <Trophy size={20} />, color: 'bg-amber-500' }
+  ];
+
+  const filteredLessons = useMemo(() => {
+    let result = lessons;
+    if (searchTerm) {
+      result = fuse.search(searchTerm).map(r => r.item);
+    }
+    if (activeCategory !== 'Todas') {
+      result = result.filter(l => l.category === activeCategory);
+    }
+    return result;
+  }, [searchTerm, activeCategory]);
 
   useEffect(() => {
     const savedPractice = localStorage.getItem('practiceDone');
@@ -105,6 +132,9 @@ const LandingPage = () => {
     if (saved) {
       setCompletedCount(JSON.parse(saved).length);
     }
+
+    const savedFavorites = JSON.parse(localStorage.getItem('favoriteLessons') || '[]');
+    setFavoriteLessons(lessons.filter(l => savedFavorites.includes(l.id)));
   }, []);
 
   return (
@@ -118,10 +148,22 @@ const LandingPage = () => {
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <Link
+              to="/glossary"
+              className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors"
+            >
+              Glossário
+            </Link>
+            <Link
+              to="/analytics"
+              className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors"
+            >
+              Dashboard
+            </Link>
+            <Link
               to="/lesson/1"
               className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors"
             >
-              Acessar Aulas
+              Aceder às Aulas
             </Link>
           </div>
         </div>
@@ -135,7 +177,7 @@ const LandingPage = () => {
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 text-sm font-black uppercase tracking-widest mb-8 border border-blue-100 dark:border-blue-900/30 shadow-sm">
             <Star size={16} fill="currentColor" />
-            Vagas Abertas - Turma {new Date().getFullYear()}
+            Inscrições Abertas - Turma {new Date().getFullYear()}
           </div>
           <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tight leading-[0.9] dark:text-white">
             Domine o <span className="text-blue-600">React</span> do Zero ao <span className="text-emerald-500">Premium</span>.
@@ -189,7 +231,7 @@ const LandingPage = () => {
               to="/lesson/1"
               className="w-full sm:w-auto bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-blue-700 hover:shadow-2xl hover:shadow-blue-200 dark:hover:shadow-none transition-all flex items-center justify-center gap-3 group"
             >
-              Começar minha jornada <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+              Começar a minha jornada <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <div className="flex items-center gap-3 text-slate-400 dark:text-slate-600 font-bold">
               <div className="flex -space-x-3">
@@ -204,6 +246,34 @@ const LandingPage = () => {
           </div>
         </div>
       </header>
+
+      {/* Badges Section */}
+      {completedCount > 0 && (
+        <section className="max-w-7xl mx-auto px-6 mb-12">
+          <div className="flex flex-wrap gap-4 items-center justify-center">
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mr-2">As Tuas Conquistas:</span>
+            {badges.map(badge => {
+              const isLocked = completedCount < badge.min;
+              return (
+                <div
+                  key={badge.id}
+                  className={`
+                    flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all
+                    ${isLocked
+                      ? 'bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 opacity-40 grayscale'
+                      : `${badge.color} border-transparent text-white shadow-lg shadow-blue-500/20`}
+                  `}
+                  title={isLocked ? `Conclui ${badge.min} aulas para desbloquear` : 'Conquista desbloqueada!'}
+                >
+                  {badge.icon}
+                  <span className="text-xs font-black uppercase tracking-wider">{badge.name}</span>
+                  {!isLocked && <Medal size={14} className="text-white/80" />}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Progress Summary (Conditional) */}
       {completedCount > 0 && (
@@ -256,6 +326,47 @@ const LandingPage = () => {
         </section>
       )}
 
+      {/* Favorite Lessons */}
+      {favoriteLessons.length > 0 && (
+        <section className="py-24 bg-white dark:bg-slate-950 border-t border-slate-50 dark:border-slate-900">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center gap-4 mb-12">
+              <div className="p-4 bg-pink-50 dark:bg-pink-900/20 rounded-3xl text-pink-500">
+                <Heart size={32} fill="currentColor" />
+              </div>
+              <div>
+                <h2 className="text-4xl font-black tracking-tight dark:text-white leading-tight">As Tuas Favoritas</h2>
+                <p className="text-slate-500 dark:text-slate-400 font-medium">As aulas que marcaste para rever mais tarde.</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {favoriteLessons.map((lesson) => (
+                <Link
+                  key={lesson.id}
+                  to={`/lesson/${lesson.id}`}
+                  className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 hover:border-pink-200 dark:hover:border-pink-900 hover:shadow-2xl dark:hover:shadow-none transition-all group relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-pink-50/50 dark:bg-pink-900/10 rounded-bl-full -z-10 group-hover:bg-pink-600/5 transition-colors"></div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="bg-pink-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                      Aula {lesson.id}
+                    </div>
+                    <Heart size={20} className="text-pink-500" fill="currentColor" />
+                  </div>
+                  <h3 className="text-xl font-black mb-3 group-hover:text-pink-600 transition-colors leading-tight dark:text-white">
+                    {lesson.title}
+                  </h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">
+                    {lesson.description}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Notes Dashboard */}
       {hasNotes && (
         <section className="py-24 bg-white dark:bg-slate-950 border-y border-slate-50 dark:border-slate-900">
@@ -266,15 +377,15 @@ const LandingPage = () => {
                   <StickyNote size={32} />
                 </div>
                 <div>
-                  <h2 className="text-4xl font-black tracking-tight dark:text-white leading-tight">Seus Insights</h2>
-                  <p className="text-slate-500 dark:text-slate-400 font-medium">Busque em todas as anotações que você fez durante o curso.</p>
+                  <h2 className="text-4xl font-black tracking-tight dark:text-white leading-tight">Os Teus Insights</h2>
+                  <p className="text-slate-500 dark:text-slate-400 font-medium">Pesquisa em todas as notas que fizeste durante o curso.</p>
                 </div>
               </div>
               <div className="relative w-full md:w-80">
                 <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                 <input
                   type="text"
-                  placeholder="Buscar em suas notas..."
+                  placeholder="Pesquisar nas tuas notas..."
                   value={notesSearch}
                   onChange={(e) => setNotesSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl text-sm focus:outline-none focus:border-blue-500 transition-all dark:text-white"
@@ -414,12 +525,7 @@ const LandingPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {lessons.filter(l => {
-            const matchesSearch = l.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                 l.description.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesCategory = activeCategory === 'Todas' || l.category === activeCategory;
-            return matchesSearch && matchesCategory;
-          }).map((lesson) => (
+          {filteredLessons.map((lesson) => (
             <Link
               key={lesson.id}
               to={`/lesson/${lesson.id}`}
@@ -481,7 +587,7 @@ const LandingPage = () => {
                 <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-3 truncate">{res.lessonTitle}</div>
                 <div className="font-bold mb-4 dark:text-white group-hover:text-blue-600 transition-colors">{res.name}</div>
                 <div className="flex items-center gap-2 text-xs text-slate-400 font-bold group-hover:text-slate-600 transition-colors">
-                  Acessar Documentação <ExternalLink size={12} />
+                  Aceder à Documentação <ExternalLink size={12} />
                 </div>
               </a>
             ))}

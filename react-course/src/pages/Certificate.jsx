@@ -1,13 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { Award, Download, Home, Share2, User } from 'lucide-react';
+import { Award, Download, Home, Share2, User, Loader2 } from 'lucide-react';
 import { lessons } from '../data/lessons';
+import html2pdf from 'html2pdf.js';
 
 const Certificate = () => {
   const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '[]');
   const isComplete = completedLessons.length === lessons.length;
   const certificateRef = useRef();
   const [userName, setUserName] = useState(() => localStorage.getItem('studentName') || 'Sandro Pereira');
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('studentName', userName);
@@ -22,6 +24,22 @@ const Certificate = () => {
     month: 'long',
     year: 'numeric'
   });
+
+  const downloadPDF = () => {
+    setIsGenerating(true);
+    const element = certificateRef.current;
+    const opt = {
+      margin: 0,
+      filename: `certificado-react-${userName.toLowerCase().replace(/\s+/g, '-')}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+      setIsGenerating(false);
+    });
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-12 px-4 flex flex-col items-center">
@@ -38,16 +56,21 @@ const Certificate = () => {
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl font-bold text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            placeholder="Seu nome completo"
+            placeholder="O teu nome completo"
           />
         </div>
 
         <button
-          onClick={() => window.print()}
-          className="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold flex items-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 dark:shadow-none"
+          disabled={isGenerating}
+          onClick={downloadPDF}
+          className="bg-blue-600 text-white px-8 py-3 rounded-2xl font-black flex items-center gap-3 hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 dark:shadow-none disabled:opacity-50"
         >
-          <Download size={20} />
-          Imprimir Certificado
+          {isGenerating ? (
+            <Loader2 size={22} className="animate-spin" />
+          ) : (
+            <Download size={22} />
+          )}
+          {isGenerating ? 'A Gerar PDF...' : 'Descarregar PDF'}
         </button>
       </div>
 
@@ -78,7 +101,7 @@ const Certificate = () => {
               {userName}
             </h2>
             <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed pt-4">
-              concluiu com êxito o treinamento intensivo de **React.js**, totalizando 30 aulas práticas, abrangendo desde fundamentos básicos até padrões avançados de arquitetura, performance e deploy.
+              concluiu com êxito a formação intensiva de **React.js**, totalizando 30 aulas práticas, abrangendo desde fundamentos básicos até padrões avançados de arquitetura, performance e deploy.
             </p>
           </div>
 
