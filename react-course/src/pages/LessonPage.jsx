@@ -34,6 +34,7 @@ import {
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
 import CodePlayground from '../components/CodePlayground';
+import html2pdf from 'html2pdf.js';
 import CommentsSection from '../components/CommentsSection';
 
 const LessonPage = () => {
@@ -41,7 +42,9 @@ const LessonPage = () => {
   const navigate = useNavigate();
   const lessonId = parseInt(id);
   const lesson = lessons.find((l) => l.id === lessonId);
-  const { isDarkMode, toggleDarkMode } = useTheme();
+  const { isDarkMode, toggleDarkMode, theme, setTheme } = useTheme();
+  const lessonRef = React.useRef();
+  const scrollRef = React.useRef();
 
   const [completedLessons, setCompletedLessons] = useState(() => {
     const saved = localStorage.getItem('completedLessons');
@@ -57,6 +60,7 @@ const LessonPage = () => {
   const [practiceDone, setPracticeDone] = useState(false);
   const [solutionUrl, setSolutionUrl] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
+  const [readingProgress, setReadingProgress] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -76,7 +80,16 @@ const LessonPage = () => {
 
     const savedFavorites = JSON.parse(localStorage.getItem('favoriteLessons') || '[]');
     setIsFavorite(savedFavorites.includes(lessonId));
+
+    // Reset scroll progress when lesson changes
+    setReadingProgress(0);
   }, [lessonId]);
+
+  const handleScroll = (e) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.target;
+    const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+    setReadingProgress(progress);
+  };
 
   useEffect(() => {
     localStorage.setItem('completedLessons', JSON.stringify(completedLessons));
@@ -212,6 +225,24 @@ const LessonPage = () => {
     }
   };
 
+  const [isExporting, setIsExporting] = useState(false);
+
+  const downloadLessonPDF = () => {
+    setIsExporting(true);
+    const element = lessonRef.current;
+    const opt = {
+      margin: 10,
+      filename: `aula-${lessonId}-${lesson.title.toLowerCase().replace(/\s+/g, '-')}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+      setIsExporting(false);
+    });
+  };
+
   const prevLesson = lessonId > 1 ? lessonId - 1 : null;
   const nextLesson = lessonId < lessons.length ? lessonId + 1 : null;
   const isAllComplete = completedLessons.length === lessons.length;
@@ -251,13 +282,42 @@ const LessonPage = () => {
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         md:translate-x-0 md:static md:block flex flex-col
       `}>
-        <div className="p-6 border-b border-slate-100 dark:border-slate-800 hidden md:flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-blue-600 font-black text-2xl tracking-tighter">
-            PREMIUM REACT
-          </Link>
-          <button onClick={toggleDarkMode} className="p-2 text-slate-400 hover:text-blue-600 transition-colors">
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+        <div className="p-6 border-b border-slate-100 dark:border-slate-800 hidden md:flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-2 text-blue-600 font-black text-2xl tracking-tighter">
+              PREMIUM REACT
+            </Link>
+          </div>
+          <div className="flex gap-2 p-1 bg-slate-50 dark:bg-slate-800 rounded-xl">
+            <button
+              onClick={() => setTheme('light')}
+              className={`flex-1 p-2 rounded-lg transition-all ${theme === 'light' ? 'bg-white dark:bg-slate-700 shadow-sm text-blue-600' : 'text-slate-400'}`}
+              title="Tema Claro"
+            >
+              <Sun size={16} className="mx-auto" />
+            </button>
+            <button
+              onClick={() => setTheme('dark')}
+              className={`flex-1 p-2 rounded-lg transition-all ${theme === 'dark' ? 'bg-white dark:bg-slate-700 shadow-sm text-blue-600' : 'text-slate-400'}`}
+              title="Tema Escuro"
+            >
+              <Moon size={16} className="mx-auto" />
+            </button>
+            <button
+              onClick={() => setTheme('sepia')}
+              className={`flex-1 p-2 rounded-lg transition-all ${theme === 'sepia' ? 'bg-white dark:bg-slate-700 shadow-sm text-blue-600' : 'text-slate-400'}`}
+              title="Tema Sépia"
+            >
+              <BookOpen size={16} className="mx-auto" />
+            </button>
+            <button
+              onClick={() => setTheme('high-contrast')}
+              className={`flex-1 p-2 rounded-lg transition-all ${theme === 'high-contrast' ? 'bg-white dark:bg-slate-700 shadow-sm text-blue-600' : 'text-slate-400'}`}
+              title="Alto Contraste"
+            >
+              <Zap size={16} className="mx-auto" />
+            </button>
+          </div>
         </div>
 
         {/* Search */}
@@ -337,7 +397,19 @@ const LessonPage = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-grow flex flex-col min-w-0 h-screen overflow-y-auto bg-white dark:bg-slate-950 md:bg-[#f8fafc] dark:md:bg-slate-950">
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="flex-grow flex flex-col min-w-0 h-screen overflow-y-auto bg-white dark:bg-slate-950 md:bg-[#f8fafc] dark:md:bg-slate-950 scroll-smooth"
+      >
+        {/* Reading Progress Bar (Internal) */}
+        <div className="sticky top-0 left-0 right-0 h-1 z-50 bg-transparent">
+          <div
+            className="h-full bg-blue-400 transition-all duration-150 ease-out"
+            style={{ width: `${readingProgress}%` }}
+          ></div>
+        </div>
+
         <main className="flex-grow p-4 md:p-12 lg:p-16">
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumbs */}
@@ -378,6 +450,14 @@ const LessonPage = () => {
                   <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
                 </button>
                 <button
+                  onClick={downloadLessonPDF}
+                  disabled={isExporting}
+                  className="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-blue-600 hover:border-blue-600 transition-all shadow-sm bg-white dark:bg-slate-900 disabled:opacity-50"
+                  title="Descarregar Aula em PDF"
+                >
+                  <Download size={20} className={isExporting ? 'animate-bounce' : ''} />
+                </button>
+                <button
                   onClick={shareLesson}
                   className="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-blue-500 hover:border-blue-500 transition-all shadow-sm bg-white dark:bg-slate-900"
                   title="Partilhar Aula"
@@ -405,7 +485,7 @@ const LessonPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
               <div className="lg:col-span-2">
                 <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden mb-10 transition-colors">
-                  <div className="p-8 md:p-12">
+                  <div ref={lessonRef} className="p-8 md:p-12">
                     {lesson.videoUrl && (
                       <div className="mb-10 aspect-video rounded-3xl overflow-hidden border-4 border-slate-100 dark:border-slate-800 shadow-2xl">
                         <iframe

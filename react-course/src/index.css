@@ -6,6 +6,38 @@
   body {
     @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 antialiased transition-colors duration-300;
   }
+
+  /* Temas de Acessibilidade */
+  html.sepia body {
+    background-color: #f4ecd8 !important;
+    color: #433422 !important;
+  }
+
+  html.sepia .bg-white,
+  html.sepia .bg-slate-50 {
+    background-color: #fdf6e3 !important;
+    border-color: #eee8d5 !important;
+  }
+
+  html.high-contrast body {
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+  }
+
+  html.high-contrast .bg-white,
+  html.high-contrast .bg-slate-50,
+  html.high-contrast .bg-slate-900,
+  html.high-contrast .dark\:bg-slate-900 {
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+    border: 2px solid #ffff00 !important;
+  }
+
+  html.high-contrast .text-blue-600,
+  html.high-contrast .dark\:text-blue-400 {
+    color: #ffffff !important;
+    text-decoration: underline;
+  }
 }
 
 .prose {

@@ -12,21 +12,25 @@ Acompanhamento de tarefas e melhorias planeadas para a plataforma de curso.
 - [x] **Glossário Técnico**: Criado repositório de termos essenciais explicados em PT-PT.
 - [x] **Sistema de Favoritos**: Funcionalidade de "Gostar" de aulas para acesso rápido na página inicial.
 - [x] **Gamificação (Badges)**: Sistema de medalhas baseado no progresso do aluno (Iniciado, Explorador, Avançado, Mestre).
-- [x] **Exportação PDF**: Implementada geração de PDF de alta qualidade para o certificado com `html2pdf.js`.
+- [x] **Exportação PDF Certificado**: Implementada geração de PDF de alta qualidade para o certificado com `html2pdf.js`.
 - [x] **Modo Offline (PWA)**: Configuração de Manifesto e Service Worker para transformar a app numa PWA.
 - [x] **Limpeza de Projeto**: Remoção de ficheiros redundantes e migração de dados legados.
 - [x] **Editor de Código Interativo (Playground)**: Integrado um editor para que os alunos possam testar os desafios diretamente na plataforma.
 - [x] **Comentários e Dúvidas**: Área para discussão de alunos em cada aula (Mock/LocalStorage).
 - [x] **Dashboards de Analytics**: Visualização detalhada do tempo gasto e performance em cada módulo.
 - [x] **Testes Automatizados**: Implementada suite de testes com Vitest.
+- [x] **Download de Aula em PDF**: Opção de descarregar o conteúdo integral da aula para leitura offline.
+- [x] **Temas de Acessibilidade**: Adição de modos Sépia e Alto Contraste para melhor legibilidade.
+- [x] **Indicador de Leitura**: Barra de progresso baseada no scroll da aula atual.
 
 ## 🚀 Sugestões para Futuras Iterações (Pós-MVP)
-- [ ] **Sincronização na Cloud**: Adicionar suporte para guardar o progresso e notas numa base de dados (ex: Supabase/Firebase) para além do localStorage.
+- [ ] **Sincronização na Cloud**: Adicionar suporte para guardar o progresso e notas numa base de dados (ex: Supabase/Firebase).
 - [ ] **Sistema de Mentoria**: Chat em tempo real para dúvidas com tutores.
 - [ ] **Webinars ao Vivo**: Calendário de aulas síncronas integradas na plataforma.
-- [ ] **Modo de Exame Final**: Teste exaustivo cronometrado (opcional) para obtenção de certificado de excelência.
-- [ ] **Dark Mode Avançado**: Suporte para temas personalizados (High Contrast, Sepia, etc.).
-- [ ] **Comunidade (Fórum)**: Espaço dedicado para networking entre alunos.
+- [ ] **Modo de Exame Final**: Teste exaustivo para obtenção de certificado de excelência.
+- [ ] **Calculadora de Estimativa**: Previsão de conclusão baseada no ritmo de estudo atual.
+- [ ] **Integração com IA**: Chatbot assistente para explicar conceitos complexos.
+- [ ] **Ranking de Alunos**: Sistema de pontuação global para incentivar a competição saudável.
 
 ---
 *Atualizado em: Janeiro de 2026*
