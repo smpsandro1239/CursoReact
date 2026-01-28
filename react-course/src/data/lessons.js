@@ -1,6 +1,7 @@
 export const lessons = [
   {
     id: 1,
+    videoUrl: "https://www.youtube.com/embed/SqcY0GlETPk",
     category: "Fundamentos",
     difficulty: "Iniciante",
     readingTime: "60 min",
@@ -83,11 +84,20 @@ Experimenta mudar os valores e ver o que acontece. A curiosidade e a tentativa-e
       { name: "MDN - JavaScript First Steps", url: "https://developer.mozilla.org/pt-PT/docs/Learn/JavaScript/First_steps" },
       { name: "W3Schools - JS Introduction", url: "https://www.w3schools.com/js/js_intro.asp" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é o papel principal do JavaScript numa página web?",
       options: ["Definir a estrutura e conteúdo da página", "Estilizar e dar cor aos elementos", "Adicionar interatividade e comportamento dinâmico", "Substituir o HTML completamente"],
       correctAnswer: 2
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 2,
@@ -168,11 +178,20 @@ Em português europeu e boas práticas globais, usa nomes descritivos em \`camel
       { name: "MDN - Grammar and types", url: "https://developer.mozilla.org/pt-PT/docs/Web/JavaScript/Guide/Grammar_and_types" },
       { name: "JavaScript.info - Variables", url: "https://javascript.info/variables" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual operador deves usar para comparar valor e tipo de forma segura?",
       options: ["==", "=", "===", "!="],
       correctAnswer: 2
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 3,
@@ -254,11 +273,20 @@ Em React, evita usar o \`for\` tradicional para renderizar listas no ecrã. Usar
       { name: "MDN - Control flow", url: "https://developer.mozilla.org/pt-PT/docs/Web/JavaScript/Guide/Control_flow_and_error_handling" },
       { name: "W3Schools - JS Loop For", url: "https://www.w3schools.com/js/js_loop_for.asp" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a principal vantagem do operador ternário?",
       options: ["É mais rápido que o if/else", "Permite escrever condicionais simples de forma concisa", "Funciona apenas com números", "Substitui os loops"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 4,
@@ -339,11 +367,20 @@ Em entrevistas técnicas, perguntam quase sempre a diferença entre \`function d
       { name: "MDN - Functions", url: "https://developer.mozilla.org/pt-PT/docs/Web/JavaScript/Guide/Functions" },
       { name: "JavaScript.info - Arrow Functions", url: "https://javascript.info/arrow-functions-basics" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Porque é que as arrow functions são tão populares no React?",
       options: ["São mais rápidas a executar", "Têm sintaxe concisa e não têm o seu próprio 'this'", "Substituem o HTML", "Funcionam apenas em dispositivos móveis"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 5,
@@ -421,11 +458,20 @@ Evita métodos que alteram o array original como \`.push()\` ou \`.splice()\`. P
       { name: "MDN - Array Methods", url: "https://developer.mozilla.org/pt-PT/docs/Web/JavaScript/Reference/Global_Objects/Array" },
       { name: "JavaScript.info - Objects", url: "https://javascript.info/object" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é o método de array mais utilizado no React para renderizar listas no ecrã?",
       options: ["forEach()", "push()", "map()", "pop()"],
       correctAnswer: 2
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 6,
@@ -501,11 +547,20 @@ Não abuses da manipulação direta do DOM quando começares a usar React. O Rea
     resources: [
       { name: "MDN - Manipulating the DOM", url: "https://developer.mozilla.org/pt-PT/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é o método mais moderno e flexível para selecionar um elemento no DOM?",
       options: ["getElementById()", "getElementsByTagName()", "querySelector()", "select()"],
       correctAnswer: 2
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 7,
@@ -582,11 +637,20 @@ No início, o JSX parece estranho porque mistura lógica com visual. Dá-lhe 2 d
       { name: "React Docs - Your First Component", url: "https://react.dev/learn/your-first-component" },
       { name: "Vite Guide", url: "https://vitejs.dev/guide/" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "O que é o JSX no ecossistema React?",
       options: ["Uma nova linguagem de programação", "Uma extensão de sintaxe que permite escrever HTML dentro do JavaScript", "Um substituto para o CSS", "Uma base de dados"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 8,
@@ -672,11 +736,20 @@ Sempre que passares números ou booleanos como props, usa as chavetas: \`<Contad
     resources: [
       { name: "React Docs - Passing Props", url: "https://react.dev/learn/passing-props-to-a-component" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Como é que os dados fluem no React por padrão?",
       options: ["Do Filho para o Pai", "Em ambas as direções livremente", "Do Pai para o Filho (Unidirecional)", "Apenas entre componentes irmãos"],
       correctAnswer: 2
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 9,
@@ -755,11 +828,20 @@ Sempre que o novo estado depender do valor anterior (como somar +1), usa a sinta
     resources: [
       { name: "React Docs - useState", url: "https://react.dev/reference/react/useState" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "O que acontece quando o estado de um componente é atualizado?",
       options: ["A página inteira é recarregada", "O componente sofre um re-render (atualiza o visual)", "O componente é destruído", "Nada acontece até guardarmos manualmente"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 10,
@@ -838,11 +920,20 @@ Cuidado com os loops infinitos! Se atualizares o estado dentro de um \`useEffect
     resources: [
       { name: "React Docs - useEffect", url: "https://react.dev/reference/react/useEffect" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Quando é que um useEffect com um array de dependências vazio ([]) é executado?",
       options: ["Em todas as atualizações", "Apenas quando o componente é montado pela primeira vez", "Nunca", "Apenas quando o componente é destruído"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 11,
@@ -917,11 +1008,20 @@ Um Hook personalizado pode retornar qualquer coisa: um valor, um array, um objet
     resources: [
       { name: "React Docs - Custom Hooks", url: "https://react.dev/learn/reusing-logic-with-custom-hooks" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a principal vantagem de usar Hooks Personalizados?",
       options: ["Tornar o código mais lento", "Reutilizar lógica de comportamento entre diferentes componentes", "Substituir o uso de CSS", "Esconder o código de outros programadores"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 12,
@@ -1000,11 +1100,20 @@ Usa o componente \`NavLink\` em vez de \`Link\` para menus de navegação. Ele a
     resources: [
       { name: "React Router Guide", url: "https://reactrouter.com/en/main/start/overview" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é o hook utilizado para aceder aos parâmetros dinâmicos de uma URL (ex: :id)?",
       options: ["useParams()", "useNavigate()", "useRoute()", "useQuery()"],
       correctAnswer: 0
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 13,
@@ -1077,11 +1186,20 @@ O Context API é nativo do React e resolve 90% das necessidades de estado global
     resources: [
       { name: "React Docs - Context", url: "https://react.dev/reference/react/useContext" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é o principal problema que a Context API resolve?",
       options: ["Lentidão do JavaScript", "Prop Drilling (passagem excessiva de props)", "Falta de estilização", "Erros de sintaxe no HTML"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 14,
@@ -1150,11 +1268,20 @@ Não coloques \`useMemo\` em tudo! Ele próprio tem um pequeno custo de memória
       { name: "React Docs - useMemo", url: "https://react.dev/reference/react/useMemo" },
       { name: "React Docs - useCallback", url: "https://react.dev/reference/react/useCallback" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Para que serve o hook useMemo?",
       options: ["Para fazer chamadas a APIs", "Para guardar o resultado de cálculos caros e evitar repetições desnecessárias", "Para mudar o tema da aplicação", "Para criar animações"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 15,
@@ -1234,11 +1361,20 @@ Usa sempre \`screen.debug()\` durante o desenvolvimento dos testes para ver o qu
       { name: "React Testing Library Docs", url: "https://testing-library.com/docs/react-testing-library/intro/" },
       { name: "Jest Matchers", url: "https://jestjs.io/docs/using-matchers" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a abordagem recomendada pela React Testing Library?",
       options: ["Testar a implementação interna das funções", "Testar da perspetiva do utilizador e da acessibilidade", "Testar apenas o design CSS", "Não testar, apenas confiar no código"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 16,
@@ -1310,11 +1446,20 @@ Usa \`Types\` para uniões simples (ex: \`type Status = "sucesso" | "erro"\`) e 
       { name: "React TypeScript Cheatsheet", url: "https://react-typescript-cheatsheet.netlify.app/" },
       { name: "TypeScript Handbook", url: "https://www.typescriptlang.org/docs/handbook/intro.html" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a principal vantagem de usar TypeScript com React?",
       options: ["Tornar o ficheiro final mais pequeno", "Detetar erros de tipo durante o desenvolvimento (antes de correr o código)", "Substituir o uso de bibliotecas de CSS", "Não precisar de aprender JavaScript"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 17,
@@ -1392,11 +1537,20 @@ Usa a extensão "vscode-styled-components" no teu VS Code para teres realce de s
     resources: [
       { name: "Styled Components Docs", url: "https://styled-components.com/docs" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Como se passam variáveis do JavaScript para o CSS no Styled Components?",
       options: ["Através de ficheiros JSON externos", "Através de props passadas ao componente estilizado", "Não é possível passar variáveis", "Usando !important no CSS"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 18,
@@ -1466,11 +1620,20 @@ Usa o \`staleTime\` para definir quanto tempo os dados são considerados "fresco
     resources: [
       { name: "TanStack Query Docs", url: "https://tanstack.com/query/latest" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Para que serve o 'queryKey' no React Query?",
       options: ["Para dar estilo ao componente", "Para identificar e organizar os dados na cache de forma única", "Para definir a password da API", "Para mudar a cor do botão de loading"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 19,
@@ -1539,11 +1702,20 @@ Usa a função \`reset()\` fornecida pelo hook para limpar o formulário automat
       { name: "React Hook Form Docs", url: "https://react-hook-form.com/get-started" },
       { name: "Zod Validation Guide", url: "https://zod.dev/" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a principal vantagem de usar React Hook Form em vez de gerir tudo com múltiplos useState?",
       options: ["É mais colorido", "Melhor performance (menos re-renderizações) e código mais limpo", "Não precisa de HTML", "É a única forma de fazer formulários"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 20,
@@ -1620,11 +1792,20 @@ Guarda o token no LocalStorage para que o utilizador não tenha de fazer login s
       { name: "JWT.io Introduction", url: "https://jwt.io/introduction" },
       { name: "React Router Navigate", url: "https://reactrouter.com/en/main/components/navigate" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a melhor forma de proteger uma rota no React?",
       options: ["Apagar o ficheiro do servidor", "Usar um componente que verifica o estado de autenticação e redireciona se necessário", "Pedir ao utilizador para não entrar", "Mudar a cor do link para preto"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 21,
@@ -1694,11 +1875,20 @@ Sempre que testares mudanças de estado dentro de um \`renderHook\`, deves envol
       { name: "Mock Service Worker (MSW)", url: "https://mswjs.io/" },
       { name: "Testing Library - renderHook", url: "https://testing-library.com/docs/react-testing-library/api/#renderhook" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é o principal objetivo de 'mockar' uma API durante os testes?",
       options: ["Tornar os testes mais difíceis", "Isolar o componente de falhas externas e tornar os testes mais rápidos e determinísticos", "Pagar menos faturas de servidor", "Não serve para nada no React moderno"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 22,
@@ -1768,11 +1958,20 @@ Usa bibliotecas como \`react-window\` ou \`react-virtualized\` se tiveres de mos
       { name: "React Docs - Code Splitting", url: "https://react.dev/learn/code-splitting" },
       { name: "React Window Docs", url: "https://react-window.vercel.app/" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "O que faz a técnica de 'Virtualização de Listas'?",
       options: ["Apaga os dados da lista para poupar espaço", "Renderiza apenas os itens que estão visíveis na janela do utilizador", "Converte a lista numa imagem", "Não existe no React"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 23,
@@ -1845,11 +2044,20 @@ Nunca, em circunstância alguma, guardes passwords em texto limpo no LocalStorag
       { name: "OWASP Top 10", url: "https://owasp.org/www-project-top-ten/" },
       { name: "DOMPurify GitHub", url: "https://github.com/cure53/dompurify" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a melhor forma de prevenir ataques XSS ao exibir conteúdo HTML dinâmico no React?",
       options: ["Usar apenas <div>", "Sanitizar o HTML com uma biblioteca como DOMPurify antes de o renderizar", "Não usar JavaScript no site", "Mudar a cor do texto para vermelho"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 24,
@@ -1929,11 +2137,20 @@ Usa a deteção automática de idioma para que a tua app abra logo em Inglês pa
       { name: "react-i18next Documentation", url: "https://react.i18next.com/" },
       { name: "Intl.NumberFormat (MDN)", url: "https://developer.mozilla.org/pt-PT/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a principal vantagem de usar i18n em vez de criar vários sites diferentes para cada língua?",
       options: ["É mais barato", "Mantém um único código-fonte sincronizado para todos os idiomas", "O Google prefere sites em várias línguas", "Não há vantagem real"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 25,
@@ -2003,11 +2220,20 @@ Usa a ferramenta "Lighthouse" no Chrome ou a extensão "axe DevTools" para encon
       { name: "The A11y Project", url: "https://www.a11yproject.com/" },
       { name: "WebAIM Contrast Checker", url: "https://webaim.org/resources/contrastchecker/" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual tag HTML é fundamental para que um leitor de ecrã saiba o que é uma imagem?",
       options: ["<src>", "<alt>", "<title>", "<desc>"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 26,
@@ -2088,11 +2314,20 @@ Para melhor performance, anima sempre propriedades como \`transform\` (scale, ro
       { name: "Framer Motion Documentation", url: "https://www.framer.com/motion/" },
       { name: "Animista (CSS Animation generator)", url: "https://animista.net/" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual propriedade do Framer Motion controla o estado final da animação?",
       options: ["start", "initial", "animate", "end"],
       correctAnswer: 2
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 27,
@@ -2162,11 +2397,20 @@ Os testes E2E são mais lentos que os unitários. Não testes todos os pequenos 
       { name: "Cypress Documentation", url: "https://docs.cypress.io/" },
       { name: "Testing Library - Cypress", url: "https://testing-library.com/docs/cypress-testing-library/intro/" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a principal diferença entre um teste unitário e um teste End-to-End (E2E)?",
       options: ["E2E é mais rápido", "Unitário testa peças isoladas; E2E testa o fluxo completo no browser real", "Unitário é apenas para CSS", "Não há diferença"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 28,
@@ -2238,11 +2482,20 @@ Nunca coloques chaves de API reais no código. Usa os "Secrets" do GitHub e as v
       { name: "GitHub Actions Guide", url: "https://docs.github.com/en/actions" },
       { name: "Vite Deployment Guide", url: "https://vitejs.dev/guide/static-deploy.html" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é a principal vantagem de usar um sistema de CI/CD como o GitHub Actions?",
       options: ["Ter mais bugs no código", "Garantir que os testes correm sempre antes do código ser publicado", "Não precisar de escrever código", "Mudar a cor do terminal"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 29,
@@ -2313,11 +2566,20 @@ Não compliques demasiado cedo! Começa simples e evolui a arquitetura conforme 
       { name: "Feature-Sliced Design", url: "https://feature-sliced.design/" },
       { name: "SOLID Principles for React", url: "https://medium.com/dailyjs/applying-solid-principles-to-react-3d1534a448cd" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "O que diz o Princípio da Responsabilidade Única (Single Responsibility)?",
       options: ["Um componente deve fazer tudo o que a app precisa", "Cada componente ou função deve ter apenas uma razão para mudar e fazer apenas uma coisa bem", "Ninguém é responsável pelo código", "Fazer código o mais rápido possível"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   },
   {
     id: 30,
@@ -2380,10 +2642,19 @@ Concluíste a jornada. Agora, o código é teu. Domina o mundo!
       { name: "React Roadmap 2026", url: "https://roadmap.sh/react" },
       { name: "Build a Portfolio that gets you hired", url: "https://www.freecodecamp.org/news/how-to-build-a-portfolio/" }
     ],
-    quiz: {
+    quizzes: [
+      {
+
       question: "Qual é o passo mais importante após terminar este curso?",
       options: ["Parar de estudar", "Continuar a construir projetos reais e manter-se atualizado com a comunidade", "Esquecer o React e mudar para outra área", "Esperar que o emprego apareça sozinho"],
       correctAnswer: 1
-    }
+
+      },
+      {
+        question: "Pergunta de bónus: O React é mantido por qual empresa?",
+        options: ["Google", "Meta (Facebook)", "Microsoft", "Amazon"],
+        correctAnswer: 1
+      }
+    ]
   }
 ];

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BookOpen,
@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
+import Fuse from 'fuse.js';
 
 const LandingPage = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -42,6 +43,22 @@ const LandingPage = () => {
   const totalHours = (totalMinutes / 60).toFixed(1);
 
   const [practiceCount, setPracticeCount] = useState(0);
+
+  const fuse = new Fuse(lessons, {
+    keys: ['title', 'description', 'category', 'tags'],
+    threshold: 0.3,
+  });
+
+  const filteredLessons = useMemo(() => {
+    let result = lessons;
+    if (searchTerm) {
+      result = fuse.search(searchTerm).map(r => r.item);
+    }
+    if (activeCategory !== 'Todas') {
+      result = result.filter(l => l.category === activeCategory);
+    }
+    return result;
+  }, [searchTerm, activeCategory]);
 
   useEffect(() => {
     const savedPractice = localStorage.getItem('practiceDone');
@@ -414,12 +431,7 @@ const LandingPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {lessons.filter(l => {
-            const matchesSearch = l.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                 l.description.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesCategory = activeCategory === 'Todas' || l.category === activeCategory;
-            return matchesSearch && matchesCategory;
-          }).map((lesson) => (
+          {filteredLessons.map((lesson) => (
             <Link
               key={lesson.id}
               to={`/lesson/${lesson.id}`}
