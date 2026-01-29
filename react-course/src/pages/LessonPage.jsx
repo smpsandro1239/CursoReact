@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import { useTheme } from '../context/ThemeContext';
+import { useToast } from '../context/ToastContext';
 import CodePlayground from '../components/CodePlayground';
 import html2pdf from 'html2pdf.js';
 import CommentsSection from '../components/CommentsSection';
@@ -43,6 +44,7 @@ const LessonPage = () => {
   const lessonId = parseInt(id);
   const lesson = lessons.find((l) => l.id === lessonId);
   const { isDarkMode, toggleDarkMode, theme, setTheme } = useTheme();
+  const { addToast } = useToast();
   const lessonRef = React.useRef();
   const scrollRef = React.useRef();
 
@@ -61,6 +63,8 @@ const LessonPage = () => {
   const [solutionUrl, setSolutionUrl] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
   const [readingProgress, setReadingProgress] = useState(0);
+  const [isAIExplaining, setIsAIExplaining] = useState(false);
+  const [aiExplanation, setAiExplanation] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -117,6 +121,7 @@ const LessonPage = () => {
     } else {
       const newCompleted = [...completedLessons, id];
       setCompletedLessons(newCompleted);
+      addToast("Aula marcada como concluída! Bom trabalho.");
 
       // Massive celebration on 100% completion
       if (newCompleted.length === lessons.length) {
@@ -146,6 +151,7 @@ const LessonPage = () => {
     savedNotes[lessonId] = note;
     localStorage.setItem('lessonNotes', JSON.stringify(savedNotes));
     setIsNoteSaved(true);
+    addToast("Nota guardada com sucesso!");
     setTimeout(() => setIsNoteSaved(false), 2000);
   };
 
@@ -180,8 +186,10 @@ const LessonPage = () => {
     let newFavorites;
     if (isFavorite) {
       newFavorites = savedFavorites.filter(id => id !== lessonId);
+      addToast("Removida dos favoritos.", "info");
     } else {
       newFavorites = [...savedFavorites, lessonId];
+      addToast("Adicionada aos favoritos!");
     }
     localStorage.setItem('favoriteLessons', JSON.stringify(newFavorites));
     setIsFavorite(!isFavorite);
@@ -241,6 +249,24 @@ const LessonPage = () => {
     html2pdf().set(opt).from(element).save().then(() => {
       setIsExporting(false);
     });
+  };
+
+  const askAI = () => {
+    setIsAIExplaining(true);
+    setAiExplanation('');
+
+    // Simulate AI thinking
+    setTimeout(() => {
+      const concepts = {
+        1: "O JavaScript é a 'linguagem de ação' da web. Enquanto o HTML define o que está lá e o CSS como se parece, o JS define o que acontece. O ecossistema React usa JS moderno para criar componentes que reagem a dados.",
+        2: "Variables (let/const) são contentores. 'const' é o teu padrão de ouro para segurança de código. 'let' é apenas para valores que realmente precisam de mudar (contadores, etc).",
+        3: "Controle de fluxo permite que a tua app 'tome decisões'. Em React, usamos muito o operador ternário para mostrar ou esconder elementos baseados no estado do utilizador.",
+        // Default explanation for other lessons
+        default: `Nesta aula sobre ${lesson.title}, o conceito principal é a modularidade. O React permite decompor interfaces complexas em pequenas funções puras chamadas componentes, facilitando a manutenção e o teste do software.`
+      };
+
+      setAiExplanation(concepts[lessonId] || concepts.default);
+    }, 1500);
   };
 
   const prevLesson = lessonId > 1 ? lessonId - 1 : null;
@@ -520,6 +546,46 @@ const LessonPage = () => {
                         </div>
                       </div>
                     )}
+
+                    {/* AI Assistant Call to Action */}
+                    <div className="mt-12 bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:rotate-12 transition-transform">
+                        <Cpu size={80} />
+                      </div>
+                      <h3 className="text-xl font-black mb-2 flex items-center gap-2">
+                        <Zap size={20} className="text-blue-400" /> Assistente de IA <span className="text-[10px] bg-blue-600 px-2 py-0.5 rounded-full uppercase">Beta</span>
+                      </h3>
+                      <p className="text-slate-400 text-sm mb-6 max-w-md">Não entendeste bem um conceito desta aula? O nosso assistente pode explicar de outra forma.</p>
+
+                      {!isAIExplaining ? (
+                        <button
+                          onClick={askAI}
+                          className="bg-white text-slate-900 px-6 py-3 rounded-xl font-bold text-sm hover:bg-blue-50 transition-all shadow-lg"
+                        >
+                          Explicar Conceito Central
+                        </button>
+                      ) : (
+                        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                          {aiExplanation === '' ? (
+                            <div className="flex items-center gap-3 text-blue-400 font-bold">
+                              <Loader2 size={18} className="animate-spin" /> A processar explicação...
+                            </div>
+                          ) : (
+                            <div className="space-y-4">
+                              <p className="text-slate-200 text-sm leading-relaxed italic border-l-2 border-blue-500 pl-4">
+                                "{aiExplanation}"
+                              </p>
+                              <button
+                                onClick={() => setIsAIExplaining(false)}
+                                className="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors"
+                              >
+                                Fechar Explicação
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
 
                     {lesson.resources && (
                       <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">

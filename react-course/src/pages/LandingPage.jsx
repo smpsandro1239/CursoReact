@@ -44,6 +44,7 @@ const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('Todas');
   const [notesSearch, setNotesSearch] = useState('');
+  const [notesFilter, setNotesFilter] = useState('Todas');
 
   const categories = ['Todas', ...new Set(lessons.map(l => l.category))];
   const totalMinutes = lessons.reduce((acc, l) => acc + parseInt(l.readingTime), 0);
@@ -95,7 +96,8 @@ const LandingPage = () => {
       text,
       lesson: lessons.find(l => l.id === parseInt(id))
     }))
-    .filter(item => item.lesson);
+    .filter(item => item.lesson)
+    .filter(item => notesFilter === 'Todas' || item.lesson.category === notesFilter);
 
   const allResources = lessons.reduce((acc, l) => {
     if (l.resources) {
@@ -390,6 +392,22 @@ const LandingPage = () => {
                   onChange={(e) => setNotesSearch(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl text-sm focus:outline-none focus:border-blue-500 transition-all dark:text-white"
                 />
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                {['Todas', 'Fundamentos', 'Hooks', 'Navegação', 'Design'].map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => setNotesFilter(cat)}
+                    className={`
+                      px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap
+                      ${notesFilter === cat
+                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 dark:shadow-none'
+                        : 'bg-slate-50 dark:bg-slate-900 text-slate-400 border border-slate-100 dark:border-slate-800 hover:border-blue-200'}
+                    `}
+                  >
+                    {cat}
+                  </button>
+                ))}
               </div>
             </div>
 

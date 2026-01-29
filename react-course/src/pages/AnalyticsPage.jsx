@@ -47,6 +47,11 @@ const AnalyticsPage = () => {
   }, []);
 
   const progressPercentage = Math.round((stats.completed / lessons.length) * 100);
+  const [lessonsPerWeek, setLessonsPerWeek] = useState(3);
+
+  const estimatedWeeks = Math.ceil((lessons.length - stats.completed) / lessonsPerWeek);
+  const finishDate = new Date();
+  finishDate.setDate(finishDate.getDate() + (estimatedWeeks * 7));
 
   return (
     <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-950 p-6 md:p-12 font-sans">
@@ -197,6 +202,49 @@ const AnalyticsPage = () => {
                  </div>
                </div>
              </div>
+          </div>
+        </div>
+
+        {/* Estimation Calculator */}
+        <div className="bg-white dark:bg-slate-900 p-8 md:p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl mb-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex-grow">
+              <h3 className="text-xl font-black mb-2 dark:text-white flex items-center gap-2">
+                <Clock size={20} className="text-indigo-600" /> Estimativa de Conclusão
+              </h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                Com base no teu ritmo de estudo, calculamos quando estarás pronto para o mercado.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 p-4 rounded-3xl">
+              <div className="text-right">
+                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Aulas por Semana</div>
+                <div className="flex items-center gap-2 mt-1">
+                  <button
+                    onClick={() => setLessonsPerWeek(Math.max(1, lessonsPerWeek - 1))}
+                    className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-700 rounded-full shadow-sm hover:bg-slate-100 transition-colors dark:text-white"
+                  >-</button>
+                  <span className="text-xl font-black dark:text-white w-8 text-center">{lessonsPerWeek}</span>
+                  <button
+                    onClick={() => setLessonsPerWeek(lessonsPerWeek + 1)}
+                    className="w-8 h-8 flex items-center justify-center bg-white dark:bg-slate-700 rounded-full shadow-sm hover:bg-slate-100 transition-colors dark:text-white"
+                  >+</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-indigo-600 text-white p-6 rounded-3xl shadow-xl shadow-indigo-200 dark:shadow-none min-w-[240px] text-center">
+              <div className="text-[10px] font-black opacity-80 uppercase tracking-widest mb-1">Data Estimada</div>
+              <div className="text-2xl font-black">
+                {stats.completed === 30 ? 'Curso Concluído! 🏆' : finishDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </div>
+              {stats.completed < 30 && (
+                <div className="text-xs font-bold mt-1 opacity-80">
+                  Faltam aprox. {estimatedWeeks} {estimatedWeeks === 1 ? 'semana' : 'semanas'}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

@@ -22,15 +22,19 @@ Acompanhamento de tarefas e melhorias planeadas para a plataforma de curso.
 - [x] **Download de Aula em PDF**: Opção de descarregar o conteúdo integral da aula para leitura offline.
 - [x] **Temas de Acessibilidade**: Adição de modos Sépia e Alto Contraste para melhor legibilidade.
 - [x] **Indicador de Leitura**: Barra de progresso baseada no scroll da aula atual.
+- [x] **Notificações Toast**: Feedback visual para ações do utilizador (favoritos, conclusão, notas).
+- [x] **Calculadora de Estimativa**: Previsão inteligente da data de conclusão do curso no Analytics.
+- [x] **Assistente de IA (Beta)**: Explicações alternativas para conceitos complexos.
+- [x] **Pesquisa Avançada de Notas**: Filtros por categoria nas notas guardadas.
 
 ## 🚀 Sugestões para Futuras Iterações (Pós-MVP)
 - [ ] **Sincronização na Cloud**: Adicionar suporte para guardar o progresso e notas numa base de dados (ex: Supabase/Firebase).
 - [ ] **Sistema de Mentoria**: Chat em tempo real para dúvidas com tutores.
 - [ ] **Webinars ao Vivo**: Calendário de aulas síncronas integradas na plataforma.
 - [ ] **Modo de Exame Final**: Teste exaustivo para obtenção de certificado de excelência.
-- [ ] **Calculadora de Estimativa**: Previsão de conclusão baseada no ritmo de estudo atual.
-- [ ] **Integração com IA**: Chatbot assistente para explicar conceitos complexos.
 - [ ] **Ranking de Alunos**: Sistema de pontuação global para incentivar a competição saudável.
+- [ ] **Portefólio Automático**: Geração de uma página de portefólio baseada nos desafios práticos concluídos.
+- [ ] **App Nativa**: Conversão para mobile usando React Native ou Capacitor.
 
 ---
 *Atualizado em: Janeiro de 2026*
