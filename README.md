@@ -1,6 +1,6 @@
 # 🚀 Premium React: O Curso Definitivo (30 Aulas) - Por Sandro Pereira
 
-[![Website](https://img.shields.io/badge/Aceder_ao_Curso-Online-blue?style=for-the-badge&logo=vercel)](https://curso-react-rvyq.vercel.app/)
+[![Website](https://img.shields.io/badge/Aceder_ao_Curso-Online-blue?style=for-the-badge&logo=vercel)](https://curso-react-dusky.vercel.app/)
 [![Progress](https://img.shields.io/badge/Progresso-30%2F30_Aulas-emerald?style=for-the-badge)](./TODO.md)
 [![License](https://img.shields.io/badge/Licen%C3%A7a-MIT-green?style=for-the-badge)](./LICENSE)
 
