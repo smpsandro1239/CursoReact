@@ -10,7 +10,7 @@ Acompanhamento detalhado das funcionalidades e melhorias da plataforma.
 - [x] **Sistema de Quizzes**: Finalizado com suporte a múltiplas questões e persistência de pontuação.
 - [x] **30 Aulas Completas**: Currículo pedagógico estruturado.
 
-## 🚀 Concluído (100%) - Vercel Ready & Verified
+## 🚀 Concluído (100%) - Stable v1.1 - Vercel Ready & Verified
 - [x] **Quizzes Avançados**: Implementado sistema de múltiplas questões com feedback e celebração.: Melhorar estratégia de caching para vídeos e assets pesados.
 - [x] **Certificação PDF Premium**: Design A4 paisagem, alta definição, watermark e validação de nome.
 - [x] **Vercel & PWA Polish**: Build artifacts movidos para a raiz, roteamento SPA (cleanUrls) corrigido e deploy 100% verificado.
@@ -21,3 +21,4 @@ Acompanhamento detalhado das funcionalidades e melhorias da plataforma.
 
 ---
 *Atualizado por: Sandro Pereira - Março 2026*
+- [x] **Hotfix Renderização**: Resolvido crash de ícones inexistentes e verificado conteúdo markdown.
