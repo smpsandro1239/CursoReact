@@ -1,24 +1,19 @@
-# 📋 Roadmap & Progresso - Sandro Pereira
+# 📋 Roadmap & Evolution - Sandro Pereira
 
-Acompanhamento detalhado das funcionalidades e melhorias da plataforma.
+## ✅ Versão 2.0 (Evolution) - Março 2026
+- [x] **Arquitetura v2**: TypeScript + Zustand + Zod validation.
+- [x] **Gamificação**: Sistema de XP, Níveis, Streaks e HUD persistente.
+- [x] **Novo Motor de Quiz**: Múltiplas perguntas, dicas 3-níveis e streaks.
+- [x] **40 Aulas Elite**: Expansão total do currículo pedagógico.
+- [x] **Editor de Código v2**: Laboratório prático com validação e recompensas.
+- [x] **Certificação Real**: Geração de PDF com métricas reais de progresso.
+- [x] **PWA & Performance**: Cache offline e otimização de assets.
+- [x] **Vercel Pro**: Configuração de rotas SPA e automação de build.
 
-## 🟢 Concluído (Fase 1 & 2)
-- [x] **Arquitetura Base**: React 19 + Vite + Tailwind CSS.
-- [x] **Terminologia PT-PT**: Garantia de linguagem consistente (ecrã, utilizador, ficheiro).
-- [x] **Dark Mode Inteligente**: Sincronização com o sistema e persistência robusta.
-- [x] **Navegação de Elite**: Sidebar progressiva, atalhos de teclado (setas), restauração de scroll e indicadores de módulo.
-- [x] **Sistema de Quizzes**: Finalizado com suporte a múltiplas questões e persistência de pontuação.
-- [x] **30 Aulas Completas**: Currículo pedagógico estruturado.
-
-## 🚀 Concluído (100%) - Stable v1.1 - Vercel Ready & Verified
-- [x] **Quizzes Avançados**: Implementado sistema de múltiplas questões com feedback e celebração.: Melhorar estratégia de caching para vídeos e assets pesados.
-- [x] **Certificação PDF Premium**: Design A4 paisagem, alta definição, watermark e validação de nome.
-- [x] **Vercel & PWA Polish**: Build artifacts movidos para a raiz, roteamento SPA (cleanUrls) corrigido e deploy 100% verificado.
-
-## 🔵 Futuro (Pós-v1.0)
-- [ ] **Sincronização Cloud**: Integração com Supabase para progresso multi-dispositivo.
-- [ ] **Comunidade**: Fórum de discussão integrado por módulo.
+## 🟡 Próximos Passos (v3.0)
+- [ ] **Sincronização Cloud**: Integração com Supabase (Database/Auth).
+- [ ] **Leaderboards**: Comparativo em tempo real entre alunos de elite.
+- [ ] **IA Tutor**: Integração com Gemini/GPT para explicações dinâmicas no laboratório.
 
 ---
 *Atualizado por: Sandro Pereira - Março 2026*
-- [x] **Hotfix Renderização**: Resolvido crash de ícones inexistentes e verificado conteúdo markdown.

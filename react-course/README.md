@@ -1,26 +1,25 @@
-# ⚛️ Premium React Curso - Frontend Detalhado
+# ⚛️ Premium React Curso - Frontend Detalhado (v2.0)
 
-Bem-vindo à engine da plataforma **Premium React**. Este sub-diretório contém a lógica, componentes e estilos que alimentam a experiência educativa de Sandro Pereira.
+Bem-vindo à engine da plataforma **Premium React: Evolution**. Este sub-diretório contém a lógica, componentes e estilos que alimentam a experiência educativa de elite de Sandro Pereira.
 
 ## 🛠️ Tecnologias de Elite
 
-- **React 19**: Utilização de Suspense e transições para UI fluida.
-- **Tailwind CSS**: Design system customizado com suporte nativo a Dark Mode.
-- **Zustand/Context API**: Gestão de estado para progresso e preferências.
-- **Fuse.js**: Motor de pesquisa difusa para aulas e notas.
+- **React 19**: Utilização de Suspense, Hooks v19 e transições para UI ultra-fluida.
+- **Zustand**: Gestão de estado global leve e persistente.
+- **Tailwind CSS**: Design system premium com suporte nativo a Dark Mode e animações customizadas.
+- **Framer Motion**: Micro-interações e transições de página motivadoras.
 - **Lucide React**: Iconografia moderna e consistente.
 
-## 📂 Organização de Ficheiros
+## 📂 Organização (v2.0)
 
-- `src/data/`: Base de conhecimento (aulas, glossário).
-- `src/context/`: Provedores de Tema e Global State.
+- `src/store/`: Estado global centralizado (Zustand).
+- `src/data/`: Base de conhecimento robusta (40 aulas, glossário).
 - `src/pages/`: Vistas principais (Landing, Lesson, Analytics, Certificate).
-- `src/components/`: Peças modulares (Playground, Sidebar, Comments).
+- `src/components/`: Componentes modulares de alto desempenho (Editor, GamificationBar).
 
-## 🚀 Otimizações
+## 🚀 Otimizações de Deploy
 
-- **Lazy Loading**: Componentes pesados carregados apenas quando necessários.
-- **Vercel Config**: `vercel.json` preparado para rotas limpas e cache agressiva de assets.
+O build principal é delegado a partir do root, gerando um artefacto `dist` otimizado para a Vercel com suporte completo a rotas SPA.
 
 ---
 *Desenvolvido com excelência por **Sandro Pereira**.*
