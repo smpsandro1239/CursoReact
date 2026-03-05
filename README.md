@@ -1,54 +1,42 @@
-# 🚀 Premium React: O Curso Definitivo (30 Aulas) de Sandro Pereira
+# 🚀 Premium React: O Curso Definitivo (30 Aulas) - Por Sandro Pereira
 
 [![Website](https://img.shields.io/badge/Aceder_ao_Curso-Online-blue?style=for-the-badge&logo=vercel)](https://curso-react-rvyq.vercel.app/)
+[![Progress](https://img.shields.io/badge/Progresso-30%2F30_Aulas-emerald?style=for-the-badge)](./TODO.md)
+[![License](https://img.shields.io/badge/Licen%C3%A7a-MIT-green?style=for-the-badge)](./LICENSE)
 
-Este repositório contém uma aplicação completa de e-learning (LMS) focada no ensino de React, cobrindo desde os fundamentos básicos até arquiteturas profissionais avançadas.
+Plataforma de e-learning (LMS) premium construída com **React 19**, **Vite** e **Tailwind CSS**. Este projeto oferece uma experiência de aprendizagem completa, desde os fundamentos até padrões avançados de arquitetura e performance.
 
-## 📁 Estrutura do Repositório
+## 📁 Estrutura do Projeto
 
-O projeto principal está localizado na diretoria:
-- [**react-course/**](./react-course/) - Aplicação React 19 construída com Vite e Tailwind CSS.
+O código-fonte principal reside em:
+- [**react-course/**](./react-course/) - Aplicação completa com suporte a PWA e Offline.
 
-## 🚀 Funcionalidades da Plataforma
+## ✨ Funcionalidades Premium
 
-- **Currículo Completo:** 30 aulas detalhadas com teoria e prática.
-- **Navegação Fluida:** Sistema para avançar, retroceder e acesso rápido via barra lateral.
-- **Interatividade:** Quizzes em cada aula e sistema de notas pessoais.
-- **Modo Escuro:** Suporte total a temas claro e escuro.
-- **Certificação:** Geração de certificado após conclusão de 100% do conteúdo.
-- **Persistência Local:** O progresso do aluno é guardado automaticamente no navegador.
+- **30 Aulas Detalhadas:** Conteúdo pedagógico com analogias, "Porquê isto importa?" e desafios práticos.
+- **Dark Mode Inteligente:** Suporte total a temas claro/escuro com deteção automática do sistema (prefers-color-scheme).
+- **Quizzes Avançados:** Sistema de verificação de conhecimentos com feedback imediato e animações.
+- **Certificação Client-Side:** Geração de certificado PDF personalizado após conclusão total (100%).
+- **Laboratório de Código:** Editor interativo integrado em cada aula para testes em tempo real.
+- **PWA Ready:** Instalável no ecrã principal e preparado para funcionamento offline.
+- **Persistência de Progresso:** Todo o progresso, notas e favoritos são guardados localmente.
 
-## 🛠️ Como Iniciar
+## 🛠️ Início Rápido
 
-Para ver a aplicação a funcionar localmente:
+```bash
+# 1. Clonar e entrar na pasta
+cd react-course
 
-1. Entre na pasta do projeto: `cd react-course`
-2. Instale as dependências: `npm install`
-3. Inicie: `npm run dev`
-4. Aceda em [http://localhost:5173](http://localhost:5173).
+# 2. Instalar dependências
+npm install
 
-## 🌍 Como Colocar Online (Grátis)
+# 3. Iniciar o servidor
+npm run dev
+```
 
-Esta aplicação está preparada para ser publicada gratuitamente de duas formas:
+## 🌍 Deploy na Vercel (Recomendado)
 
-### Opção 1: GitHub Pages (Automático)
-Este repositório já inclui um **GitHub Action**. Assim que enviar o código para o seu repositório GitHub:
-1. Vá às **Settings** do seu repositório no GitHub.
-2. No menu lateral, clique em **Pages**.
-3. Em "Build and deployment" -> "Source", escolha **GitHub Actions**.
-4. O GitHub fará o build e o deploy automático sempre que fizer "push" de novo código.
-
-### Opção 2: Vercel (Recomendado pela simplicidade)
-1. Crie um repositório no seu GitHub e envie este código para lá.
-2. Aceda a [vercel.com](https://vercel.com) e importe o repositório.
-3. A Vercel detetará automaticamente as configurações de **Vite**.
-4. Clique em **Deploy**.
-
-O ficheiro `vercel.json` já está incluído para garantir que a navegação entre as aulas funciona corretamente online.
-
-## 📄 Documentação Detalhada
-
-Para mais informações sobre as tecnologias utilizadas, estrutura de código e sugestões de melhoria, consulte o [README.md específico do projeto](./react-course/README.md).
+O projeto está otimizado para a **Vercel** com o ficheiro vercel.json configurado para roteamento SPA sem erros 404.
 
 ---
-*Este projeto foi desenvolvido por Sandro Pereira para proporcionar uma experiência de aprendizagem moderna e profissional.*
+© 2026 **Sandro Pereira** (smpsandro1239). Todos os direitos reservados.
