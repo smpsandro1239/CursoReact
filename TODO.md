@@ -13,7 +13,7 @@ Acompanhamento detalhado das funcionalidades e melhorias da plataforma.
 ## 🚀 Concluído (100%) - Vercel Ready & Verified
 - [x] **Quizzes Avançados**: Implementado sistema de múltiplas questões com feedback e celebração.: Melhorar estratégia de caching para vídeos e assets pesados.
 - [x] **Certificação PDF Premium**: Design A4 paisagem, alta definição, watermark e validação de nome.
-- [x] **Vercel & PWA Polish**: vercel.json raiz configurado, build prefix garantido e roteamento SPA verificado.
+- [x] **Vercel & PWA Polish**: package.json raiz adicionado para build delegation, vercel.json otimizado e roteamento SPA corrigido.
 
 ## 🔵 Futuro (Pós-v1.0)
 - [ ] **Sincronização Cloud**: Integração com Supabase para progresso multi-dispositivo.
