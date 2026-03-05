@@ -4,9 +4,9 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
-import { Loader2 } from 'lucide-react';
 
 // Lazy loading das páginas para performance de elite
+// Usando import dinâmico com default para evitar problemas com exportações
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const LessonPage = lazy(() => import('./pages/LessonPage'));
 const Glossary = lazy(() => import('./pages/Glossary'));
