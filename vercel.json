@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "public": true,
   "buildCommand": "cd react-course && npm install && npm run build",
   "outputDirectory": "react-course/dist",
   "rewrites": [
