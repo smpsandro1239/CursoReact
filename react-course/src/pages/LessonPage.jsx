@@ -34,7 +34,8 @@ import {
   BrainCircuit,
   Sun,
   Moon,
-  Trophy
+  Trophy,
+  Library
 } from 'lucide-react';
 import { lessons } from '../data/lessons';
 import ReactMarkdown from 'react-markdown';
@@ -379,7 +380,7 @@ const LessonPage = () => {
             </div>
 
             {lesson.videoUrl ? (
-              <div className="mb-16 aspect-video rounded-[2.5rem] overflow-hidden bg-slate-200 dark:bg-slate-900 shadow-2xl border-8 border-white dark:border-slate-900">
+              <div className="mb-16 aspect-video rounded-[2.5rem] overflow-hidden bg-slate-200 dark:bg-slate-950 shadow-2xl border-8 border-white dark:border-slate-900">
                 <iframe
                   width="100%"
                   height="100%"
