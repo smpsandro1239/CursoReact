@@ -27,7 +27,6 @@ import {
   Library,
   StickyNote,
   MessageSquare, Download,
-  Trophy,
   Heart,
   Medal,
   Search as SearchIcon,
@@ -50,23 +49,14 @@ const LandingPage = () => {
   );
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('Todas');
-  const [notesSearch, setNotesSearch] = useState('');
 
   const categories = ['Todas', ...new Set(lessons.map(l => l.category))];
   const totalMinutes = lessons.reduce((acc, l) => acc + parseInt(l.readingTime), 0);
   const totalHours = (totalMinutes / 60).toFixed(1);
 
-  const [practiceCount, setPracticeCount] = useState(0);
-  const [favoriteLessons, setFavoriteLessons] = useState(() =>
+  const [favoriteLessons] = useState(() =>
     JSON.parse(localStorage.getItem('favoriteLessons') || '[]')
   );
-
-  const badges = [
-    { id: 'iniciado', name: 'Iniciado', min: 1, icon: <Zap size={20} />, color: 'bg-blue-500' },
-    { id: 'explorador', name: 'Explorador', min: 5, icon: <Target size={20} />, color: 'bg-indigo-500' },
-    { id: 'avancado', name: 'Avançado', min: 15, icon: <ShieldCheck size={20} />, color: 'bg-purple-500' },
-    { id: 'mestre', name: 'Mestre React', min: 30, icon: <Trophy size={20} />, color: 'bg-amber-500' }
-  ];
 
   const filteredLessons = useMemo(() => {
     let result = lessons;
@@ -79,38 +69,10 @@ const LandingPage = () => {
     return result;
   }, [searchTerm, activeCategory]);
 
-  useEffect(() => {
-    const savedPractice = localStorage.getItem('practiceDone');
-    if (savedPractice) {
-      setPracticeCount(JSON.parse(savedPractice).length);
-    }
-    const completed = JSON.parse(localStorage.getItem('completedLessons') || '[]');
-    setCompletedLessons(completed);
-  }, []);
-
-  const remainingMinutes = lessons.reduce((acc, l) => {
-    if (!completedLessons.includes(l.id)) {
-      return acc + parseInt(l.readingTime);
-    }
-    return acc;
-  }, 0);
-
-  const savedNotes = JSON.parse(localStorage.getItem('lessonNotes') || '{}');
-  const hasNotes = Object.keys(savedNotes).length > 0;
-
-  const filteredNotes = Object.entries(savedNotes)
-    .filter(([id, text]) => text.toLowerCase().includes(notesSearch.toLowerCase()))
-    .map(([id, text]) => ({
-      id: parseInt(id),
-      text,
-      lesson: lessons.find(l => l.id === parseInt(id))
-    }))
-    .filter(item => item.lesson);
-
   const progressPercentage = Math.round((completedLessons.length / lessons.length) * 100);
 
   const resetProgress = () => {
-    if(confirm('Atenção Sandro, desejas mesmo repor todo o teu progresso? Esta ação não pode ser desfeita.')) {
+    if(confirm('Atenção Sandro, desejas mesmo repor todo o teu progresso?')) {
       localStorage.removeItem('completedLessons');
       localStorage.removeItem('favoriteLessons');
       localStorage.removeItem('quizScores');
@@ -121,7 +83,6 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
-      {/* Navbar */}
       <nav className="border-b border-slate-100 dark:border-slate-900 py-4 px-6 sticky top-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md z-30">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="text-2xl font-black text-blue-600 tracking-tighter">PREMIUM REACT</div>
@@ -143,7 +104,6 @@ const LandingPage = () => {
       </nav>
 
       <main className="max-w-7xl mx-auto px-6 py-12 lg:py-20">
-        {/* Hero Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest rounded-full border border-blue-100 dark:border-blue-800">
@@ -168,7 +128,6 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* Progress Card */}
           <div className="bg-slate-900 dark:bg-slate-900/50 rounded-[3rem] p-10 text-white relative overflow-hidden shadow-2xl">
              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
              <div className="relative z-10 space-y-10">
@@ -204,7 +163,6 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Filters & Search */}
         <section id="curriculum" className="mb-16">
           <div className="flex flex-col md:flex-row gap-6 items-center justify-between mb-12">
             <div className="flex flex-wrap gap-2">
@@ -212,12 +170,7 @@ const LandingPage = () => {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`
-                    px-6 py-2.5 rounded-xl font-bold text-sm transition-all
-                    ${activeCategory === cat
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'bg-white dark:bg-slate-900 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-800'}
-                  `}
+                  className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${activeCategory === cat ? 'bg-blue-600 text-white shadow-lg' : 'bg-white dark:bg-slate-900 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-800'}`}
                 >
                   {cat}
                 </button>
@@ -275,7 +228,6 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Footer Stats & Author */}
         <footer className="mt-32 pt-24 border-t border-slate-100 dark:border-slate-900 flex flex-col items-center gap-10">
            <div className="flex flex-col items-center gap-4 text-center">
               <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-[2rem] flex items-center justify-center text-slate-900 dark:text-white font-black text-3xl shadow-xl">
