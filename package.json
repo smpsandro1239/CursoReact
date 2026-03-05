@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd react-course && npm install && npm run build"
+    "build": "cd react-course && npm install && npm run build && cd .. && rm -rf dist && mv react-course/dist ./dist"
   }
 }

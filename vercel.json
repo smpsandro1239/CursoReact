@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "outputDirectory": "react-course/dist",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
